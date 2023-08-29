@@ -60,7 +60,7 @@ const linksList = [
   {
     title: "Kategorien",
     icon: "mdi-palette",
-    link: "/automated_forms",
+    link: "/categories",
   },
 ]
 
