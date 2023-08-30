@@ -1,13 +1,18 @@
 <template>
   <q-page class="flex flex-center">
-    ToDo: Locations
+    <LocationTable />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import LocationTable from "components/LocationTable.vue"
 
 export default defineComponent({
-  name: 'LocationPage'
+  name: 'LocationPage',
+
+  components: {
+    LocationTable,
+  },
 })
 </script>

@@ -1,13 +1,18 @@
 <template>
   <q-page class="flex flex-center">
-    ToDo: Contacts
+    <ContactTable />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import ContactTable from "components/ContactTable.vue"
 
 export default defineComponent({
-  name: 'ContactPage'
+  name: 'ContactPage',
+
+  components: {
+    ContactTable,
+  },
 })
 </script>
