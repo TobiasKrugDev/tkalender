@@ -22,7 +22,7 @@
 
     if($num > 0) {
         $posts_arr = array();
-        $posts_arr['data'] = array();
+        $posts_arr['items'] = array();
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
@@ -38,7 +38,7 @@
                 'icon' => $icon
             );
 
-            array_push($posts_arr['data'], $post_item);
+            array_push($posts_arr['items'], $post_item);
         }
 
         echo json_encode($posts_arr);
