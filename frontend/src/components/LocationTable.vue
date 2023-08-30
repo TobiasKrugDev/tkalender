@@ -1,7 +1,10 @@
 <template>
   <div>
-    ToDo: LocationTable <br>
-    {{ locations }}
+    <q-table
+      title="Orte"
+      :rows="locations"
+      :columns="columns"
+    />
   </div>
 </template>
 
@@ -11,8 +14,46 @@ import { mapActions, mapState } from "vuex"
 
 export default defineComponent({
   name: 'LocationTable',
-    computed: {
+    
+  computed: {
     ...mapState("locations", ["locations"]),
+  },
+
+  data () {
+    return {
+      columns: [
+        {
+          name: 'name',
+          label: 'Name',
+          align: 'left',
+          field: 'name'
+        },
+        {
+          name: 'description',
+          label: 'Beschreibung',
+          align: 'left',
+          field: 'description'
+        },
+        {
+          name: 'streetAddress',
+          label: 'Straße + Hausnr.',
+          align: 'left',
+          field: 'streetAddress'
+        },
+        {
+          name: 'postalCode',
+          label: 'Postleitzahl',
+          align: 'left',
+          field: 'postalCode'
+        },
+        {
+          name: 'city',
+          label: 'Ort',
+          align: 'left',
+          field: 'city'
+        },
+      ]
+    }
   },
 
   mounted () {

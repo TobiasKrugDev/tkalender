@@ -1,7 +1,10 @@
 <template>
   <div>
-    ToDo: CategoryTable <br>
-    {{ categories }}
+    <q-table
+      title="Katgorien"
+      :rows="categories"
+      :columns="columns"
+    />
   </div>
 </template>
 
@@ -11,8 +14,34 @@ import { mapActions, mapState } from "vuex"
 
 export default defineComponent({
   name: 'CategoryTable',
-    computed: {
+  
+  computed: {
     ...mapState("categories", ["categories"]),
+  },
+
+  data () {
+    return {
+      columns: [
+        {
+          name: 'name',
+          label: 'Name',
+          align: 'left',
+          field: 'name'
+        },
+        {
+          name: 'description',
+          label: 'Beschreibung',
+          align: 'left',
+          field: 'description'
+        },
+        {
+          name: 'color',
+          label: 'Farbe',
+          align: 'left',
+          field: 'color'
+        },
+      ]
+    }
   },
 
   mounted () {

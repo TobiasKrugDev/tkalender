@@ -12,7 +12,7 @@ const mutations = {
 
 const actions = {
   async getCategories ({ commit }) {
-    const response = await api.get('/appointment/read')
+    const response = await api.get('/category/read')
     commit("setCategories", response.data.items)
   },
 }
