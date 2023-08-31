@@ -63,8 +63,8 @@ export default defineComponent({
 
 <style lang="scss">
   .category-table-color-circle {
-    height: 45px;
-    width: 45px;
+    height: 48px;
+    width: 48px;
     border-radius: 50%;
   }
 </style>

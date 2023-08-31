@@ -4,7 +4,17 @@
       title="Kontakte"
       :rows="contacts"
       :columns="columns"
-    />
+    >
+      <template v-slot:body-cell-image="props">
+        <q-td :props="props">
+          <div>
+            <q-avatar>
+              <img src="https://cdn.quasar.dev/img/avatar.png">
+            </q-avatar>
+          </div>
+        </q-td>
+      </template>
+    </q-table>
   </div>
 </template>
 
@@ -21,6 +31,12 @@ export default defineComponent({
   data () {
     return {
       columns: [
+        {
+          name: 'image',
+          label: '',
+          align: 'left',
+          field: 'image'
+        },
         {
           name: 'firstname',
           label: 'Vorname',
@@ -50,12 +66,6 @@ export default defineComponent({
           label: 'E-Mail-Adresse',
           align: 'left',
           field: 'emailAddress'
-        },
-        {
-          name: 'image',
-          label: 'Bild',
-          align: 'left',
-          field: 'image'
         },
       ]
     }
