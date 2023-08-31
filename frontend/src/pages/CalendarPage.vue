@@ -1,13 +1,18 @@
 <template>
   <q-page class="flex flex-center">
-    ToDo: Calendar
+    <Calendar />
   </q-page>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import Calendar from "components/Calendar.vue"
 
 export default defineComponent({
-  name: 'CalendarPage'
+  name: 'CalendarPage',
+
+  components: {
+    Calendar,
+  },
 })
 </script>
