@@ -52,8 +52,9 @@ export default defineComponent({
                 start: new Date(appointment.startAt),
                 end: new Date(appointment.endAt),
                 title: appointment.name,
+                class: appointment.category ? appointment.category : 'no-category'
             }
-            
+
             this.events = [ ...this.events, event ]
         }
     },
@@ -73,5 +74,12 @@ export default defineComponent({
 <style lang="scss">
 .vuecal__now-line {
     color: #06c;
+}
+.vuecal__event.no-category {
+    background-color: rgba(3, 36, 252, 0.9);border: 1px solid rgb(3, 36, 252);color: #fff;
+}
+
+.vuecal__event:hover {
+    cursor: pointer;
 }
 </style>
