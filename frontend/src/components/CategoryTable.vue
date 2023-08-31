@@ -4,7 +4,14 @@
       title="Katgorien"
       :rows="categories"
       :columns="columns"
-    />
+    >
+      <template v-slot:body-cell-color="props">
+        <q-td :props="props">
+          <div class="category-table-color-circle" :style="'background-color: ' + props.value">
+          </div>
+        </q-td>
+      </template>
+    </q-table>
   </div>
 </template>
 
@@ -23,6 +30,12 @@ export default defineComponent({
     return {
       columns: [
         {
+          name: 'color',
+          label: '',
+          align: 'left',
+          field: 'color'
+        },
+        {
           name: 'name',
           label: 'Name',
           align: 'left',
@@ -33,12 +46,6 @@ export default defineComponent({
           label: 'Beschreibung',
           align: 'left',
           field: 'description'
-        },
-        {
-          name: 'color',
-          label: 'Farbe',
-          align: 'left',
-          field: 'color'
         },
       ]
     }
@@ -53,3 +60,11 @@ export default defineComponent({
   }
 })
 </script>
+
+<style lang="scss">
+  .category-table-color-circle {
+    height: 45px;
+    width: 45px;
+    border-radius: 50%;
+  }
+</style>
