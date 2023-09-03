@@ -16,6 +16,12 @@
           </div>
         </q-td>
       </template>
+
+      <template #body-cell-actions="props">
+        <td class="text-right">
+          <q-btn flat round color="dark" icon="mdi-delete" @click="onDeleteClick(props.row)" />
+        </td>
+      </template>
     </q-table>
 
     
@@ -34,23 +40,34 @@
         </q-card-section>
       </q-card>
     </q-dialog>
+
+    <q-dialog v-model="showDeleteDialog">
+      <DeleteConfirm :item="selectedContact" entity="contact" />
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
 import { mapActions, mapState } from "vuex"
+import DeleteConfirm from "components/DeleteConfirm.vue"
 
 export default defineComponent({
   name: 'ContactTable',
-    computed: {
+
+  components: {
+    DeleteConfirm,
+  },
+
+  computed: {
     ...mapState("contacts", ["contacts"]),
   },
 
   data () {
     return {
-      selectedRow: null,
+      selectedContact: null,
       showDialog: false,
+      showDeleteDialog: false,
       columns: [
         {
           name: 'image',
@@ -88,6 +105,7 @@ export default defineComponent({
           align: 'left',
           field: 'emailAddress'
         },
+        { name: "actions" },
       ]
     }
   },
@@ -100,8 +118,17 @@ export default defineComponent({
     ...mapActions("contacts", ["getContacts"]),
 
     onRowClick(evt, row) {
-      this.selectedRow = row
+      if (this.showDeleteDialog) {
+        return
+      }
+
+      this.selectedContact = row
       this.showDialog = true
+    },
+
+    onDeleteClick (row) {
+      this.selectedContact = row
+      this.showDeleteDialog = true
     },
 
     onFileUpload() {
