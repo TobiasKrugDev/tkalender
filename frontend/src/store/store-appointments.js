@@ -15,6 +15,15 @@ const actions = {
     const response = await api.get('/appointment/read')
     commit("setAppointments", response.data.items)
   },
+
+  async deleteAppointment ({ }, id) {
+    await api.delete("/appointment/delete",
+      {
+        params:
+          { id },
+      },
+    )
+  },
 }
 
 export default {

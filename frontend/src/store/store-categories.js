@@ -15,6 +15,15 @@ const actions = {
     const response = await api.get('/category/read')
     commit("setCategories", response.data.items)
   },
+
+  async deleteCategory ({}, id) {
+    await api.delete("/category/delete", 
+      { 
+        params: 
+          { id },
+      },
+    )
+  },
 }
 
 export default {

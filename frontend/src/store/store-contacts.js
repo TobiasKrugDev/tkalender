@@ -15,6 +15,15 @@ const actions = {
     const response = await api.get('/contact/read')
     commit("setContacts", response.data.items)
   },
+
+  async deleteContact ({ }, id) {
+    await api.delete("/contact/delete",
+      {
+        params:
+          { id },
+      },
+    )
+  },
 }
 
 export default {

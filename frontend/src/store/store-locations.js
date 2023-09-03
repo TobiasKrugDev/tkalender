@@ -15,6 +15,15 @@ const actions = {
     const response = await api.get('/location/read')
     commit("setLocations", response.data.items)
   },
+
+  async deleteLocation ({ }, id) {
+    await api.delete("/location/delete",
+      {
+        params:
+          { id },
+      },
+    )
+  },
 }
 
 export default {
