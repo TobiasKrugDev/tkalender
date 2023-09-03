@@ -4,17 +4,36 @@
       title="Kontakte"
       :rows="contacts"
       :columns="columns"
+      @row-click="onRowClick"
     >
       <template v-slot:body-cell-image="props">
         <q-td :props="props">
           <div>
-            <q-avatar>
-              <img src="https://cdn.quasar.dev/img/avatar.png">
+            <q-avatar v-if="props.row.image">
+              <img :src="props.row.image">
             </q-avatar>
+            <q-avatar v-else icon="mdi-account" color="grey-5" text-color="white" />
           </div>
         </q-td>
       </template>
     </q-table>
+
+    
+    <q-dialog v-model="showDialog">
+      <q-card>
+        <q-card-section class="row items-center q-pb-none">
+          <div class="text-h6">Test Modal</div>
+          <q-space />
+          <q-btn icon="close" flat round dense v-close-popup />
+        </q-card-section>
+
+        <q-card-section>
+          <div>
+            <input ref="contactImageUpload" type="file" accept="image/*" @change="onFileUpload()" />
+          </div>
+        </q-card-section>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
@@ -30,6 +49,8 @@ export default defineComponent({
 
   data () {
     return {
+      selectedRow: null,
+      showDialog: false,
       columns: [
         {
           name: 'image',
@@ -77,6 +98,20 @@ export default defineComponent({
 
   methods: {
     ...mapActions("contacts", ["getContacts"]),
+
+    onRowClick(evt, row) {
+      this.selectedRow = row
+      this.showDialog = true
+    },
+
+    onFileUpload() {
+      var file = this.$refs.contactImageUpload.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = function() {
+        console.log('RESULT', reader.result)
+      }
+    }
   }
 })
 </script>
