@@ -3,28 +3,73 @@
 
     <q-header
       class="bg-transparent row q-py-lg"
-      :class="$q.screen.gt.xs ? 'q-px-lg q-gutter-x-lg' : 'q-px-sm q-gutter-x-sm'"
       style="flex-wrap: nowrap;"
     >
+      <q-space class="gt-sm" />
       <div class="blurred-background" />
-      <q-toolbar
-        class="bg-white shadow-7 rounded-borders"
-        :class="$q.screen.gt.xs ? 'q-px-lg' : 'q-px-sm'"
-        style="color: black;"
-      >
+      <!-- Desktop Toolbars -->
+      <q-toolbar class="bg-white shadow-7 rounded-borders q-pl-lg q-pr-none gt-sm search-toolbar">
         <q-toolbar-title>
-          <q-input
-            v-model="searchInput"
-            placeholder="Suche nach..."
-            borderless
-            type="search"
-            @keyup.enter="navigateToSearch"
-          >
-            <template #prepend>
-              <q-icon name="search" />
-            </template>
-          </q-input>
+          <div class="row no-wrap">
+            <q-input 
+              v-model="searchInput"
+              borderless 
+              placeholder="Suche nach..." 
+              class="col" 
+              type="search" 
+              @keyup.enter="navigateToSearch" 
+            />
+            <q-btn 
+              id="search-button" 
+              color="primary" 
+              icon="search" 
+              class="q-px-xl" 
+            />
+          </div>
         </q-toolbar-title>
+      </q-toolbar>
+
+      <q-space class="gt-sm" />
+
+      <q-toolbar class="bg-white shadow-7 rounded-borders q-px-none gt-sm q-mx-lg logout-toolbar-card">
+        <q-toolbar-title class="full-width full-height">
+          <q-btn color="grey-7" icon="mdi-logout" :label="$q.screen.gt.md ? 'Abmelden' : ''" flat class="full-width full-height" />
+        </q-toolbar-title>
+      </q-toolbar>
+
+      <!-- Mobile Toolbar -->
+      <q-toolbar class="bg-white shadow-7 rounded-borders q-px-none lt-md q-mx-md">
+        <q-btn
+          flat
+          dense
+          color="grey-7"
+          round
+          icon="menu"
+          aria-label="Menu"
+          size="lg"
+          class="q-ml-md"
+          @click="toggleLeftDrawer"
+        />
+
+        <q-toolbar-title>
+          <router-link to="/">
+            <img src="/icons/favicon-128x128.png" class="absolute-center mobile-layout-toolbar-logo">
+          </router-link>
+        </q-toolbar-title>
+
+        <q-btn
+          id="mobile-search-btn"
+          flat
+          round
+          icon="search"
+          color="grey-7"
+          size="lg"
+          class="q-mr-md"
+        >
+          <q-popup-proxy>
+            ToDo: Mobile Suche
+          </q-popup-proxy>
+        </q-btn>
       </q-toolbar>
     </q-header>
 
@@ -44,6 +89,21 @@
           v-bind="link"
           :entity="link.entity"
         />
+
+        <q-item
+          clickable
+          target="_self"
+          to="/"
+          class="text-white mobile-logout-link lt-md"
+        >
+          <q-item-section avatar>
+            <q-icon name="mdi-logout" />
+          </q-item-section>
+
+          <q-item-section>
+            <q-item-label>Abmelden</q-item-label>
+          </q-item-section>
+        </q-item>
       </q-list>
     </q-drawer>
 
@@ -120,7 +180,7 @@ export default defineComponent({
 
   .q-drawer {
     width: 250px;
-    background: #2121ce;
+    background: $primary;
     margin: 24px 0 24px 16px;
     border-radius: 8px;
     height: calc(100% - 48px) !important;
@@ -133,5 +193,37 @@ export default defineComponent({
 
   .page-container-background {
     background-color: #f5f6fa;
+  }
+
+  #search-button {
+    border-radius: 8px ;
+  }
+
+  .mobile-layout-toolbar-logo {
+    height: 80%;
+  }
+
+  .logout-toolbar-card {
+    width: 100px;
+  }
+
+  .search-toolbar {
+    width: 70%;
+  }
+
+  .mobile-logout-link {
+    position: absolute;
+    bottom: 20px;
+    width: 100%;
+  }
+
+  @media screen and (min-width: 1440px) {
+    .logout-toolbar-card {
+      width: 200px;
+    }
+
+  .search-toolbar {
+    width: 50%;
+  }
   }
 </style>
