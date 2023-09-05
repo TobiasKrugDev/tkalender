@@ -3,6 +3,7 @@
     clickable
     target="_self"
     :to="link"
+    class="text-white"
   >
     <q-item-section
       v-if="icon"

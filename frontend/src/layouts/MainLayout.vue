@@ -1,7 +1,7 @@
 <template>
   <q-layout view="lHh lpR lFf">
 
-    <q-drawer show-if-above v-model="leftDrawerOpen" side="left" elevated>
+    <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
       <div class="relative-position q-my-lg layout-desktop-logo">
         <router-link to="/">
           <img
@@ -89,5 +89,13 @@ export default defineComponent({
 <style lang="scss">
   .layout-desktop-logo {
       height: 140px;
+  }
+
+  .q-drawer {
+    width: 250px;
+    background: #2121ce;
+    margin: 24px 0 24px 16px;
+    border-radius: 8px;
+    height: calc(100% - 48px) !important;
   }
 </style>
