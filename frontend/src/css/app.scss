@@ -5,6 +5,11 @@
     border-radius: 8px;
 }
 
+// Override default outlined q-input border-radius
+.q-field--outlined .q-field__control {
+    border-radius: 8px;
+}
+
 // Show components
 .show-property-name {
     font-weight: bold;
