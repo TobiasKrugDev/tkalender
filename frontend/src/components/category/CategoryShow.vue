@@ -31,7 +31,6 @@ export default defineComponent({
     props: {
         category: {
             type: Object,
-            default: null,
             required: true,
         },
     },

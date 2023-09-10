@@ -1,14 +1,54 @@
 <template>
-    <div>
-        ToDo: Category Update
+    <CategoryForm ref="categoryForm" :initial-category-data="category" />
+
+    <div class="text-right q-mt-xl">
+        <q-btn 
+            rounded 
+            flat 
+            color="grey-7" 
+            icon="close" 
+            :label="$q.screen.gt.xs ? 'Abbrechen' : ''" 
+            class="q-mr-xs" 
+            v-close-popup 
+        />
+        <q-btn 
+            rounded 
+            color="primary" 
+            icon="mdi-content-save" 
+            label="Speichern" 
+            class="q-ml-xs" 
+            @click="onCategorySave" 
+        />
     </div>
 </template>
 
 <script>
 import { defineComponent } from 'vue'
+import { mapActions } from "vuex"
+import CategoryForm from "components/category/CategoryForm.vue"
 
 export default defineComponent({
     name: 'CategoryUpdate',
+
+    components: {
+        CategoryForm,
+    },
+
+    props: {
+        category: {
+            type: Object,
+            required: true,
+        },
+    },
+
+    methods: {
+        ...mapActions("categories", ["updateCategory"]),
+
+        onCategorySave () {
+            const isValid = this.$refs.categoryForm.validateCategoryForm()
+            if (isValid) this.updateCategory(this.category)
+        }
+    }
 })
 </script>
 

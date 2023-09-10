@@ -23,7 +23,7 @@
       <DialogCard :title="dialogCardTitle">
         <CategoryCreate v-if="dialogMode === 'create'" />
         <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory"  />
-        <CategoryUpdate v-if="dialogMode === 'update'" />
+        <CategoryUpdate v-if="dialogMode === 'update'" :category="selectedCategory" />
       </DialogCard>
     </q-dialog>
 
@@ -86,8 +86,10 @@ export default defineComponent({
   computed: {
     ...mapState("categories", ["categories"]),
     dialogCardTitle () {
-      if (this.dialogMode === "show" || this.dialogMode === "update") {
+      if (this.dialogMode === "show") {
         return this.selectedCategory.name
+      } else if (this.dialogMode === "update") {
+        return "Kategorie bearbeiten"
       } else {
         return "Neue Kategorie"
       }

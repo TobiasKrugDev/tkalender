@@ -27,9 +27,22 @@ import { defineComponent } from 'vue'
 export default defineComponent({
     name: 'CategoryForm',
 
+    props: {
+        initialCategoryData: {
+            type: Object,
+            default: null,
+        },
+    },
+
     data () {
         return {
             category: {}
+        }
+    },
+
+    mounted () {
+        if (this.initialCategoryData) {
+            this.category = this.initialCategoryData
         }
     },
 
