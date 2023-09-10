@@ -19,7 +19,7 @@
 
       <template #body-cell-actions="props">
         <td class="text-right">
-          <q-btn flat round color="red-6" icon="mdi-delete" @click="onDeleteClick(props.row)" />
+          <q-btn flat round color="grey-7" icon="mdi-delete" @click="onDeleteClick(props.row)" />
         </td>
       </template>
     </q-table>
