@@ -91,6 +91,19 @@ module.exports = configure(function (/* ctx */) {
       open: true // opens browser window automatically
     },
 
+    devServer: {
+      // https: true,
+      port: 8081,
+      open: true, // opens browser window automatically
+
+      proxy: {
+        "/api": {
+          target: "https://www.dev-schabernack-testsite-himom-16.de", // ToDo: Change this to a less embarassing URL
+          changeOrigin: true,
+        },
+      },
+    },
+
     // https://v2.quasar.dev/quasar-cli-vite/quasar-config-js#framework
     framework: {
       config: {},
