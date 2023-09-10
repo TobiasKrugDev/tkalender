@@ -1,1 +1,6 @@
 // app global css in SCSS form
+
+// Override default q-card border-radius
+.q-card {
+    border-radius: 8px;
+}
