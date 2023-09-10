@@ -1,7 +1,7 @@
 <template>
   <div class="q-pa-md">
     <q-table
-      title="Kontakte"
+      flat
       :rows="contacts"
       :columns="columns"
       @row-click="onRowClick"

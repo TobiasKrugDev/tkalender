@@ -1,7 +1,7 @@
 <template>
   <div>
     <q-table
-      title="Katgorien"
+      flat
       :rows="categories"
       :columns="columns"
       @row-click="onRowClick"

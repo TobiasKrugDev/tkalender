@@ -1,6 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <CategoryTable />
+    <WrapperCard title="Kategorien">
+      <CategoryTable />
+    </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
 
@@ -16,6 +18,7 @@
 import { defineComponent } from 'vue'
 import CategoryTable from "components/CategoryTable.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
+import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
   name: 'CategoryPage',
@@ -23,6 +26,7 @@ export default defineComponent({
   components: {
     CategoryTable,
     FABCreateButton,
+    WrapperCard,
   },
 
   data () {

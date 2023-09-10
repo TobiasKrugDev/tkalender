@@ -1,6 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <ContactTable />
+    <WrapperCard title="Kontakte">
+      <ContactTable />
+    </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
 
@@ -16,6 +18,7 @@
 import { defineComponent } from 'vue'
 import ContactTable from "components/ContactTable.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
+import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
   name: 'ContactPage',
@@ -23,6 +26,7 @@ export default defineComponent({
   components: {
     ContactTable,
     FABCreateButton,
+    WrapperCard,
   },
 
   data () {

@@ -1,6 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <Calendar />
+    <WrapperCard title="Kalender">
+      <Calendar />
+    </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
 
@@ -16,6 +18,7 @@
 import { defineComponent } from 'vue'
 import Calendar from "components/Calendar.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
+import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
   name: 'CalendarPage',
@@ -23,6 +26,7 @@ export default defineComponent({
   components: {
     Calendar,
     FABCreateButton,
+    WrapperCard,
   },
 
   data () {

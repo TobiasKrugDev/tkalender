@@ -1,6 +1,8 @@
 <template>
   <q-page class="flex flex-center">
-    <LocationTable />
+    <WrapperCard title="Orte">
+      <LocationTable />
+    </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
 
@@ -16,6 +18,7 @@
 import { defineComponent } from 'vue'
 import LocationTable from "components/LocationTable.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
+import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
   name: 'LocationPage',
@@ -23,6 +26,7 @@ export default defineComponent({
   components: {
     LocationTable,
     FABCreateButton,
+    WrapperCard,
   },
 
   data () {
