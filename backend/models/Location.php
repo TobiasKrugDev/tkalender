@@ -44,6 +44,8 @@
             $this->streetAddress = $row['street_address'];
             $this->postalCode = $row['postal_code'];
             $this->city = $row['city'];
+
+            return $stmt;
         }
 
         // Create Location
@@ -71,13 +73,10 @@
             $stmt->bindParam(':postalCode', $this->postalCode);
             $stmt->bindParam(':city', $this->city);
 
-            if ($stmt->execute()) {
-                return true;
-            }
-
-            // Print error message
-            printf("Error: %s.\n", $stmt->error);
-            return false;
+            $stmt->execute();
+            // Return ID of created item
+            $createdLocationID = $this->conn->lastInsertId();
+            return $createdLocationID;
         }
 
         // Update Location

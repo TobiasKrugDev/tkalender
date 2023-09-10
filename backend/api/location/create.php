@@ -23,12 +23,20 @@
     $location->postalCode = $data->postalCode;
     $location->city = $data->city;
 
-    if ($location->create()) {
-        echo json_encode(
-            array('message' => 'Location Created')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Location Not Created')
-        );
-    }
+    $createdLocationID = $location->create();
+
+    // Return data of created item
+    $createdLocation = new Location($db);
+    $createdLocation->id = $createdLocationID;
+    $createdLocation->read_single();
+
+    $location_array = array(
+        'id' => $createdLocation->id,
+        'name' => $createdLocation->name,
+        'description' => $createdLocation->description,
+        'streetAddress' => $createdLocation->streetAddress,
+        'postalCode' => $createdLocation->postalCode,
+        'city' => $createdLocation->city,
+    );
+
+    print_r(json_encode($location_array));

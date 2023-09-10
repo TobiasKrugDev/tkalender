@@ -58,6 +58,8 @@
             $this->phoneNumber = $row['phone_number'];
             $this->emailAddress = $row['email_address'];
             $this->image = $row['image'];
+
+            return $stmt;
         }
 
         // Create Contact
@@ -88,13 +90,10 @@
             $stmt->bindParam(':emailAddress', $this->emailAddress);
             $stmt->bindParam(':image', $this->image);
 
-            if ($stmt->execute()) {
-                return true;
-            }
-
-            // Print error message
-            printf("Error: %s.\n", $stmt->error);
-            return false;
+            $stmt->execute();
+            // Return ID of created item
+            $createdContactID = $this->conn->lastInsertId();
+            return $createdContactID;
         }
 
         // Update Contact

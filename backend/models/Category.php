@@ -40,6 +40,8 @@
             $this->name = $row['name'];
             $this->description = $row['description'];
             $this->color = $row['color'];
+
+            return $stmt;
         }
 
         // Create Category
@@ -61,13 +63,10 @@
             $stmt->bindParam(':description', $this->description);
             $stmt->bindParam(':color', $this->color);
 
-            if ($stmt->execute()) {
-                return true;
-            }
-
-            // Print error message
-            printf("Error: %s.\n", $stmt->error);
-            return false;
+            $stmt->execute();
+            // Return ID of created item
+            $createdCategoryID = $this->conn->lastInsertId();
+            return $createdCategoryID;
         }
 
         // Update Category

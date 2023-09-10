@@ -24,12 +24,21 @@
     $contact->emailAddress = $data->emailAddress;
     $contact->image = $data->image;
 
-    if ($contact->create()) {
-        echo json_encode(
-            array('message' => 'Contact Created')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Contact Not Created')
-        );
-    }
+    $createdContactID = $contact->create();
+
+    // Return data of created item
+    $createdContact = new Contact($db);
+    $createdContact->id = $createdContactID;
+    $createdContact->read_single();
+
+    $contact_array = array(
+        'id' => $createdContact->id,
+        'firstname' => $createdContact->firstname,
+        'lastname' => $createdContact->lastname,
+        'description' => $createdContact->description,
+        'phoneNumber' => $createdContact->phoneNumber,
+        'emailAddress' => $createdContact->emailAddress,
+        'image' => $createdContact->image,
+    );
+
+    print_r(json_encode($contact_array));

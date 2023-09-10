@@ -21,12 +21,18 @@
     $category->description = $data->description;
     $category->color = $data->color;
 
-    if ($category->create()) {
-        echo json_encode(
-            array('message' => 'Category Created')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Category Not Created')
-        );
-    }
+    $createdCategoryID = $category->create();
+
+    // Return data of created item
+    $createdCategory = new Category($db);
+    $createdCategory->id = $createdCategoryID;
+    $createdCategory->read_single();
+
+    $category_array = array(
+        'id' => $createdCategory->id,
+        'name' => $createdCategory->name,
+        'description' => $createdCategory->description,
+        'color' => $createdCategory->color
+    );
+
+    print_r(json_encode($category_array));

@@ -74,6 +74,8 @@
             $this->location = $row['location'];
             $this->category = $row['category'];
             $this->icon = $row['icon'];
+
+            return $stmt;
         }
 
         // Create Appointment
@@ -107,13 +109,10 @@
             $stmt->bindParam(':category', $this->category);
             $stmt->bindParam(':icon', $this->icon);
 
-            if ($stmt->execute()) {
-                return true;
-            }
-
-            // Print error message
-            printf("Error: %s.\n", $stmt->error);
-            return false;
+            $stmt->execute();
+            // Return ID of created item
+            $createdAppointmentID = $this->conn->lastInsertId();
+            return $createdAppointmentID;
         }
 
         // Update Appointment

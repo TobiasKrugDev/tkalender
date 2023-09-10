@@ -25,12 +25,22 @@
     $appointment->category = $data->category;
     $appointment->icon = $data->icon;
 
-    if ($appointment->create()) {
-        echo json_encode(
-            array('message' => 'Appointment Created')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Appointment Not Created')
-        );
-    }
+    $createdAppointmentID = $appointment->create();
+
+    // Return data of created item
+    $createdAppointment = new Appointment($db);
+    $createdAppointment->id = $createdAppointmentID;
+    $createdAppointment->read_single();
+
+    $appointment_array = array(
+        'id' => $createdAppointment->id,
+        'name' => $createdAppointment->name,
+        'description' => $createdAppointment->description,
+        'startAt' => $createdAppointment->startAt,
+        'endAt' => $createdAppointment->endAt,
+        'location' => $createdAppointment->location,
+        'category' => $createdAppointment->category,
+        'icon' => $createdAppointment->icon,
+    );
+
+    print_r(json_encode($appointment_array));
