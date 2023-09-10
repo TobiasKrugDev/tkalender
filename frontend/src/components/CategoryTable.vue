@@ -8,8 +8,7 @@
     >
       <template v-slot:body-cell-color="props">
         <q-td :props="props">
-          <div class="category-table-color-circle" :style="'background-color: ' + props.value">
-          </div>
+          <div class="category-table-color-circle" :style="'background-color: ' + props.value" />
         </q-td>
       </template>
       <template #body-cell-actions="props">
@@ -19,20 +18,10 @@
       </template>
     </q-table>
 
-    <q-dialog v-model="showDialog">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Test Modal</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-section>
-          <div>
-            ToDo: Show Ansicht
-          </div>
-        </q-card-section>
-      </q-card>
+    <q-dialog v-model="itemDialog" persistent>
+      <DialogCard :title="selectedCategory.name">
+        <CategoryShow :category="selectedCategory" />
+      </DialogCard>
     </q-dialog>
 
     <q-dialog v-model="showDeleteDialog">
@@ -45,12 +34,16 @@
 import { defineComponent } from 'vue'
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
+import DialogCard from "components/DialogCard.vue"
+import CategoryShow from "components/category/CategoryShow.vue"
 
 export default defineComponent({
   name: 'CategoryTable',
 
   components: {
     DeleteConfirm,
+    DialogCard,
+    CategoryShow,
   },
   
   computed: {
@@ -60,7 +53,7 @@ export default defineComponent({
   data () {
     return {
       selectedCategory: null,
-      showDialog: false,
+      itemDialog: false,
       showDeleteDialog: false,
       columns: [
         {
@@ -99,7 +92,7 @@ export default defineComponent({
       }
       
       this.selectedCategory = row
-      this.showDialog = true
+      this.itemDialog = true
     },
 
     onDeleteClick (row) {
