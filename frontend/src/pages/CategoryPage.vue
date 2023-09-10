@@ -1,16 +1,10 @@
 <template>
   <q-page class="flex">
     <WrapperCard title="Kategorien">
-      <CategoryTable />
+      <CategoryTable ref="categoryTable" />
     </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
-
-    <q-dialog v-model="createDialog">
-      <q-card>
-        ToDo: Category Create Dialog
-      </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -44,7 +38,7 @@ export default defineComponent({
 
   methods: {
     openCreateDialog () {
-      this.createDialog = true
+      this.$refs.categoryTable.openCreateDialog()
     }
   }
 })
