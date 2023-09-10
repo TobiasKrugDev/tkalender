@@ -11,7 +11,7 @@
             <router-link to="/contacts/create">
                 <q-fab-action color="primary" icon="mdi-account-group" label="Kontakt hinzufügen" />
             </router-link>
-            <router-link to="/calendar/create">
+            <router-link to="/calendar/create_appointment">
                 <q-fab-action color="primary" icon="mdi-calendar" label="Termin hinzufügen" />
             </router-link>
         </q-fab>
