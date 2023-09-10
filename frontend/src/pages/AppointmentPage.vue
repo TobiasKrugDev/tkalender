@@ -1,5 +1,5 @@
 <template>
-  <q-page class="flex flex-center">
+  <q-page class="flex">
     ToDo: Appointment List
 
     <FABCreateButton @create-button-click="openCreateDialog" />
