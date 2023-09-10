@@ -17,7 +17,7 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $category->id = $data->id;
+    $category->id = isset($_GET['id']) ? $_GET['id'] : die();
     $category->name = $data->name;
     $category->description = $data->description;
     $category->color = $data->color;

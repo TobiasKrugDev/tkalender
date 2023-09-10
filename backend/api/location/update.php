@@ -17,7 +17,7 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $location->id = $data->id;
+    $location->id = isset($_GET['id']) ? $_GET['id'] : die();
     $location->name = $data->name;
     $location->description = $data->description;
     $location->streetAddress = $data->streetAddress;

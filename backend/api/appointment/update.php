@@ -17,7 +17,7 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $appointment->id = $data->id;
+    $appointment->id = isset($_GET['id']) ? $_GET['id'] : die();
     $appointment->name = $data->name;
     $appointment->description = $data->description;
     $appointment->startAt = $data->startAt;

@@ -17,7 +17,7 @@
 
     $data = json_decode(file_get_contents("php://input"));
 
-    $contact->id = $data->id;
+    $contact->id = isset($_GET['id']) ? $_GET['id'] : die();
     $contact->firstname = $data->firstname;
     $contact->lastname = $data->lastname;
     $contact->description = $data->description;
