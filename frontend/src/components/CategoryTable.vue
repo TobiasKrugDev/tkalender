@@ -108,8 +108,8 @@
       </DialogCard>
     </q-dialog>
 
-    <q-dialog v-model="showDeleteDialog">
-      <DeleteConfirm :item="selectedCategory" entity="category" />
+    <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
+      <DeleteConfirm :item="selectedCategory" entity="category" @item-deleted="onItemDeleted" />
     </q-dialog>
   </div>
 </template>
@@ -234,6 +234,14 @@ export default defineComponent({
 
     onPageChange (page) {
       this.pagination.page = page
+      this.getCategoryData()
+    },
+
+    onItemDeleted () {
+      // Close dialog
+      this.$refs.deleteConfirm.hide()
+
+      // Refresh category list
       this.getCategoryData()
     }
   }

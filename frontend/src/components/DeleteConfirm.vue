@@ -54,6 +54,8 @@ export default defineComponent({
         },
     },
 
+    emits: ["itemDeleted"],
+
     computed: {
         itemName () {
             if (this.entity === "contact") {
@@ -71,13 +73,15 @@ export default defineComponent({
     ...mapActions("categories", ["deleteCategory"]),
 
 
-    deleteItem () {
+    async deleteItem () {
         switch (this.entity) {
-            case "appointment": this.deleteAppointment(this.item.id); break;
-            case "contact": this.deleteContact(this.item.id); break;
-            case "location": this.deleteLocation(this.item.id); break;
-            case "category": this.deleteCategory(this.item.id); break;
+            case "appointment": await this.deleteAppointment(this.item.id); break;
+            case "contact": await this.deleteContact(this.item.id); break;
+            case "location": await this.deleteLocation(this.item.id); break;
+            case "category": await this.deleteCategory(this.item.id); break;
         }
+
+        this.$emit("itemDeleted")
     }
   }
 })
