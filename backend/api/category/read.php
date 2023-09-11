@@ -13,7 +13,7 @@
     // Get Items
     $category = new Category($db);
 
-    $category->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 25;
+    $category->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $category->offset = isset($_GET['page']) ? $category->limit * ($_GET['page'] - 1) : 0;
 
     $result = $category->read();

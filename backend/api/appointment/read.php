@@ -15,7 +15,7 @@
 
     $appointment->contactFilter = isset($_GET['filter_contact']) ? $_GET['filter_contact'] : null;
     $appointment->locationFilter = isset($_GET['filter_location']) ? $_GET['filter_location'] : null;
-    $appointment->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 25;
+    $appointment->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $appointment->offset = isset($_GET['page']) ? $appointment->limit * ($_GET['page'] - 1) : 0;
 
     $result = $appointment->read();

@@ -14,7 +14,7 @@
     $contact = new Contact($db);
 
     $contact->appointmentFilter = isset($_GET['filter_appointment']) ? $_GET['filter_appointment'] : null;
-    $contact->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 25;
+    $contact->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $contact->offset = isset($_GET['page']) ? $contact->limit * ($_GET['page'] - 1) : 0;
 
     $result = $contact->read();

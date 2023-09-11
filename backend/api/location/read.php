@@ -13,7 +13,7 @@
     // Get Items
     $location = new Location($db);
 
-    $location->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 25;
+    $location->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $location->offset = isset($_GET['page']) ? $location->limit * ($_GET['page'] - 1) : 0;
 
     $result = $location->read();
