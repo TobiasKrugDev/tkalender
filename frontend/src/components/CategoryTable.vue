@@ -7,7 +7,10 @@
       rows-per-page-label="Einträge pro Seite"
       :grid="$q.screen.xs"
       :rows-per-page-options="[10, 25, 50, 100]"
+      v-model:pagination="pagination"
+      :loading="loading"
       @row-click="onRowClick"
+      @request="onRequest"
     >
       <template v-slot:body-cell-color="props">
         <q-td :props="props">
@@ -128,6 +131,14 @@ export default defineComponent({
       itemDialog: false,
       showDeleteDialog: false,
       dialogMode: "",
+      loading: false,
+      pagination: {
+        // sortBy: 'desc',
+        // descending: false,
+        page: 1,
+        rowsPerPage: 10,
+        rowsNumber: this.totalItems,
+      },
       columns: [
         {
           name: 'color',
@@ -153,7 +164,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState("categories", ["categories"]),
+    ...mapState("categories", ["categories", "totalItems"]),
     dialogCardTitle () {
       if (this.dialogMode === "show") {
         return this.selectedCategory.name
@@ -166,7 +177,7 @@ export default defineComponent({
   },
 
   mounted () {
-    this.getCategories()
+    this.getCategoryData()
   },
 
   methods: {
@@ -196,6 +207,18 @@ export default defineComponent({
       this.selectedCategory = row
       this.dialogMode = "update"
       this.itemDialog = true
+    },
+
+    async getCategoryData () {
+      this.loading = true
+      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page })
+      this.pagination.rowsNumber = this.totalItems
+      this.loading = false
+    },
+
+    onRequest (props) {
+      this.pagination = props.pagination
+      this.getCategoryData()
     }
   }
 })
