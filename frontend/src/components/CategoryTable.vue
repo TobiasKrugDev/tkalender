@@ -103,7 +103,7 @@
     <q-dialog v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
         <CategoryCreate v-if="dialogMode === 'create'" />
-        <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory"  />
+        <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" />
         <CategoryUpdate v-if="dialogMode === 'update'" :category="selectedCategory" />
       </DialogCard>
     </q-dialog>

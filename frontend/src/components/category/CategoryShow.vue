@@ -17,7 +17,7 @@
     </div>
 
     <div class="text-right q-mt-xl">
-        <q-btn rounded flat color="red-6" icon="delete" :label="$q.screen.gt.xs ? 'Löschen' : ''" class="q-mr-xs" />
+        <q-btn rounded flat color="red-6" icon="delete" :label="$q.screen.gt.xs ? 'Löschen' : ''" class="q-mr-xs" @click="onDeleteClick" />
         <q-btn rounded color="primary" icon="edit" :label="$q.screen.gt.xs ? 'Bearbeiten' : ''" class="q-ml-xs" />
     </div>
 </template>
@@ -34,6 +34,14 @@ export default defineComponent({
             required: true,
         },
     },
+
+    emits: ["deleteClick"],
+
+    methods: {
+        onDeleteClick () {
+            this.$emit("deleteClick", this.category)
+        }
+    }
 })
 </script>
 
