@@ -41,6 +41,17 @@
             return $stmt;
         }
 
+        // Get Total Items Number
+        public function count() {
+            $query = 'SELECT COUNT(*) AS total FROM contacts';
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $row['total'];
+        }
+
         // Get Single Contact
         public function read_single() {
 

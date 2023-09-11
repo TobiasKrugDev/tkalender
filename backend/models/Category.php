@@ -26,6 +26,17 @@
             return $stmt;
         }
 
+        // Get Total Items Number
+        public function count() {
+            $query = 'SELECT COUNT(*) AS total FROM categories';
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $row['total'];
+        }
+
         // Get Single Category
         public function read_single() {
 

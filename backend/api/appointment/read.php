@@ -10,6 +10,7 @@
     $database = new Database();
     $db = $database->connect();
 
+    // Get Items
     $appointment = new Appointment($db);
 
     $appointment->contactFilter = isset($_GET['filter_contact']) ? $_GET['filter_contact'] : null;
@@ -20,9 +21,13 @@
     $result = $appointment->read();
     $num = $result->rowCount();
 
+    // Get Total Items Number
+    $totalItems = $appointment->count();
+
     if($num > 0) {
         $posts_arr = array();
         $posts_arr['items'] = array();
+        $posts_arr['totalItems'] = $totalItems;
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);

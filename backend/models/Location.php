@@ -28,6 +28,18 @@
             return $stmt;
         }
 
+        
+        // Get Total Items Number
+        public function count() {
+            $query = 'SELECT COUNT(*) AS total FROM locations';
+            $stmt = $this->conn->prepare($query);
+            $stmt->execute();
+
+            $row = $stmt->fetch(PDO::FETCH_ASSOC);
+
+            return $row['total'];
+        }
+
         // Get Single Location
         public function read_single() {
 

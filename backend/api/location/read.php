@@ -10,6 +10,7 @@
     $database = new Database();
     $db = $database->connect();
 
+    // Get Items
     $location = new Location($db);
 
     $location->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 25;
@@ -18,9 +19,13 @@
     $result = $location->read();
     $num = $result->rowCount();
 
+    // Get Total Items Number
+    $totalItems = $location->count();
+
     if($num > 0) {
         $posts_arr = array();
         $posts_arr['items'] = array();
+        $posts_arr['totalItems'] = $totalItems;
 
         while($row = $result->fetch(PDO::FETCH_ASSOC)) {
             extract($row);
