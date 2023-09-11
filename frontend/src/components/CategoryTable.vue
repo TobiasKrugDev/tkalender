@@ -4,6 +4,8 @@
       flat
       :rows="categories"
       :columns="columns"
+      rows-per-page-label="Einträge pro Seite"
+      :grid="$q.screen.xs"
       @row-click="onRowClick"
     >
       <template v-slot:body-cell-color="props">
@@ -16,6 +18,72 @@
           <q-btn flat round color="grey-7" icon="mdi-pencil" @click="openUpdateDialog(props.row)" />
           <q-btn flat round color="grey-7" icon="mdi-delete" @click="onDeleteClick(props.row)" />
         </td>
+      </template>
+      <template #pagination>
+          <!-- Hide default pagination -->
+      </template>
+      <template #item="props">
+        <div class="col-12">
+          <q-separator class="q-my-md" />
+        </div>
+        <div class="col-10">
+          <div v-if="props.row.name" class="text-h6 q-mb-md">
+            {{ props.row.name }}
+          </div>
+          <div class="text-weight-medium">
+            Beschreibung:
+          </div>
+          <div class="q-mb-md">
+            {{ props.row.description }}
+          </div>
+          <div class="text-weight-medium q-mb-xs">
+            Farbe:
+          </div>
+          <div>
+            <div class="category-table-color-circle" :style="'background-color: ' + props.row.color" />
+          </div>
+        </div>
+        <div class="col-2 text-right">
+          <q-btn
+            flat
+            round
+            dense
+            color="grey-7"
+            icon="more_vert"
+          >
+            <q-menu
+              transition-show="flip-up"
+              transition-hide="flip-down"
+            >
+              <q-list style="min-width: 100px">
+                <q-item clickable @click="onRowClick(null, props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-eye-outline" />
+                  </q-item-section>
+                  <q-item-section>
+                    Ansehen
+                  </q-item-section>
+                </q-item>
+                <q-item clickable @click="openUpdateDialog(props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-pencil" />
+                  </q-item-section>
+                  <q-item-section avatar>
+                    Bearbeiten
+                  </q-item-section>
+                </q-item>
+                <q-item clickable @click="onDeleteClick(props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-delete" />
+                  </q-item-section>
+                  <q-item-section avatar>
+                    Löschen
+                  </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
       </template>
     </q-table>
 
