@@ -11,11 +11,13 @@ const mutations = {
 }
 
 const actions = {
+  // GET Locations
   async getLocations ({ commit }) {
     const response = await api.get('/location/read')
     commit("setLocations", response.data.items)
   },
 
+  // DELETE Location
   async deleteLocation ({ }, id) {
     await api.delete("/location/delete",
       {
@@ -24,6 +26,29 @@ const actions = {
       },
     )
   },
+
+  // POST / Create Location
+  async createLocation ({}, location) {
+    axios.post('/api/location/create', location, 
+    {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  },
+
+  // PUT / Update Location
+  async updateLocation ({}, location) {
+    axios.put('/api/location/update', location, 
+    {
+      params: {
+        id : location.id
+      },
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+  }
 }
 
 export default {
