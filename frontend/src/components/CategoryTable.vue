@@ -91,6 +91,15 @@
       </template>
     </q-table>
 
+    <!-- Pagination -->
+    <div class="flex flex-center q-mb-lg">
+      <CustomPagination 
+        :totalItems="pagination.rowsNumber" 
+        :itemsPerPage="pagination.rowsPerPage" 
+        class="q-mx-auto" 
+        @page-change="onPageChange" />
+    </div>
+
     <q-dialog v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
         <CategoryCreate v-if="dialogMode === 'create'" />
@@ -113,6 +122,7 @@ import DialogCard from "components/DialogCard.vue"
 import CategoryCreate from "components/category/CategoryCreate.vue"
 import CategoryShow from "components/category/CategoryShow.vue"
 import CategoryUpdate from "components/category/CategoryUpdate.vue"
+import CustomPagination from "src/components/CustomPagination.vue"
 
 export default defineComponent({
   name: 'CategoryTable',
@@ -123,6 +133,7 @@ export default defineComponent({
     CategoryCreate,
     CategoryShow,
     CategoryUpdate,
+    CustomPagination,
   },
 
   data () {
@@ -218,6 +229,11 @@ export default defineComponent({
 
     onRequest (props) {
       this.pagination = props.pagination
+      this.getCategoryData()
+    },
+
+    onPageChange (page) {
+      this.pagination.page = page
       this.getCategoryData()
     }
   }
