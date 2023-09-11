@@ -6,6 +6,7 @@
       :columns="columns"
       rows-per-page-label="Einträge pro Seite"
       :grid="$q.screen.xs"
+      :rows-per-page-options="[10, 25, 50, 100]"
       @row-click="onRowClick"
     >
       <template v-slot:body-cell-color="props">
