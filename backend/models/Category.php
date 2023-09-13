@@ -23,16 +23,31 @@
             // Note: apparently bindParam doesn't work for column names as well as ASC/DESC
             if ($this->sortBy == 'name') {
                 if ($this->orderDirection == 'DESC') {
-                    $query = 'SELECT * FROM categories ORDER BY name DESC LIMIT ?, ?';
+                    $query = 'SELECT * 
+                    FROM categories 
+                    WHERE name LIKE ? OR description LIKE ?  
+                    ORDER BY name DESC 
+                    LIMIT ?, ?';
                 } else {
-                    $query = 'SELECT * FROM categories ORDER BY name ASC LIMIT ?, ?';
+                    $query = 'SELECT * 
+                    FROM categories 
+                    WHERE name LIKE ? OR description LIKE ?
+                    ORDER BY name ASC 
+                    LIMIT ?, ?';
                 }
             } else {
-                $query = 'SELECT * FROM categories ORDER BY id DESC LIMIT ?, ?';
+                $query = 'SELECT * 
+                FROM categories 
+                WHERE name LIKE ? OR description LIKE ?
+                ORDER BY id DESC 
+                LIMIT ?, ?';
             }
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(2, $this->limit, PDO::PARAM_INT);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(3, $this->offset, PDO::PARAM_INT);
+            $stmt->bindParam(4, $this->limit, PDO::PARAM_INT);
             $stmt->execute();
             
             return $stmt;
@@ -138,24 +153,5 @@
             // Print error message
             printf("Error: %s.\n", $stmt->error);
             return false;
-        }
-
-        // Search Categories
-        public function search() {
-            $query = '
-                SELECT * 
-                FROM categories 
-                WHERE name LIKE ? OR description LIKE ?
-                LIMIT ?, ?';
-            $stmt = $this->conn->prepare($query);
-            $searchQuery = "%".$this->searchQuery."%";
-            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(3, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(4, $this->limit, PDO::PARAM_INT);
-            $stmt->execute();
-
-            
-            return $stmt;
         }
     }

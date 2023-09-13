@@ -17,6 +17,7 @@
     $category->offset = isset($_GET['page']) ? $category->limit * ($_GET['page'] - 1) : 0;
     $category->sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
     $category->orderDirection = isset($_GET['orderDirection']) ? $_GET['orderDirection'] : 'ASC';
+    $category->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $category->read();
     $num = $result->rowCount();

@@ -9,6 +9,7 @@
       :rows-per-page-options="[10, 25, 50, 100]"
       v-model:pagination="pagination"
       :loading="loading"
+      :filter="filter"
       @row-click="onRowClick"
       @request="onRequest"
     >
@@ -25,6 +26,13 @@
       </template>
       <template #pagination>
           <!-- Hide default pagination -->
+      </template>
+      <template v-slot:top-right>
+        <q-input outlined dense debounce="300" v-model="filter" placeholder="Suche">
+          <template v-slot:append>
+            <q-icon name="search" />
+          </template>
+        </q-input>
       </template>
       <template #item="props">
         <div class="col-12">
@@ -150,6 +158,7 @@ export default defineComponent({
         rowsPerPage: 10,
         rowsNumber: this.totalItems,
       },
+      filter: "",
       columns: [
         {
           name: 'color',
@@ -227,13 +236,14 @@ export default defineComponent({
 
     async getCategoryData () {
       this.loading = true
-      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page, sortBy: this.pagination.sortBy, desc:  this.pagination.descending})
+      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page, sortBy: this.pagination.sortBy, desc:  this.pagination.descending, filter: this.filter})
       this.pagination.rowsNumber = this.totalItems
       this.loading = false
     },
 
     onRequest (props) {
       this.pagination = props.pagination
+      this.filter = props.filter
       this.getCategoryData()
     },
 
