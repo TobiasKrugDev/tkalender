@@ -1,5 +1,5 @@
 <template>
-    <q-card class="wrapper-card shadow-7 q-mx-md q-mx-md-lg">
+    <q-card class="wrapper-card shadow-7 q-mx-md">
       <q-card-section>
         <div class="row items-center no-wrap">
           <div class="col">
@@ -34,5 +34,12 @@ export default defineComponent({
     .wrapper-card {
         width: 100%;
         height: 100%;
+    }
+
+    @media screen and (min-width: 1024px) {
+      .wrapper-card {
+        margin-right: 24px;
+        margin-left: 40px;
+      }
     }
 </style>
