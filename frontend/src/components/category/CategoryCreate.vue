@@ -19,12 +19,15 @@ export default defineComponent({
         CategoryForm,
     },
 
+    emits: ["categoryCreated"],
+
     methods: {
         ...mapActions("categories", ["createCategory"]),
 
-        onCategorySave () {
+        async onCategorySave () {
             const isValid = this.$refs.categoryForm.validateCategoryForm()
-            if (isValid) this.createCategory(this.$refs.categoryForm.category)
+            if (isValid) await this.createCategory(this.$refs.categoryForm.category)
+            this.$emit("categoryCreated")
         }
     }
 })

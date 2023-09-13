@@ -2,12 +2,17 @@ import { api, axios } from "src/boot/axios"
 
 const state = {
   categories: [],
+  createdCategory: null,
   totalItems: 0,
 }
 
 const mutations = {
   setCategories (state, value) {
     state.categories = value
+  },
+
+  setCreatedCategory (state, value) {
+    state.createdCategory = value
   },
 
   setTotalItems (state, value) {
@@ -40,13 +45,15 @@ const actions = {
   },
 
   // POST / Create Category
-  async createCategory ({}, category) {
-    axios.post('/api/category/create', category, 
+  async createCategory ({ commit }, category) {
+    const response = await  axios.post('/api/category/create', category, 
     {
       headers: {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setCreatedCategory", response.data)
   },
 
   // PUT / Update Category

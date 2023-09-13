@@ -102,7 +102,7 @@
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
-        <CategoryCreate v-if="dialogMode === 'create'" />
+        <CategoryCreate v-if="dialogMode === 'create'" @category-created="onCategoryCreate" />
         <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" @edit-click="onEditClick" />
         <CategoryUpdate v-if="dialogMode === 'update'" :category="selectedCategory" />
       </DialogCard>
@@ -175,7 +175,7 @@ export default defineComponent({
   },
 
   computed: {
-    ...mapState("categories", ["categories", "totalItems"]),
+    ...mapState("categories", ["categories", "totalItems", "createdCategory"]),
     dialogCardTitle () {
       if (this.dialogMode === "show") {
         return this.selectedCategory.name
@@ -245,6 +245,14 @@ export default defineComponent({
       // Close dialogs
       this.$refs.deleteConfirm.hide()
       this.$refs.itemDialog.hide()
+
+      // Refresh category list
+      this.getCategoryData()
+    },
+
+    onCategoryCreate () {
+      this.selectedCategory = this.createdCategory
+      this.dialogMode = "show"
 
       // Refresh category list
       this.getCategoryData()
