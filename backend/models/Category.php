@@ -9,6 +9,8 @@
 
         public $limit;
         public $offset;
+        public $sortBy;
+        public $orderDirection;
         public $searchQuery;
 
         public function __construct($db) {
@@ -17,7 +19,17 @@
 
         // Get Category List
         public function read() {
-            $query = 'SELECT * FROM categories LIMIT ?, ?';
+            // ToDo: Maybe try to refactor this
+            // Note: apparently bindParam doesn't work for column names as well as ASC/DESC
+            if ($this->sortBy == 'name') {
+                if ($this->orderDirection == 'DESC') {
+                    $query = 'SELECT * FROM categories ORDER BY name DESC LIMIT ?, ?';
+                } else {
+                    $query = 'SELECT * FROM categories ORDER BY name ASC LIMIT ?, ?';
+                }
+            } else {
+                $query = 'SELECT * FROM categories ORDER BY id DESC LIMIT ?, ?';
+            }
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->offset, PDO::PARAM_INT);
             $stmt->bindParam(2, $this->limit, PDO::PARAM_INT);

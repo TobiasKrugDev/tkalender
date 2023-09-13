@@ -27,14 +27,17 @@ const mutations = {
 
 const actions = {
   // GET Categories
-  async getCategories ({ commit }, { itemsPerPage, page }) {
-    const response = await api.get('/category/read', 
-      { 
-        params: { 
-          itemsPerPage,
-          page,
-        } 
-      })
+  async getCategories ({ commit }, { itemsPerPage, page, sortBy, desc }) {
+    const params = { itemsPerPage, page }
+    if (sortBy) {
+      params.sortBy = sortBy
+      if (desc) {
+        params.orderDirection = 'DESC'
+      } else {
+        params.orderDirection = 'ASC'
+      }
+    }
+    const response = await api.get('/category/read', { params })
     commit("setCategories", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },

@@ -161,7 +161,8 @@ export default defineComponent({
           name: 'name',
           label: 'Name',
           align: 'left',
-          field: 'name'
+          field: 'name',
+          sortable: true,
         },
         {
           name: 'description',
@@ -226,7 +227,7 @@ export default defineComponent({
 
     async getCategoryData () {
       this.loading = true
-      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page })
+      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page, sortBy: this.pagination.sortBy, desc:  this.pagination.descending})
       this.pagination.rowsNumber = this.totalItems
       this.loading = false
     },
