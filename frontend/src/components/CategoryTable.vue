@@ -100,7 +100,7 @@
         @page-change="onPageChange" />
     </div>
 
-    <q-dialog v-model="itemDialog" persistent>
+    <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
         <CategoryCreate v-if="dialogMode === 'create'" />
         <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" />
@@ -238,8 +238,9 @@ export default defineComponent({
     },
 
     onItemDeleted () {
-      // Close dialog
+      // Close dialogs
       this.$refs.deleteConfirm.hide()
+      this.$refs.itemDialog.hide()
 
       // Refresh category list
       this.getCategoryData()
