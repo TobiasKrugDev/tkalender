@@ -22,12 +22,16 @@
     $category->description = $data->description;
     $category->color = $data->color;
 
-    if ($category->update()) {
-        echo json_encode(
-            array('message' => 'Category Updated')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Category Not Updated')
-        );
-    }
+    $category->update();
+
+    // Return updated item
+    $category->read_single();
+
+    $category_array = array(
+        'id' => $category->id,
+        'name' => $category->name,
+        'description' => $category->description,
+        'color' => $category->color
+    );
+
+    print_r(json_encode($category_array));

@@ -24,12 +24,18 @@
     $location->postalCode = $data->postalCode;
     $location->city = $data->city;
 
-    if ($location->update()) {
-        echo json_encode(
-            array('message' => 'Location Updated')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Location Not Updated')
-        );
-    }
+    $location->update();
+
+    // Return updated item
+    $location->read_single();
+
+    $location_array = array(
+        'id' => $location->id,
+        'name' => $location->name,
+        'description' => $location->description,
+        'streetAddress' => $location->streetAddress,
+        'postalCode' => $location->postalCode,
+        'city' => $location->city,
+    );
+
+    print_r(json_encode($location_array));

@@ -25,12 +25,20 @@
     $contact->emailAddress = $data->emailAddress;
     $contact->image = $data->image;
 
-    if ($contact->update()) {
-        echo json_encode(
-            array('message' => 'Contact Updated')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Contact Not Updated')
-        );
-    }
+    $contact->update();
+
+    // Return updated item
+    $contact->read_single();
+
+    $contact_array = array(
+        'id' => $contact->id,
+        'firstname' => $contact->firstname,
+        'lastname' => $contact->lastname,
+        'description' => $contact->description,
+        'phoneNumber' => $contact->phoneNumber,
+        'emailAddress' => $contact->emailAddress,
+        'image' => $contact->image,
+    );
+
+    print_r(json_encode($contact_array));
+

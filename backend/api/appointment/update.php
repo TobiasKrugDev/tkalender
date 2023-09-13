@@ -26,12 +26,20 @@
     $appointment->category = $data->category;
     $appointment->icon = $data->icon;
 
-    if ($appointment->update()) {
-        echo json_encode(
-            array('message' => 'Appointment Updated')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Appointment Not Updated')
-        );
-    }
+    $appointment->update();
+
+    // Return updated item
+    $appointment->read_single();
+
+    $appointment_array = array(
+        'id' => $appointment->id,
+        'name' => $appointment->name,
+        'description' => $appointment->description,
+        'startAt' => $appointment->startAt,
+        'endAt' => $appointment->endAt,
+        'location' => $appointment->location,
+        'category' => $appointment->category,
+        'icon' => $appointment->icon,
+    );
+
+    print_r(json_encode($appointment_array));
