@@ -103,7 +103,7 @@
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
         <CategoryCreate v-if="dialogMode === 'create'" />
-        <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" />
+        <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" @edit-click="onEditClick" />
         <CategoryUpdate v-if="dialogMode === 'update'" :category="selectedCategory" />
       </DialogCard>
     </q-dialog>
@@ -207,6 +207,10 @@ export default defineComponent({
     onDeleteClick (row) {
       this.selectedCategory = row
       this.showDeleteDialog = true
+    },
+
+    onEditClick (row) {
+      this.openUpdateDialog(row)
     },
 
     openCreateDialog () {
