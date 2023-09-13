@@ -14,3 +14,11 @@
 .show-property-name {
     font-weight: bold;
 }
+
+// Override default q-table items per page select position
+.q-table__bottom {
+    justify-content: start;
+    .q-table__separator {
+        flex: initial;
+    }
+}
