@@ -1,5 +1,5 @@
 <template>
-    <CategoryForm ref="categoryForm" :initial-category-data="category" />
+    <CategoryForm ref="categoryForm" :initial-category-data="copiedCategoryData" />
 
     <div class="text-right q-mt-xl">
         <q-btn 
@@ -41,12 +41,22 @@ export default defineComponent({
         },
     },
 
+    emits: ["categoryUpdated"],
+
+    computed: {
+        // Prevent vuex mutate errors
+        copiedCategoryData () {
+            return { ...this.category }
+        }
+    },
+
     methods: {
         ...mapActions("categories", ["updateCategory"]),
 
-        onCategorySave () {
+        async onCategorySave () {
             const isValid = this.$refs.categoryForm.validateCategoryForm()
-            if (isValid) this.updateCategory(this.category)
+            if (isValid) await this.updateCategory(this.$refs.categoryForm.category)
+            this.$emit("categoryUpdated")
         }
     }
 })

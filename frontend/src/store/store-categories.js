@@ -3,6 +3,7 @@ import { api, axios } from "src/boot/axios"
 const state = {
   categories: [],
   createdCategory: null,
+  updatedCategory: null,
   totalItems: 0,
 }
 
@@ -13,6 +14,10 @@ const mutations = {
 
   setCreatedCategory (state, value) {
     state.createdCategory = value
+  },
+
+  setUpdatedCategory (state, value) {
+    state.updatedCategory = value
   },
 
   setTotalItems (state, value) {
@@ -57,8 +62,8 @@ const actions = {
   },
 
   // PUT / Update Category
-  async updateCategory ({}, category) {
-    axios.put('/api/category/update', category, 
+  async updateCategory ({ commit }, category) {
+    const response = await axios.put('/api/category/update', category, 
     {
       params: {
         id : category.id
@@ -67,6 +72,8 @@ const actions = {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setUpdatedCategory", response.data)
   }
 }
 
