@@ -20,33 +20,25 @@
     $category->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $category->read();
-    $num = $result->rowCount();
 
     // Get Total Items Number
     $totalItems = $category->count();
 
-    if($num > 0) {
-        $posts_arr = array();
-        $posts_arr['items'] = array();
-        $posts_arr['totalItems'] = $totalItems;
+    $posts_arr = array();
+    $posts_arr['items'] = array();
+    $posts_arr['totalItems'] = $totalItems;
 
-        while($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
+    while($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        extract($row);
 
-            $post_item = array(
-                'id' => $id,
-                'name' => $name,
-                'description' => $description,
-                'color' => $color,
-            );
-
-            array_push($posts_arr['items'], $post_item);
-        }
-
-        echo json_encode($posts_arr);
-    } else {
-        // No Items
-        echo json_encode(
-            array('message' => 'No Items Found')
+        $post_item = array(
+            'id' => $id,
+            'name' => $name,
+            'description' => $description,
+            'color' => $color,
         );
+
+        array_push($posts_arr['items'], $post_item);
     }
+
+    echo json_encode($posts_arr);
