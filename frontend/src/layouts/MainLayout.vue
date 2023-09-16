@@ -222,6 +222,10 @@ export default defineComponent({
   width: 100%;
 }
 
+.q-drawer {
+  position: fixed;
+}
+
 @media screen and (min-width: 1024px) {
   .q-header {
     left: 337px !important;
