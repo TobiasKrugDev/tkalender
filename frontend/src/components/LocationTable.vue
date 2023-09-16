@@ -62,10 +62,11 @@
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
-        <!-- <CategoryCreate
+        <ItemCreate
           v-if="dialogMode === 'create'"
-          @category-created="onCategoryCreate"
-        /> -->
+          entity="location"
+          @item-created="onLocationCreate"
+        />
         <ItemShow
           v-if="dialogMode === 'show'"
           :item="selectedLocation"
@@ -73,16 +74,21 @@
           @delete-click="onDeleteClick"
           @edit-click="onEditClick"
         />
-        <!-- <CategoryUpdate
+        <ItemUpdate
           v-if="dialogMode === 'update'"
-          :category="selectedCategory"
-          @category-updated="onCategoryUpdate"
-        /> -->
+          :item="selectedLocation"
+          entity="location"
+          @item-updated="onLocationUpdate"
+        />
       </DialogCard>
     </q-dialog>
 
     <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
-      <DeleteConfirm :item="selectedLocation" entity="location" />
+      <DeleteConfirm
+        :item="selectedLocation"
+        entity="location"
+        @item-deleted="onItemDeleted"
+      />
     </q-dialog>
   </div>
 </template>
@@ -92,7 +98,9 @@ import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 import DialogCard from "components/DialogCard.vue"
+import ItemCreate from "src/components/ItemCreate.vue"
 import ItemShow from "src/components/ItemShow.vue"
+import ItemUpdate from "src/components/ItemUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
 
 export default defineComponent({
@@ -101,7 +109,9 @@ export default defineComponent({
   components: {
     DeleteConfirm,
     DialogCard,
+    ItemCreate,
     ItemShow,
+    ItemUpdate,
     CustomPagination,
   },
 
@@ -120,7 +130,7 @@ export default defineComponent({
         // sortBy: 'name',
         // descending: false,
         page: 1,
-        rowsPerPage: 10,
+        rowsPerPage: 2,
         rowsNumber: this.totalItems,
       },
       filter: "",

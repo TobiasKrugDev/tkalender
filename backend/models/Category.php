@@ -39,7 +39,7 @@
                 $query = 'SELECT * 
                 FROM categories 
                 WHERE name LIKE ? OR description LIKE ?
-                ORDER BY id DESC 
+                ORDER BY id ASC 
                 LIMIT ?, ?';
             }
             $stmt = $this->conn->prepare($query);

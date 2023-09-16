@@ -116,9 +116,10 @@
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
-        <CategoryCreate
+        <ItemCreate
           v-if="dialogMode === 'create'"
-          @category-created="onCategoryCreate"
+          entity="category"
+          @item-created="onCategoryCreate"
         />
         <ItemShow
           v-if="dialogMode === 'show'"
@@ -127,10 +128,11 @@
           @delete-click="onDeleteClick"
           @edit-click="onEditClick"
         />
-        <CategoryUpdate
+        <ItemUpdate
           v-if="dialogMode === 'update'"
-          :category="selectedCategory"
-          @category-updated="onCategoryUpdate"
+          :item="selectedCategory"
+          entity="category"
+          @item-updated="onCategoryUpdate"
         />
       </DialogCard>
     </q-dialog>
@@ -150,9 +152,9 @@ import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 import DialogCard from "components/DialogCard.vue"
-import CategoryCreate from "components/category/CategoryCreate.vue"
+import ItemCreate from "components/ItemCreate.vue"
 import ItemShow from "components/ItemShow.vue"
-import CategoryUpdate from "components/category/CategoryUpdate.vue"
+import ItemUpdate from "components/ItemUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
 
 export default defineComponent({
@@ -161,9 +163,9 @@ export default defineComponent({
   components: {
     DeleteConfirm,
     DialogCard,
-    CategoryCreate,
+    ItemCreate,
     ItemShow,
-    CategoryUpdate,
+    ItemUpdate,
     CustomPagination,
   },
 

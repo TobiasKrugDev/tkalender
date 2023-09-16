@@ -27,8 +27,8 @@ const mutations = {
 
 const actions = {
   // GET Locations
-  async getLocations({ commit }, { itemsPerPage, page, sortBy, desc, filter }) {
-    const params = { itemsPerPage, page, filter }
+  async getLocations({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
+    const params = { itemsPerPage: rowsPerPage, page, filter }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
@@ -50,8 +50,8 @@ const actions = {
   },
 
   // POST / Create Location
-  async createLocation({}, location) {
-    const response = axios.post("/api/location/create", location, {
+  async createLocation({ commit }, location) {
+    const response = await axios.post("/api/location/create", location, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -61,8 +61,8 @@ const actions = {
   },
 
   // PUT / Update Location
-  async updateLocation({}, location) {
-    const response = axios.put("/api/location/update", location, {
+  async updateLocation({ commit }, location) {
+    const response = await axios.put("/api/location/update", location, {
       params: {
         id: location.id,
       },

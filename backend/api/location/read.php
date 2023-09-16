@@ -15,6 +15,9 @@
 
     $location->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $location->offset = isset($_GET['page']) ? $location->limit * ($_GET['page'] - 1) : 0;
+    $location->sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
+    $location->orderDirection = isset($_GET['orderDirection']) ? $_GET['orderDirection'] : 'ASC';
+    $location->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $location->read();
     $num = $result->rowCount();

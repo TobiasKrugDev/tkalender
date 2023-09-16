@@ -27,11 +27,8 @@ const mutations = {
 
 const actions = {
   // GET Categories
-  async getCategories(
-    { commit },
-    { itemsPerPage, page, sortBy, desc, filter }
-  ) {
-    const params = { itemsPerPage, page, filter }
+  async getCategories({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
+    const params = { itemsPerPage: rowsPerPage, page, filter }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
