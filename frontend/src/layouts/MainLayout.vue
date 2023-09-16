@@ -1,7 +1,6 @@
 <template>
   <q-layout view="lHh lpR lFf">
     <q-header class="bg-transparent row q-py-lg" style="flex-wrap: nowrap">
-      <q-space class="gt-sm" />
       <div class="blurred-background" />
       <!-- Desktop Toolbars -->
       <q-toolbar
@@ -226,9 +225,21 @@ export default defineComponent({
   position: fixed;
 }
 
+.blurred-background {
+  position: absolute;
+  inset: 0;
+  bottom: 12px;
+  backdrop-filter: blur(3px);
+  background-color: rgba(245, 246, 250, 0.5);
+}
+
+.search-toolbar {
+  margin-left: 21px;
+}
+
 @media screen and (min-width: 1024px) {
   .q-header {
-    left: 337px !important;
+    left: 317px !important;
   }
 }
 
