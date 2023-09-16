@@ -130,7 +130,7 @@ export default defineComponent({
         // sortBy: 'name',
         // descending: false,
         page: 1,
-        rowsPerPage: 2,
+        rowsPerPage: 10,
         rowsNumber: this.totalItems,
       },
       filter: "",
