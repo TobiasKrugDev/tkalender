@@ -178,6 +178,8 @@ export default defineComponent({
     },
   },
 
+  emits: ["searchResultsFetched"],
+
   data() {
     return {
       selectedCategory: null,
@@ -245,8 +247,11 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getCategoryData()
+  async mounted() {
+    await this.getCategoryData()
+    if (this.searchMode) {
+      this.$emit("searchResultsFetched", this.totalItems)
+    }
   },
 
   methods: {

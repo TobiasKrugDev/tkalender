@@ -101,27 +101,6 @@
       </DialogCard>
     </q-dialog>
 
-    <!-- <q-dialog v-model="showDialog">
-      <q-card>
-        <q-card-section class="row items-center q-pb-none">
-          <div class="text-h6">Test Modal</div>
-          <q-space />
-          <q-btn icon="close" flat round dense v-close-popup />
-        </q-card-section>
-
-        <q-card-section>
-          <div>
-            <input
-              ref="contactImageUpload"
-              type="file"
-              accept="image/*"
-              @change="onFileUpload()"
-            />
-          </div>
-        </q-card-section>
-      </q-card>
-    </q-dialog> -->
-
     <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
       <DeleteConfirm
         :item="selectedContact"
@@ -160,6 +139,8 @@ export default defineComponent({
       deafult: false,
     },
   },
+
+  emits: ["searchResultsFetched"],
 
   data() {
     return {
@@ -246,8 +227,11 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getContactData()
+  async mounted() {
+    await this.getContactData()
+    if (this.searchMode) {
+      this.$emit("searchResultsFetched", this.totalItems)
+    }
   },
 
   methods: {

@@ -181,6 +181,8 @@ export default defineComponent({
     },
   },
 
+  emits: ["searchResultsFetched"],
+
   computed: {
     ...mapState("locations", ["locations"]),
   },
@@ -263,8 +265,11 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    this.getLocationData()
+  async mounted() {
+    await this.getLocationData()
+    if (this.searchMode) {
+      this.$emit("searchResultsFetched", this.totalItems)
+    }
   },
 
   methods: {

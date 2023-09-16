@@ -178,6 +178,7 @@ export default defineComponent({
       if (this.searchInput) {
         const queryString = "/search/" + encodeURIComponent(this.searchInput)
         this.$router.push(queryString)
+        this.searchInput = ""
       }
     },
 
