@@ -38,7 +38,24 @@
         {{ item.city }}
       </div>
     </div>
-    <div class="q-mb-lg">ToDo: Google Maps Embed</div>
+    <div class="q-mb-lg text-center">
+      <iframe
+        :src="
+          'https://maps.google.com/maps?&amp;q=' +
+          item.streetAddress +
+          ' ' +
+          item.postalCode +
+          ' ' +
+          item.city +
+          '&amp;output=embed'
+        "
+        width="500"
+        height="400"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        class="google-maps-iframe"
+      ></iframe>
+    </div>
   </div>
 
   <div class="text-right q-mt-xl">
@@ -93,3 +110,11 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.google-maps-iframe {
+  border: 0;
+  width: 100%;
+  border-radius: 8px;
+}
+</style>
