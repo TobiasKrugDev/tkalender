@@ -264,10 +264,7 @@ export default defineComponent({
     async getCategoryData() {
       this.loading = true
       await this.getCategories({
-        itemsPerPage: this.pagination.rowsPerPage,
-        page: this.pagination.page,
-        sortBy: this.pagination.sortBy,
-        desc: this.pagination.descending,
+        ...this.pagination,
         filter: this.filter,
       })
       this.pagination.rowsNumber = this.totalItems
