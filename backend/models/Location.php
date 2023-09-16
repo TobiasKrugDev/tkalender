@@ -11,6 +11,8 @@
 
         public $limit;
         public $offset;
+        public $sortBy;
+        public $orderDirection;
         public $searchQuery;
 
         public function __construct($db) {
@@ -19,10 +21,20 @@
 
         // Get Location List
         public function read() {
-            $query = 'SELECT * FROM locations LIMIT ?, ?';
+            // ToDo: Sorting
+            $query = 'SELECT * 
+            FROM locations 
+            WHERE name LIKE ? OR description LIKE ? OR street_address LIKE ? OR postal_code LIKE ? OR city LIKE ?
+            LIMIT ?, ?';
             $stmt = $this->conn->prepare($query);
-            $stmt->bindParam(1, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(2, $this->limit, PDO::PARAM_INT);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(5, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(6, $this->offset, PDO::PARAM_INT);
+            $stmt->bindParam(7, $this->limit, PDO::PARAM_INT);
             $stmt->execute();
             
             return $stmt;
@@ -143,26 +155,5 @@
             // Print error message
             printf("Error: %s.\n", $stmt->error);
             return false;
-        }
-
-        // Search Locations
-        public function search() {
-            $query = '
-                SELECT * 
-                FROM locations 
-                WHERE name LIKE ? OR description LIKE ? OR street_address LIKE ? OR postal_code LIKE ? OR city LIKE ?
-                LIMIT ?, ?';
-            $stmt = $this->conn->prepare($query);
-            $searchQuery = "%".$this->searchQuery."%";
-            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(5, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(6, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(7, $this->limit, PDO::PARAM_INT);
-            $stmt->execute();
-            
-            return $stmt;
         }
     }

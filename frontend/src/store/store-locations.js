@@ -1,20 +1,45 @@
-import { api } from "src/boot/axios"
+import { api, axios } from "src/boot/axios"
 
 const state = {
   locations: [],
+  createdLocation: null,
+  updatedLocation: null,
+  totalItems: 0,
 }
 
 const mutations = {
   setLocations(state, value) {
     state.locations = value
   },
+
+  setCreatedLocation(state, value) {
+    state.createdLocation = value
+  },
+
+  setUpdatedLocation(state, value) {
+    state.updatedLocation = value
+  },
+
+  setTotalItems(state, value) {
+    state.totalItems = value
+  },
 }
 
 const actions = {
   // GET Locations
-  async getLocations({ commit }) {
-    const response = await api.get("/location/read")
+  async getLocations({ commit }, { itemsPerPage, page, sortBy, desc, filter }) {
+    const params = { itemsPerPage, page, filter }
+    if (sortBy) {
+      params.sortBy = sortBy
+      if (desc) {
+        params.orderDirection = "DESC"
+      } else {
+        params.orderDirection = "ASC"
+      }
+    }
+    const response = await api.get("/location/read", { params })
     commit("setLocations", response.data.items)
+    commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Location
@@ -26,16 +51,18 @@ const actions = {
 
   // POST / Create Location
   async createLocation({}, location) {
-    axios.post("/api/location/create", location, {
+    const response = axios.post("/api/location/create", location, {
       headers: {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setCreatedLocation", response.data)
   },
 
   // PUT / Update Location
   async updateLocation({}, location) {
-    axios.put("/api/location/update", location, {
+    const response = axios.put("/api/location/update", location, {
       params: {
         id: location.id,
       },
@@ -43,6 +70,8 @@ const actions = {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setUpdatedLocation", response.data)
   },
 }
 

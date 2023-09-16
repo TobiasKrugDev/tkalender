@@ -13,7 +13,7 @@
       @row-click="onRowClick"
       @request="onRequest"
     >
-      <template v-slot:body-cell-color="props">
+      <template #body-cell-color="props">
         <q-td :props="props">
           <div
             class="category-table-color-circle"
@@ -42,7 +42,7 @@
       <template #pagination>
         <!-- Hide default pagination -->
       </template>
-      <template v-slot:top-right>
+      <template #top-right>
         <q-input
           outlined
           dense
@@ -50,7 +50,7 @@
           v-model="filter"
           placeholder="Suche"
         >
-          <template v-slot:append>
+          <template #append>
             <q-icon name="search" />
           </template>
         </q-input>
@@ -120,9 +120,10 @@
           v-if="dialogMode === 'create'"
           @category-created="onCategoryCreate"
         />
-        <CategoryShow
+        <ItemShow
           v-if="dialogMode === 'show'"
-          :category="selectedCategory"
+          :item="selectedCategory"
+          entity="category"
           @delete-click="onDeleteClick"
           @edit-click="onEditClick"
         />
@@ -150,7 +151,7 @@ import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 import DialogCard from "components/DialogCard.vue"
 import CategoryCreate from "components/category/CategoryCreate.vue"
-import CategoryShow from "components/category/CategoryShow.vue"
+import ItemShow from "components/ItemShow.vue"
 import CategoryUpdate from "components/category/CategoryUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
 
@@ -161,7 +162,7 @@ export default defineComponent({
     DeleteConfirm,
     DialogCard,
     CategoryCreate,
-    CategoryShow,
+    ItemShow,
     CategoryUpdate,
     CustomPagination,
   },
@@ -174,7 +175,7 @@ export default defineComponent({
       dialogMode: "",
       loading: false,
       pagination: {
-        // sortBy: 'desc',
+        // sortBy: 'name',
         // descending: false,
         page: 1,
         rowsPerPage: 10,
