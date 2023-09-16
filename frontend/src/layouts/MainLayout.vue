@@ -167,12 +167,20 @@ export default defineComponent({
 
   data() {
     return {
+      searchInput: "",
       essentialLinks: linksList,
       leftDrawerOpen: false,
     }
   },
 
   methods: {
+    navigateToSearch() {
+      if (this.searchInput) {
+        const queryString = "/search/" + encodeURIComponent(this.searchInput)
+        this.$router.push(queryString)
+      }
+    },
+
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen
     },

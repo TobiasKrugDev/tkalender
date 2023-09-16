@@ -10,6 +10,8 @@
       v-model:pagination="pagination"
       :loading="loading"
       :filter="filter"
+      :title="searchMode ? 'Orte' : ''"
+      :hide-pagination="searchMode ? true : false"
       @row-click="onRowClick"
       @request="onRequest"
     >
@@ -34,7 +36,7 @@
       <template #pagination>
         <!-- Hide default pagination -->
       </template>
-      <template #top-right>
+      <template v-if="!searchMode" #top-right>
         <q-input
           outlined
           dense
@@ -51,7 +53,7 @@
     </q-table>
 
     <!-- Pagination -->
-    <div class="flex flex-center q-mb-lg">
+    <div v-if="showPagination" class="flex flex-center q-mb-lg">
       <CustomPagination
         :totalItems="pagination.rowsNumber"
         :itemsPerPage="pagination.rowsPerPage"
@@ -115,6 +117,13 @@ export default defineComponent({
     CustomPagination,
   },
 
+  props: {
+    searchMode: {
+      type: Boolean,
+      deafult: false,
+    },
+  },
+
   computed: {
     ...mapState("locations", ["locations"]),
   },
@@ -130,10 +139,10 @@ export default defineComponent({
         // sortBy: 'name',
         // descending: false,
         page: 1,
-        rowsPerPage: 10,
+        rowsPerPage: this.searchMode ? 5 : 10,
         rowsNumber: this.totalItems,
       },
-      filter: "",
+      filter: this.searchMode ? this.$route.params.query : "",
       columns: [
         {
           name: "name",
@@ -184,6 +193,15 @@ export default defineComponent({
         return "Ort bearbeiten"
       } else {
         return "Neuer Ort"
+      }
+    },
+    showPagination() {
+      if (!this.searchMode) return true
+
+      if (this.pagination.rowsNumber <= this.pagination.rowsPerPage) {
+        return false
+      } else {
+        return true
       }
     },
   },

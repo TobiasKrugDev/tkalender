@@ -32,6 +32,10 @@ const routes = [
         path: "categories/create",
         component: () => import("pages/CategoryPage.vue"),
       },
+      {
+        path: "search/:query",
+        component: () => import("pages/SearchPage.vue"),
+      },
     ],
   },
 

@@ -39,7 +39,7 @@
       </div>
     </div>
     <div class="q-mb-lg text-center">
-      <iframe
+      <!-- <iframe
         :src="
           'https://maps.google.com/maps?&amp;q=' +
           item.streetAddress +
@@ -54,7 +54,7 @@
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"
         class="google-maps-iframe"
-      ></iframe>
+      ></iframe> -->
     </div>
   </div>
 
