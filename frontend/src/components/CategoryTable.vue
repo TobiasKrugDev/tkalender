@@ -58,23 +58,20 @@
         </q-input>
       </template>
       <template #item="props">
-        <div class="col-12">
-          <q-separator class="q-my-md" />
-        </div>
-        <div class="col-10">
-          <div v-if="props.row.name" class="text-h6 q-mb-md">
-            {{ props.row.name }}
-          </div>
-          <div class="text-weight-medium">Beschreibung:</div>
-          <div class="q-mb-md">
-            {{ props.row.description }}
-          </div>
-          <div class="text-weight-medium q-mb-xs">Farbe:</div>
-          <div>
+        <div class="col-10 q-pl-md">
+          <div class="text-h6 q-mb-md mobile-item-title-circle">
             <div
               class="category-table-color-circle"
               :style="'background-color: ' + props.row.color"
             />
+            <div class="q-ml-sm">{{ props.row.name }}</div>
+          </div>
+          <div class="q-table__grid-item-title">Beschreibung</div>
+          <div class="q-mb-md">
+            <span v-if="props.row.description">{{
+              props.row.description
+            }}</span>
+            <span v-else>-</span>
           </div>
         </div>
         <div class="col-2 text-right">
@@ -102,6 +99,9 @@
               </q-list>
             </q-menu>
           </q-btn>
+        </div>
+        <div class="col-12">
+          <q-separator class="q-my-md" />
         </div>
       </template>
     </q-table>
@@ -336,5 +336,14 @@ export default defineComponent({
   height: 48px;
   width: 48px;
   border-radius: 50%;
+}
+
+.q-table__title {
+  margin-bottom: 20px;
+}
+
+.mobile-item-title-circle {
+  display: flex;
+  line-height: 3rem;
 }
 </style>
