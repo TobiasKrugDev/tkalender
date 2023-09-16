@@ -49,7 +49,64 @@
           </template>
         </q-input>
       </template>
-      <!-- ToDo Props Slot -->
+      <template #item="props">
+        <div class="col-10 q-pl-md">
+          <div class="text-h6 q-mb-md">
+            <div>{{ props.row.name }}</div>
+          </div>
+          <div class="q-table__grid-item-title">Beschreibung</div>
+          <div class="q-mb-md">
+            <span v-if="props.row.description">{{
+              props.row.description
+            }}</span>
+            <span v-else>-</span>
+          </div>
+          <div class="q-table__grid-item-title">Adresse</div>
+          <div>
+            <div
+              v-if="
+                props.row.streetAddress ||
+                props.row.postalCode ||
+                props.row.city
+              "
+            >
+              <div>{{ props.row.streetAddress }}</div>
+              <div>{{ props.row.postalCode }}</div>
+              <div>{{ props.row.city }}</div>
+            </div>
+            <span v-else>-</span>
+          </div>
+        </div>
+        <div class="col-2 text-right">
+          <q-btn flat round dense color="grey-7" icon="more_vert">
+            <q-menu transition-show="flip-up" transition-hide="flip-down">
+              <q-list style="min-width: 100px">
+                <q-item clickable @click="onRowClick(null, props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-eye-outline" />
+                  </q-item-section>
+                  <q-item-section> Ansehen </q-item-section>
+                </q-item>
+                <q-item clickable @click="openUpdateDialog(props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-pencil" />
+                  </q-item-section>
+                  <q-item-section avatar> Bearbeiten </q-item-section>
+                </q-item>
+                <q-item clickable @click="onDeleteClick(props.row)">
+                  <q-item-section side>
+                    <q-icon name="mdi-delete" />
+                  </q-item-section>
+                  <q-item-section avatar> Löschen </q-item-section>
+                </q-item>
+              </q-list>
+            </q-menu>
+          </q-btn>
+        </div>
+        <div class="col-12">
+          <q-separator class="q-my-md" />
+        </div>
+      </template>
     </q-table>
 
     <!-- Pagination -->
