@@ -5,7 +5,7 @@
       <ContactTable
         v-if="displayContactTable"
         :searchMode="true"
-        class="q-mb-lg"
+        class="q-mb-lg search-result-table"
         @search-results-fetched="
           (foundItems) => handleSearchResults('contact', foundItems)
         "
@@ -13,7 +13,7 @@
       <LocationTable
         v-if="displayLocationTable"
         :searchMode="true"
-        class="q-mb-lg"
+        class="q-mb-lg search-result-table"
         @search-results-fetched="
           (foundItems) => handleSearchResults('location', foundItems)
         "
@@ -21,7 +21,7 @@
       <CategoryTable
         v-if="displayCategoryTable"
         :searchMode="true"
-        class="q-mb-lg"
+        class="q-mb-lg search-result-table"
         @search-results-fetched="
           (foundItems) => handleSearchResults('category', foundItems)
         "
@@ -116,5 +116,11 @@ export default defineComponent({
 <style lang="scss">
 .no-search-results-found {
   margin-top: 200px;
+}
+
+.search-result-table {
+  border: solid 1px #beb9b9;
+  border-radius: 8px;
+  padding: 20px;
 }
 </style>
