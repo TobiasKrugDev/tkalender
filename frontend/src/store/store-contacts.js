@@ -1,20 +1,45 @@
-import { api } from "src/boot/axios"
+import { api, axios } from "src/boot/axios"
 
 const state = {
   contacts: [],
+  createdcontact: null,
+  updatedcontact: null,
+  totalItems: 0,
 }
 
 const mutations = {
   setContacts(state, value) {
     state.contacts = value
   },
+
+  setCreatedContact(state, value) {
+    state.createdContact = value
+  },
+
+  setUpdatedContact(state, value) {
+    state.updatedContact = value
+  },
+
+  setTotalItems(state, value) {
+    state.totalItems = value
+  },
 }
 
 const actions = {
   // GET Contacts
-  async getContacts({ commit }) {
-    const response = await api.get("/contact/read")
+  async getContacts({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
+    const params = { itemsPerPage: rowsPerPage, page, filter }
+    if (sortBy) {
+      params.sortBy = sortBy
+      if (desc) {
+        params.orderDirection = "DESC"
+      } else {
+        params.orderDirection = "ASC"
+      }
+    }
+    const response = await api.get("/contact/read", { params })
     commit("setContacts", response.data.items)
+    commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Contacts
@@ -25,17 +50,19 @@ const actions = {
   },
 
   // POST / Create Contact
-  async createContact({}, contact) {
-    axios.post("/api/contact/create", contact, {
+  async createContact({ commit }, contact) {
+    const response = await axios.post("/api/contact/create", contact, {
       headers: {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setCreatedContact", response.data)
   },
 
-  // PUT / Update Contact
-  async updateContact({}, contact) {
-    axios.put("/api/contact/update", contact, {
+  // PUT / Update Location
+  async updateContact({ commit }, contact) {
+    const response = await axios.put("/api/contact/update", contact, {
       params: {
         id: contact.id,
       },
@@ -43,6 +70,8 @@ const actions = {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setUpdatedContact", response.data)
   },
 }
 

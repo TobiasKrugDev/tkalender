@@ -1,4 +1,9 @@
 <template>
+  <ContactForm
+    v-if="entity === 'contact'"
+    ref="contactForm"
+    :initial-contact-data="copiedItemData"
+  />
   <LocationForm
     v-if="entity === 'location'"
     ref="locationForm"
@@ -34,6 +39,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions } from "vuex"
+import ContactForm from "components/ContactForm.vue"
 import LocationForm from "components/LocationForm.vue"
 import CategoryForm from "components/CategoryForm.vue"
 
@@ -41,6 +47,7 @@ export default defineComponent({
   name: "ItemUpdate",
 
   components: {
+    ContactForm,
     LocationForm,
     CategoryForm,
   },
@@ -66,12 +73,16 @@ export default defineComponent({
   },
 
   methods: {
+    ...mapActions("contacts", ["updateContact"]),
     ...mapActions("locations", ["updateLocation"]),
     ...mapActions("categories", ["updateCategory"]),
 
     async onItemSave() {
       let isValid
-      if (this.entity === "location") {
+      if (this.entity === "contact") {
+        isValid = this.$refs.contactForm.validateContactForm()
+        if (isValid) await this.updateContact(this.$refs.contactForm.contact)
+      } else if (this.entity === "location") {
         // ToDo: "validateForm()" is sufficient
         isValid = this.$refs.locationForm.validateLocationForm()
         if (isValid) await this.updateLocation(this.$refs.locationForm.location)

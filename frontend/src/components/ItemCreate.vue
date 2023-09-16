@@ -1,4 +1,5 @@
 <template>
+  <ContactForm v-if="entity === 'contact'" ref="contactForm" />
   <LocationForm v-if="entity === 'location'" ref="locationForm" />
   <CategoryForm v-if="entity === 'category'" ref="categoryForm" />
 
@@ -26,6 +27,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions } from "vuex"
+import ContactForm from "components/ContactForm.vue"
 import CategoryForm from "components/CategoryForm.vue"
 import LocationForm from "components/LocationForm.vue"
 
@@ -33,6 +35,7 @@ export default defineComponent({
   name: "ItemCreate",
 
   components: {
+    ContactForm,
     CategoryForm,
     LocationForm,
   },
@@ -47,12 +50,16 @@ export default defineComponent({
   emits: ["itemCreated"],
 
   methods: {
-    ...mapActions("categories", ["createCategory"]),
+    ...mapActions("contacts", ["createContact"]),
     ...mapActions("locations", ["createLocation"]),
+    ...mapActions("categories", ["createCategory"]),
 
     async onItemSave() {
       let isValid
-      if (this.entity === "location") {
+      if (this.entity === "contact") {
+        isValid = this.$refs.contactForm.validateContactForm()
+        if (isValid) await this.createContact(this.$refs.contactForm.contact)
+      } else if (this.entity === "location") {
         isValid = this.$refs.locationForm.validateLocationForm()
         if (isValid) await this.createLocation(this.$refs.locationForm.location)
       } else if (this.entity === "category") {
@@ -65,5 +72,3 @@ export default defineComponent({
   },
 })
 </script>
-
-<style lang="scss"></style>

@@ -16,6 +16,9 @@
     $contact->appointmentFilter = isset($_GET['filter_appointment']) ? $_GET['filter_appointment'] : null;
     $contact->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $contact->offset = isset($_GET['page']) ? $contact->limit * ($_GET['page'] - 1) : 0;
+    $contact->sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
+    $contact->orderDirection = isset($_GET['orderDirection']) ? $_GET['orderDirection'] : 'ASC';
+    $contact->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $contact->read();
     $num = $result->rowCount();

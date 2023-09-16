@@ -1,19 +1,22 @@
 <template>
-  <!-- Category -->
-  <div v-if="entity === 'category'">
+  <!-- Contact -->
+  <div v-if="entity === 'contact'">
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Beschreibung:</div>
       <div>
         {{ item.description }}
       </div>
     </div>
-    <div>
-      <div class="show-property-name q-mb-xs">Farbe:</div>
+    <div class="q-mb-lg">
+      <div class="show-property-name q-mb-xs">Telefonnr.:</div>
       <div>
-        <div
-          class="category-table-color-circle"
-          :style="'background-color: ' + item.color"
-        />
+        {{ item.phoneNumber }}
+      </div>
+    </div>
+    <div class="q-mb-lg">
+      <div class="show-property-name q-mb-xs">E-Mail-Adresse:</div>
+      <div>
+        {{ item.emailAddress }}
       </div>
     </div>
   </div>
@@ -55,6 +58,25 @@
         referrerpolicy="no-referrer-when-downgrade"
         class="google-maps-iframe"
       ></iframe> -->
+    </div>
+  </div>
+
+  <!-- Category -->
+  <div v-if="entity === 'category'">
+    <div class="q-mb-lg">
+      <div class="show-property-name q-mb-xs">Beschreibung:</div>
+      <div>
+        {{ item.description }}
+      </div>
+    </div>
+    <div>
+      <div class="show-property-name q-mb-xs">Farbe:</div>
+      <div>
+        <div
+          class="category-table-color-circle"
+          :style="'background-color: ' + item.color"
+        />
+      </div>
     </div>
   </div>
 

@@ -1,14 +1,10 @@
 <template>
   <q-page class="flex">
     <WrapperCard title="Kontakte">
-      <ContactTable />
+      <ContactTable ref="contactTable" />
     </WrapperCard>
 
     <FABCreateButton @create-button-click="openCreateDialog" />
-
-    <q-dialog v-model="createDialog">
-      <q-card> ToDo: Contact Create Dialog </q-card>
-    </q-dialog>
   </q-page>
 </template>
 
@@ -42,7 +38,7 @@ export default defineComponent({
 
   methods: {
     openCreateDialog() {
-      this.createDialog = true
+      this.$refs.contactTable.openCreateDialog()
     },
   },
 })

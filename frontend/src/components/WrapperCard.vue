@@ -1,6 +1,7 @@
 <template>
   <q-card class="wrapper-card shadow-7 q-mx-md">
     <q-card-section>
+      <!-- ToDo: A slot for image and color circle here would be cool -->
       <div class="row items-center no-wrap">
         <div class="col">
           <div class="text-h5 text-weight-medium">

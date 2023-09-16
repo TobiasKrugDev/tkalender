@@ -2,7 +2,7 @@
   <q-page class="flex">
     <WrapperCard title="Suchergebnisse">
       <!-- ToDo: AppointmentTable -->
-      <!-- ToDo: ContactTable -->
+      <ContactTable ref="contactTable" :searchMode="true" class="q-mb-lg" />
       <LocationTable ref="locationTable" :searchMode="true" class="q-mb-lg" />
       <CategoryTable ref="categoryTable" :searchMode="true" />
     </WrapperCard>
@@ -15,6 +15,7 @@
 import { defineComponent } from "vue"
 // import FABCreateButton from "components/FABCreateButton.vue"
 import WrapperCard from "components/WrapperCard.vue"
+import ContactTable from "components/ContactTable.vue"
 import LocationTable from "components/LocationTable.vue"
 import CategoryTable from "components/CategoryTable.vue"
 
@@ -24,6 +25,7 @@ export default defineComponent({
   components: {
     // FABCreateButton,
     WrapperCard,
+    ContactTable,
     LocationTable,
     CategoryTable,
   },

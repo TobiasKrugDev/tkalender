@@ -12,6 +12,8 @@
 
         public $limit;
         public $offset;
+        public $sortBy;
+        public $orderDirection;
         public $searchQuery;
         public $appointmentFilter;
 
@@ -21,6 +23,7 @@
 
         // Get Contact List
         public function read() {
+            // ToDo: Sorting
             if (isset($this->appointmentFilter)) {
                 $query = '
                     SELECT * 
@@ -31,10 +34,18 @@
                 $stmt->bindParam(1, $this->appointmentFilter);
                 $stmt->execute();
             } else {
-                $query = 'SELECT * FROM contacts LIMIT ?, ?';
+                $query = 'SELECT * 
+                FROM contacts 
+                WHERE firstname LIKE ? OR lastname LIKE ? OR description LIKE ? OR email_address LIKE ?
+                LIMIT ?, ?';
                 $stmt = $this->conn->prepare($query);
-                $stmt->bindParam(1, $this->offset, PDO::PARAM_INT);
-                $stmt->bindParam(2, $this->limit, PDO::PARAM_INT);
+                $searchQuery = "%".$this->searchQuery."%";
+                $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(5, $this->offset, PDO::PARAM_INT);
+                $stmt->bindParam(6, $this->limit, PDO::PARAM_INT);
                 $stmt->execute();
             }
             
@@ -43,8 +54,15 @@
 
         // Get Total Items Number
         public function count() {
-            $query = 'SELECT COUNT(*) AS total FROM contacts';
+            $query = 'SELECT COUNT(*) AS total 
+            FROM contacts
+            WHERE firstname LIKE ? OR lastname LIKE ? OR description LIKE ? OR email_address LIKE ?';
             $stmt = $this->conn->prepare($query);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -162,24 +180,5 @@
             // Print error message
             printf("Error: %s.\n", $stmt->error);
             return false;
-        }
-
-        // Search Contacts
-        public function search() {
-            $query = '
-                SELECT * 
-                FROM contacts 
-                WHERE firstname LIKE ? OR lastname LIKE ? OR description LIKE ?
-                LIMIT ?, ?';
-            $stmt = $this->conn->prepare($query);
-            $searchQuery = "%".$this->searchQuery."%";
-            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(4, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(5, $this->limit, PDO::PARAM_INT);
-            $stmt->execute();
-            
-            return $stmt;
         }
     }
