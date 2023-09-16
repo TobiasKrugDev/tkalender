@@ -1,29 +1,27 @@
 <template>
   <q-layout view="lHh lpR lFf">
-
-    <q-header
-      class="bg-transparent row q-py-lg"
-      style="flex-wrap: nowrap;"
-    >
+    <q-header class="bg-transparent row q-py-lg" style="flex-wrap: nowrap">
       <q-space class="gt-sm" />
       <div class="blurred-background" />
       <!-- Desktop Toolbars -->
-      <q-toolbar class="bg-white shadow-7 rounded-borders q-pl-lg q-pr-none gt-sm search-toolbar">
+      <q-toolbar
+        class="bg-white shadow-7 rounded-borders q-pl-lg q-pr-none gt-sm search-toolbar"
+      >
         <q-toolbar-title>
           <div class="row no-wrap">
-            <q-input 
+            <q-input
               v-model="searchInput"
-              borderless 
-              placeholder="Suche nach..." 
-              class="col" 
-              type="search" 
-              @keyup.enter="navigateToSearch" 
+              borderless
+              placeholder="Suche nach..."
+              class="col"
+              type="search"
+              @keyup.enter="navigateToSearch"
             />
-            <q-btn 
-              id="search-button" 
-              color="primary" 
-              icon="search" 
-              class="q-px-xl" 
+            <q-btn
+              id="search-button"
+              color="primary"
+              icon="search"
+              class="q-px-xl"
             />
           </div>
         </q-toolbar-title>
@@ -31,14 +29,24 @@
 
       <q-space class="gt-sm" />
 
-      <q-toolbar class="bg-white shadow-7 rounded-borders q-px-none gt-sm q-mx-lg logout-toolbar-card">
+      <q-toolbar
+        class="bg-white shadow-7 rounded-borders q-px-none gt-sm q-mx-lg logout-toolbar-card"
+      >
         <q-toolbar-title class="full-width full-height">
-          <q-btn color="grey-7" icon="mdi-logout" :label="$q.screen.gt.md ? 'Abmelden' : ''" flat class="full-width full-height" />
+          <q-btn
+            color="grey-7"
+            icon="mdi-logout"
+            :label="$q.screen.gt.md ? 'Abmelden' : ''"
+            flat
+            class="full-width full-height"
+          />
         </q-toolbar-title>
       </q-toolbar>
 
       <!-- Mobile Toolbar -->
-      <q-toolbar class="bg-white shadow-7 rounded-borders q-px-none lt-md q-mx-md">
+      <q-toolbar
+        class="bg-white shadow-7 rounded-borders q-px-none lt-md q-mx-md"
+      >
         <q-btn
           flat
           dense
@@ -53,7 +61,10 @@
 
         <q-toolbar-title>
           <router-link to="/">
-            <img src="/icons/favicon-128x128.png" class="absolute-center mobile-layout-toolbar-logo">
+            <img
+              src="/icons/favicon-128x128.png"
+              class="absolute-center mobile-layout-toolbar-logo"
+            />
           </router-link>
         </q-toolbar-title>
 
@@ -66,9 +77,7 @@
           size="lg"
           class="q-mr-md"
         >
-          <q-popup-proxy>
-            ToDo: Mobile Suche
-          </q-popup-proxy>
+          <q-popup-proxy> ToDo: Mobile Suche </q-popup-proxy>
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -79,7 +88,7 @@
           <img
             src="/icons/favicon-128x128.png"
             class="absolute-center layout-logo-img"
-          >
+          />
         </router-link>
       </div>
       <q-list>
@@ -110,13 +119,12 @@
     <q-page-container class="page-container-background">
       <router-view :key="$route.fullPath" />
     </q-page-container>
-
   </q-layout>
 </template>
 
 <script>
-import { defineComponent } from "vue"
-import MenuLink from "components/MenuLink.vue"
+import { defineComponent } from "vue";
+import MenuLink from "components/MenuLink.vue";
 
 const linksList = [
   {
@@ -149,7 +157,7 @@ const linksList = [
     icon: "mdi-palette",
     link: "/categories",
   },
-]
+];
 
 export default defineComponent({
   name: "MainLayout",
@@ -158,72 +166,71 @@ export default defineComponent({
     MenuLink,
   },
 
-  data () {
+  data() {
     return {
       essentialLinks: linksList,
       leftDrawerOpen: false,
-    }
+    };
   },
 
   methods: {
-    toggleLeftDrawer () {
-      this.leftDrawerOpen = !this.leftDrawerOpen
+    toggleLeftDrawer() {
+      this.leftDrawerOpen = !this.leftDrawerOpen;
     },
   },
-})
+});
 </script>
 
 <style lang="scss">
-  .layout-desktop-logo {
-      height: 140px;
-  }
+.layout-desktop-logo {
+  height: 140px;
+}
 
-  .q-drawer {
-    width: 250px;
-    background: $primary;
-    margin: 24px 0 24px 16px;
-    border-radius: 8px;
-    height: calc(100% - 48px) !important;
-    box-shadow: 0 4px 5px -2px rgba(0, 0, 0, 0.2), 0 7px 10px 1px rgba(0, 0, 0, 0.14), 0 2px 16px 1px rgba(0, 0, 0, 0.12)
-  }
+.q-drawer {
+  width: 250px;
+  background: $primary;
+  margin: 24px 0 24px 16px;
+  border-radius: 8px;
+  height: calc(100% - 48px) !important;
+  box-shadow: 0 4px 5px -2px rgba(0, 0, 0, 0.2),
+    0 7px 10px 1px rgba(0, 0, 0, 0.14), 0 2px 16px 1px rgba(0, 0, 0, 0.12);
+}
 
-  .rounded-borders {
-    border-radius: 8px;
-  }
+.rounded-borders {
+  border-radius: 8px;
+}
 
-  .page-container-background {
-    background-color: #f5f6fa;
-  }
+.page-container-background {
+  background-color: #f5f6fa;
+}
 
-  #search-button {
-    border-radius: 8px ;
-  }
+#search-button {
+  border-radius: 8px;
+}
 
-  .mobile-layout-toolbar-logo {
-    height: 80%;
-  }
+.mobile-layout-toolbar-logo {
+  height: 80%;
+}
 
+.logout-toolbar-card {
+  width: 100px;
+}
+
+.mobile-logout-link {
+  position: absolute;
+  bottom: 20px;
+  width: 100%;
+}
+
+@media screen and (min-width: 1024px) {
+  .q-header {
+    left: 337px !important;
+  }
+}
+
+@media screen and (min-width: 1440px) {
   .logout-toolbar-card {
-    width: 100px;
+    width: 200px;
   }
-
-  .search-toolbar {
-    width: 70%;
-  }
-
-  .mobile-logout-link {
-    position: absolute;
-    bottom: 20px;
-    width: 100%;
-  }
-
-  @media screen and (min-width: 1440px) {
-    .logout-toolbar-card {
-      width: 200px;
-    }
-
-  .search-toolbar {
-    width: 50%;
-  }
-  }
+}
 </style>
