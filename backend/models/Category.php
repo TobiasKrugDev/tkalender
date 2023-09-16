@@ -55,8 +55,13 @@
 
         // Get Total Items Number
         public function count() {
-            $query = 'SELECT COUNT(*) AS total FROM categories';
+            $query = 'SELECT COUNT(*) AS total 
+            FROM categories
+            WHERE name LIKE ? OR description LIKE ?';
             $stmt = $this->conn->prepare($query);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);

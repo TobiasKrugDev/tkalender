@@ -43,8 +43,16 @@
         
         // Get Total Items Number
         public function count() {
-            $query = 'SELECT COUNT(*) AS total FROM locations';
+            $query = 'SELECT COUNT(*) AS total 
+            FROM locations
+            WHERE name LIKE ? OR description LIKE ? OR street_address LIKE ? OR postal_code LIKE ? OR city LIKE ?';
             $stmt = $this->conn->prepare($query);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(5, $searchQuery, PDO::PARAM_STR);
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
