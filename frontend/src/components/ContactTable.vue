@@ -1,30 +1,35 @@
 <template>
   <div class="q-pa-md">
-    <q-table
-      flat
-      :rows="contacts"
-      :columns="columns"
-      @row-click="onRowClick"
-    >
+    <q-table flat :rows="contacts" :columns="columns" @row-click="onRowClick">
       <template v-slot:body-cell-image="props">
         <q-td :props="props">
           <div>
             <q-avatar v-if="props.row.image">
-              <img :src="props.row.image">
+              <img :src="props.row.image" />
             </q-avatar>
-            <q-avatar v-else icon="mdi-account" color="grey-5" text-color="white" />
+            <q-avatar
+              v-else
+              icon="mdi-account"
+              color="grey-5"
+              text-color="white"
+            />
           </div>
         </q-td>
       </template>
 
       <template #body-cell-actions="props">
         <td class="text-right">
-          <q-btn flat round color="grey-7" icon="mdi-delete" @click="onDeleteClick(props.row)" />
+          <q-btn
+            flat
+            round
+            color="grey-7"
+            icon="mdi-delete"
+            @click="onDeleteClick(props.row)"
+          />
         </td>
       </template>
     </q-table>
 
-    
     <q-dialog v-model="showDialog">
       <q-card>
         <q-card-section class="row items-center q-pb-none">
@@ -35,7 +40,12 @@
 
         <q-card-section>
           <div>
-            <input ref="contactImageUpload" type="file" accept="image/*" @change="onFileUpload()" />
+            <input
+              ref="contactImageUpload"
+              type="file"
+              accept="image/*"
+              @change="onFileUpload()"
+            />
           </div>
         </q-card-section>
       </q-card>
@@ -48,12 +58,12 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 
 export default defineComponent({
-  name: 'ContactTable',
+  name: "ContactTable",
 
   components: {
     DeleteConfirm,
@@ -63,54 +73,54 @@ export default defineComponent({
     ...mapState("contacts", ["contacts"]),
   },
 
-  data () {
+  data() {
     return {
       selectedContact: null,
       showDialog: false,
       showDeleteDialog: false,
       columns: [
         {
-          name: 'image',
-          label: '',
-          align: 'left',
-          field: 'image'
+          name: "image",
+          label: "",
+          align: "left",
+          field: "image",
         },
         {
-          name: 'firstname',
-          label: 'Vorname',
-          align: 'left',
-          field: 'firstname'
+          name: "firstname",
+          label: "Vorname",
+          align: "left",
+          field: "firstname",
         },
         {
-          name: 'lastname',
-          label: 'Nachname',
-          align: 'left',
-          field: 'lastname'
+          name: "lastname",
+          label: "Nachname",
+          align: "left",
+          field: "lastname",
         },
         {
-          name: 'description',
-          label: 'Beschreibung',
-          align: 'left',
-          field: 'description'
+          name: "description",
+          label: "Beschreibung",
+          align: "left",
+          field: "description",
         },
         {
-          name: 'phoneNumber',
-          label: 'Telefonnr.',
-          align: 'left',
-          field: 'phoneNumber'
+          name: "phoneNumber",
+          label: "Telefonnr.",
+          align: "left",
+          field: "phoneNumber",
         },
         {
-          name: 'emailAddress',
-          label: 'E-Mail-Adresse',
-          align: 'left',
-          field: 'emailAddress'
+          name: "emailAddress",
+          label: "E-Mail-Adresse",
+          align: "left",
+          field: "emailAddress",
         },
         { name: "actions" },
-      ]
+      ],
     }
   },
 
-  mounted () {
+  mounted() {
     this.getContacts()
   },
 
@@ -126,7 +136,7 @@ export default defineComponent({
       this.showDialog = true
     },
 
-    onDeleteClick (row) {
+    onDeleteClick(row) {
       this.selectedContact = row
       this.showDeleteDialog = true
     },
@@ -135,10 +145,10 @@ export default defineComponent({
       var file = this.$refs.contactImageUpload.files[0]
       var reader = new FileReader()
       reader.readAsDataURL(file)
-      reader.onloadend = function() {
-        console.log('RESULT', reader.result)
+      reader.onloadend = function () {
+        console.log("RESULT", reader.result)
       }
-    }
-  }
+    },
+  },
 })
 </script>

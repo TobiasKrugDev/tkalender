@@ -1,5 +1,5 @@
-import { store } from 'quasar/wrappers'
-import { createStore } from 'vuex'
+import { store } from "quasar/wrappers"
+import { createStore } from "vuex"
 import categories from "./store-categories"
 import locations from "./store-locations"
 import contacts from "./store-contacts"
@@ -25,7 +25,7 @@ export default store(function (/* { ssrContext } */) {
 
     // enable strict mode (adds overhead!)
     // for dev mode and --debug builds only
-    strict: process.env.DEBUGGING
+    strict: process.env.DEBUGGING,
   })
 
   return Store

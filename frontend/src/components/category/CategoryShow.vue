@@ -1,53 +1,66 @@
 <template>
-    <div class="q-mb-lg">
-        <div class="show-property-name q-mb-xs">
-            Beschreibung:
-        </div>
-        <div>
-            {{ category.description }}
-        </div>
-    </div>
+  <div class="q-mb-lg">
+    <div class="show-property-name q-mb-xs">Beschreibung:</div>
     <div>
-        <div class="show-property-name q-mb-xs">
-            Farbe:
-        </div>
-        <div>
-            <div class="category-table-color-circle" :style="'background-color: ' + category.color" />
-        </div>
+      {{ category.description }}
     </div>
+  </div>
+  <div>
+    <div class="show-property-name q-mb-xs">Farbe:</div>
+    <div>
+      <div
+        class="category-table-color-circle"
+        :style="'background-color: ' + category.color"
+      />
+    </div>
+  </div>
 
-    <div class="text-right q-mt-xl">
-        <q-btn rounded flat color="red-6" icon="delete" :label="$q.screen.gt.xs ? 'Löschen' : ''" class="q-mr-xs" @click="onDeleteClick" />
-        <q-btn rounded color="primary" icon="edit" :label="$q.screen.gt.xs ? 'Bearbeiten' : ''" class="q-ml-xs" @click="onEditClick" />
-    </div>
+  <div class="text-right q-mt-xl">
+    <q-btn
+      rounded
+      flat
+      color="red-6"
+      icon="delete"
+      :label="$q.screen.gt.xs ? 'Löschen' : ''"
+      class="q-mr-xs"
+      @click="onDeleteClick"
+    />
+    <q-btn
+      rounded
+      color="primary"
+      icon="edit"
+      :label="$q.screen.gt.xs ? 'Bearbeiten' : ''"
+      class="q-ml-xs"
+      @click="onEditClick"
+    />
+  </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 
 export default defineComponent({
-    name: 'CategoryShow',
+  name: "CategoryShow",
 
-    props: {
-        category: {
-            type: Object,
-            required: true,
-        },
+  props: {
+    category: {
+      type: Object,
+      required: true,
+    },
+  },
+
+  emits: ["deleteClick", "editClick"],
+
+  methods: {
+    onDeleteClick() {
+      this.$emit("deleteClick", this.category)
     },
 
-    emits: ["deleteClick", "editClick"],
-
-    methods: {
-        onDeleteClick () {
-            this.$emit("deleteClick", this.category)
-        },
-
-        onEditClick () {
-            this.$emit("editClick", this.category)
-        }
-    }
+    onEditClick() {
+      this.$emit("editClick", this.category)
+    },
+  },
 })
 </script>
 
-<style lang="scss">
-</style>
+<style lang="scss"></style>

@@ -1,14 +1,15 @@
 <template>
   <div>
-    <q-table
-      flat
-      :rows="locations"
-      :columns="columns"
-      @row-click="onRowClick"
-    >
+    <q-table flat :rows="locations" :columns="columns" @row-click="onRowClick">
       <template #body-cell-actions="props">
         <td class="text-right">
-          <q-btn flat round color="grey-7" icon="mdi-delete" @click="onDeleteClick(props.row)" />
+          <q-btn
+            flat
+            round
+            color="grey-7"
+            icon="mdi-delete"
+            @click="onDeleteClick(props.row)"
+          />
         </td>
       </template>
     </q-table>
@@ -22,9 +23,7 @@
         </q-card-section>
 
         <q-card-section>
-          <div>
-            ToDo: Show Ansicht
-          </div>
+          <div>ToDo: Show Ansicht</div>
         </q-card-section>
       </q-card>
     </q-dialog>
@@ -36,82 +35,82 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 
 export default defineComponent({
-  name: 'LocationTable',
+  name: "LocationTable",
 
   components: {
     DeleteConfirm,
   },
-    
+
   computed: {
     ...mapState("locations", ["locations"]),
   },
 
-  data () {
+  data() {
     return {
       selectedLocation: null,
       showDialog: false,
       showDeleteDialog: false,
       columns: [
         {
-          name: 'name',
-          label: 'Name',
-          align: 'left',
-          field: 'name'
+          name: "name",
+          label: "Name",
+          align: "left",
+          field: "name",
         },
         {
-          name: 'description',
-          label: 'Beschreibung',
-          align: 'left',
-          field: 'description'
+          name: "description",
+          label: "Beschreibung",
+          align: "left",
+          field: "description",
         },
         {
-          name: 'streetAddress',
-          label: 'Straße + Hausnr.',
-          align: 'left',
-          field: 'streetAddress'
+          name: "streetAddress",
+          label: "Straße + Hausnr.",
+          align: "left",
+          field: "streetAddress",
         },
         {
-          name: 'postalCode',
-          label: 'Postleitzahl',
-          align: 'left',
-          field: 'postalCode'
+          name: "postalCode",
+          label: "Postleitzahl",
+          align: "left",
+          field: "postalCode",
         },
         {
-          name: 'city',
-          label: 'Ort',
-          align: 'left',
-          field: 'city'
+          name: "city",
+          label: "Ort",
+          align: "left",
+          field: "city",
         },
         { name: "actions" },
-      ]
+      ],
     }
   },
 
-  mounted () {
+  mounted() {
     this.getLocations()
   },
 
   methods: {
     ...mapActions("locations", ["getLocations"]),
 
-    onRowClick (e, row) {
+    onRowClick(e, row) {
       if (this.showDeleteDialog) {
         return
       }
-      
+
       this.selectedLocation = row
       this.showDialog = true
     },
 
-    onDeleteClick (row) {
+    onDeleteClick(row) {
       this.selectedLocation = row
       this.showDeleteDialog = true
-    }
-  }
+    },
+  },
 })
 </script>

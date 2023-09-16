@@ -5,32 +5,28 @@ const state = {
 }
 
 const mutations = {
-  setContacts (state, value) {
+  setContacts(state, value) {
     state.contacts = value
   },
 }
 
 const actions = {
   // GET Contacts
-  async getContacts ({ commit }) {
-    const response = await api.get('/contact/read')
+  async getContacts({ commit }) {
+    const response = await api.get("/contact/read")
     commit("setContacts", response.data.items)
   },
 
   // DELETE Contacts
-  async deleteContact ({ }, id) {
-    await api.delete("/contact/delete",
-      {
-        params:
-          { id },
-      },
-    )
+  async deleteContact({}, id) {
+    await api.delete("/contact/delete", {
+      params: { id },
+    })
   },
 
   // POST / Create Contact
-  async createContact ({}, contact) {
-    axios.post('/api/contact/create', contact, 
-    {
+  async createContact({}, contact) {
+    axios.post("/api/contact/create", contact, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -38,17 +34,16 @@ const actions = {
   },
 
   // PUT / Update Contact
-  async updateContact ({}, contact) {
-    axios.put('/api/contact/update', contact, 
-    {
+  async updateContact({}, contact) {
+    axios.put("/api/contact/update", contact, {
       params: {
-        id : contact.id
+        id: contact.id,
       },
       headers: {
         "Content-Type": "application/json",
       },
     })
-  }
+  },
 }
 
 export default {

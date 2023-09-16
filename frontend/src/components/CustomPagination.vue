@@ -30,20 +30,20 @@ export default {
 
   emits: ["pageChange"],
 
-  data () {
+  data() {
     return {
       currentPage: 1,
     }
   },
 
   computed: {
-    pageCount () {
+    pageCount() {
       return Math.ceil(this.totalItems / this.itemsPerPage)
     },
   },
 
   methods: {
-    changePage () {
+    changePage() {
       this.$emit("pageChange", this.currentPage)
     },
   },

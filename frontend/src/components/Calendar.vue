@@ -1,43 +1,43 @@
 <template>
   <div>
-    <vue-cal 
-        active-view="week"
-        style="height: 80vh; width: 80vw;" 
-        :disable-views="['years', 'year']"
-        locale="de"
-        :events="events"
-        events-on-month-view="short"
-        :on-event-click="onEventClick"
+    <vue-cal
+      active-view="week"
+      style="height: 80vh; width: 80vw"
+      :disable-views="['years', 'year']"
+      locale="de"
+      :events="events"
+      events-on-month-view="short"
+      :on-event-click="onEventClick"
     />
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
-import VueCal from 'vue-cal'
-import 'vue-cal/dist/vuecal.css'
+import VueCal from "vue-cal"
+import "vue-cal/dist/vuecal.css"
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
-  name: 'Calendar',
+  name: "Calendar",
 
-  components: { 
-    VueCal 
-    },
-  
+  components: {
+    VueCal,
+  },
+
   computed: {
     ...mapState("appointments", ["appointments"]),
   },
 
-  data () {
+  data() {
     return {
-        selectedAppointment: null,
-        events: []
+      selectedAppointment: null,
+      events: [],
     }
   },
 
-  mounted () {
+  mounted() {
     this.handleAppointments()
   },
 
@@ -45,41 +45,43 @@ export default defineComponent({
     ...mapActions("appointments", ["getAppointments"]),
 
     async handleAppointments() {
-        await this.getAppointments()
-        this.events = []
-        for (let appointment of this.appointments) {
-            let event = {
-                start: new Date(appointment.startAt),
-                end: new Date(appointment.endAt),
-                title: appointment.name,
-                class: appointment.category ? appointment.category : 'no-category'
-            }
-
-            this.events = [ ...this.events, event ]
+      await this.getAppointments()
+      this.events = []
+      for (let appointment of this.appointments) {
+        let event = {
+          start: new Date(appointment.startAt),
+          end: new Date(appointment.endAt),
+          title: appointment.name,
+          class: appointment.category ? appointment.category : "no-category",
         }
+
+        this.events = [...this.events, event]
+      }
     },
 
     onEventClick(event, e) {
-        this.selectedAppointment = event
-        console.log(event)
-        // this.showDialog = true
+      this.selectedAppointment = event
+      console.log(event)
+      // this.showDialog = true
 
-        // Prevent navigating to narrower view (default vue-cal behavior).
-        e.stopPropagation()
-    }
-  }
+      // Prevent navigating to narrower view (default vue-cal behavior).
+      e.stopPropagation()
+    },
+  },
 })
 </script>
 
 <style lang="scss">
 .vuecal__now-line {
-    color: #06c;
+  color: #06c;
 }
 .vuecal__event.no-category {
-    background-color: rgba(3, 36, 252, 0.9);border: 1px solid rgb(3, 36, 252);color: #fff;
+  background-color: rgba(3, 36, 252, 0.9);
+  border: 1px solid rgb(3, 36, 252);
+  color: #fff;
 }
 
 .vuecal__event:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 </style>

@@ -123,8 +123,8 @@
 </template>
 
 <script>
-import { defineComponent } from "vue";
-import MenuLink from "components/MenuLink.vue";
+import { defineComponent } from "vue"
+import MenuLink from "components/MenuLink.vue"
 
 const linksList = [
   {
@@ -157,7 +157,7 @@ const linksList = [
     icon: "mdi-palette",
     link: "/categories",
   },
-];
+]
 
 export default defineComponent({
   name: "MainLayout",
@@ -170,15 +170,15 @@ export default defineComponent({
     return {
       essentialLinks: linksList,
       leftDrawerOpen: false,
-    };
+    }
   },
 
   methods: {
     toggleLeftDrawer() {
-      this.leftDrawerOpen = !this.leftDrawerOpen;
+      this.leftDrawerOpen = !this.leftDrawerOpen
     },
   },
-});
+})
 </script>
 
 <style lang="scss">

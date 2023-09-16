@@ -5,34 +5,32 @@
     <FABCreateButton @create-button-click="openCreateDialog" />
 
     <q-dialog v-model="createDialog">
-      <q-card>
-        ToDo: Appointment Create Dialog
-      </q-card>
+      <q-card> ToDo: Appointment Create Dialog </q-card>
     </q-dialog>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import FABCreateButton from "components/FABCreateButton.vue"
 
 export default defineComponent({
-  name: 'AppointmentPage',
+  name: "AppointmentPage",
 
   components: {
     FABCreateButton,
   },
 
-  data () {
+  data() {
     return {
       createDialog: false,
     }
   },
 
   methods: {
-    openCreateDialog () {
+    openCreateDialog() {
       this.createDialog = true
-    }
-  }
+    },
+  },
 })
 </script>

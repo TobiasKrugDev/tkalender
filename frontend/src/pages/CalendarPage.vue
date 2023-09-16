@@ -7,21 +7,19 @@
     <FABCreateButton @create-button-click="openCreateDialog" />
 
     <q-dialog v-model="createDialog">
-      <q-card>
-        ToDo: Appointment Create Dialog
-      </q-card>
+      <q-card> ToDo: Appointment Create Dialog </q-card>
     </q-dialog>
   </q-page>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import Calendar from "components/Calendar.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
 import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
-  name: 'CalendarPage',
+  name: "CalendarPage",
 
   components: {
     Calendar,
@@ -29,13 +27,13 @@ export default defineComponent({
     WrapperCard,
   },
 
-  data () {
+  data() {
     return {
       createDialog: false,
     }
   },
 
-  mounted () {
+  mounted() {
     // Check for "/create_appointment" in requested route
     if (this.$route.path.includes("/create_appointment")) {
       this.openCreateDialog()
@@ -43,9 +41,9 @@ export default defineComponent({
   },
 
   methods: {
-    openCreateDialog () {
+    openCreateDialog() {
       this.createDialog = true
-    }
-  }
+    },
+  },
 })
 </script>

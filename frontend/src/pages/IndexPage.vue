@@ -7,11 +7,11 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import FABCreateButton from "components/FABCreateButton.vue"
 
 export default defineComponent({
-  name: 'IndexPage',
+  name: "IndexPage",
 
   components: {
     FABCreateButton,

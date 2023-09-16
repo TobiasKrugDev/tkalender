@@ -15,20 +15,41 @@
     >
       <template v-slot:body-cell-color="props">
         <q-td :props="props">
-          <div class="category-table-color-circle" :style="'background-color: ' + props.value" />
+          <div
+            class="category-table-color-circle"
+            :style="'background-color: ' + props.value"
+          />
         </q-td>
       </template>
       <template #body-cell-actions="props">
         <td class="text-right">
-          <q-btn flat round color="grey-7" icon="mdi-pencil" @click="openUpdateDialog(props.row)" />
-          <q-btn flat round color="grey-7" icon="mdi-delete" @click="onDeleteClick(props.row)" />
+          <q-btn
+            flat
+            round
+            color="grey-7"
+            icon="mdi-pencil"
+            @click="openUpdateDialog(props.row)"
+          />
+          <q-btn
+            flat
+            round
+            color="grey-7"
+            icon="mdi-delete"
+            @click="onDeleteClick(props.row)"
+          />
         </td>
       </template>
       <template #pagination>
-          <!-- Hide default pagination -->
+        <!-- Hide default pagination -->
       </template>
       <template v-slot:top-right>
-        <q-input outlined dense debounce="300" v-model="filter" placeholder="Suche">
+        <q-input
+          outlined
+          dense
+          debounce="300"
+          v-model="filter"
+          placeholder="Suche"
+        >
           <template v-slot:append>
             <q-icon name="search" />
           </template>
@@ -42,55 +63,39 @@
           <div v-if="props.row.name" class="text-h6 q-mb-md">
             {{ props.row.name }}
           </div>
-          <div class="text-weight-medium">
-            Beschreibung:
-          </div>
+          <div class="text-weight-medium">Beschreibung:</div>
           <div class="q-mb-md">
             {{ props.row.description }}
           </div>
-          <div class="text-weight-medium q-mb-xs">
-            Farbe:
-          </div>
+          <div class="text-weight-medium q-mb-xs">Farbe:</div>
           <div>
-            <div class="category-table-color-circle" :style="'background-color: ' + props.row.color" />
+            <div
+              class="category-table-color-circle"
+              :style="'background-color: ' + props.row.color"
+            />
           </div>
         </div>
         <div class="col-2 text-right">
-          <q-btn
-            flat
-            round
-            dense
-            color="grey-7"
-            icon="more_vert"
-          >
-            <q-menu
-              transition-show="flip-up"
-              transition-hide="flip-down"
-            >
+          <q-btn flat round dense color="grey-7" icon="more_vert">
+            <q-menu transition-show="flip-up" transition-hide="flip-down">
               <q-list style="min-width: 100px">
                 <q-item clickable @click="onRowClick(null, props.row)">
                   <q-item-section side>
                     <q-icon name="mdi-eye-outline" />
                   </q-item-section>
-                  <q-item-section>
-                    Ansehen
-                  </q-item-section>
+                  <q-item-section> Ansehen </q-item-section>
                 </q-item>
                 <q-item clickable @click="openUpdateDialog(props.row)">
                   <q-item-section side>
                     <q-icon name="mdi-pencil" />
                   </q-item-section>
-                  <q-item-section avatar>
-                    Bearbeiten
-                  </q-item-section>
+                  <q-item-section avatar> Bearbeiten </q-item-section>
                 </q-item>
                 <q-item clickable @click="onDeleteClick(props.row)">
                   <q-item-section side>
                     <q-icon name="mdi-delete" />
                   </q-item-section>
-                  <q-item-section avatar>
-                    Löschen
-                  </q-item-section>
+                  <q-item-section avatar> Löschen </q-item-section>
                 </q-item>
               </q-list>
             </q-menu>
@@ -101,29 +106,46 @@
 
     <!-- Pagination -->
     <div class="flex flex-center q-mb-lg">
-      <CustomPagination 
-        :totalItems="pagination.rowsNumber" 
-        :itemsPerPage="pagination.rowsPerPage" 
-        class="q-mx-auto" 
-        @page-change="onPageChange" />
+      <CustomPagination
+        :totalItems="pagination.rowsNumber"
+        :itemsPerPage="pagination.rowsPerPage"
+        class="q-mx-auto"
+        @page-change="onPageChange"
+      />
     </div>
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
-        <CategoryCreate v-if="dialogMode === 'create'" @category-created="onCategoryCreate" />
-        <CategoryShow v-if="dialogMode === 'show'" :category="selectedCategory" @delete-click="onDeleteClick" @edit-click="onEditClick" />
-        <CategoryUpdate v-if="dialogMode === 'update'" :category="selectedCategory" @category-updated="onCategoryUpdate" />
+        <CategoryCreate
+          v-if="dialogMode === 'create'"
+          @category-created="onCategoryCreate"
+        />
+        <CategoryShow
+          v-if="dialogMode === 'show'"
+          :category="selectedCategory"
+          @delete-click="onDeleteClick"
+          @edit-click="onEditClick"
+        />
+        <CategoryUpdate
+          v-if="dialogMode === 'update'"
+          :category="selectedCategory"
+          @category-updated="onCategoryUpdate"
+        />
       </DialogCard>
     </q-dialog>
 
     <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
-      <DeleteConfirm :item="selectedCategory" entity="category" @item-deleted="onItemDeleted" />
+      <DeleteConfirm
+        :item="selectedCategory"
+        entity="category"
+        @item-deleted="onItemDeleted"
+      />
     </q-dialog>
   </div>
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import DeleteConfirm from "components/DeleteConfirm.vue"
 import DialogCard from "components/DialogCard.vue"
@@ -133,7 +155,7 @@ import CategoryUpdate from "components/category/CategoryUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
 
 export default defineComponent({
-  name: 'CategoryTable',
+  name: "CategoryTable",
 
   components: {
     DeleteConfirm,
@@ -144,7 +166,7 @@ export default defineComponent({
     CustomPagination,
   },
 
-  data () {
+  data() {
     return {
       selectedCategory: null,
       itemDialog: false,
@@ -161,32 +183,37 @@ export default defineComponent({
       filter: "",
       columns: [
         {
-          name: 'color',
-          label: '',
-          align: 'left',
-          field: 'color'
+          name: "color",
+          label: "",
+          align: "left",
+          field: "color",
         },
         {
-          name: 'name',
-          label: 'Name',
-          align: 'left',
-          field: 'name',
+          name: "name",
+          label: "Name",
+          align: "left",
+          field: "name",
           sortable: true,
         },
         {
-          name: 'description',
-          label: 'Beschreibung',
-          align: 'left',
-          field: 'description'
+          name: "description",
+          label: "Beschreibung",
+          align: "left",
+          field: "description",
         },
         { name: "actions" },
-      ]
+      ],
     }
   },
 
   computed: {
-    ...mapState("categories", ["categories", "totalItems", "createdCategory", "updatedCategory"]),
-    dialogCardTitle () {
+    ...mapState("categories", [
+      "categories",
+      "totalItems",
+      "createdCategory",
+      "updatedCategory",
+    ]),
+    dialogCardTitle() {
       if (this.dialogMode === "show") {
         return this.selectedCategory.name
       } else if (this.dialogMode === "update") {
@@ -197,62 +224,68 @@ export default defineComponent({
     },
   },
 
-  mounted () {
+  mounted() {
     this.getCategoryData()
   },
 
   methods: {
     ...mapActions("categories", ["getCategories"]),
 
-    onRowClick (e, row) {
+    onRowClick(e, row) {
       if (this.itemDialog || this.showDeleteDialog) {
         return
       }
-      
+
       this.selectedCategory = row
       this.dialogMode = "show"
       this.itemDialog = true
     },
 
-    onDeleteClick (row) {
+    onDeleteClick(row) {
       this.selectedCategory = row
       this.showDeleteDialog = true
     },
 
-    onEditClick (row) {
+    onEditClick(row) {
       this.openUpdateDialog(row)
     },
 
-    openCreateDialog () {
+    openCreateDialog() {
       this.dialogMode = "create"
       this.itemDialog = true
     },
 
-    openUpdateDialog (row) {
+    openUpdateDialog(row) {
       this.selectedCategory = row
       this.dialogMode = "update"
       this.itemDialog = true
     },
 
-    async getCategoryData () {
+    async getCategoryData() {
       this.loading = true
-      await this.getCategories({ itemsPerPage: this.pagination.rowsPerPage, page: this.pagination.page, sortBy: this.pagination.sortBy, desc:  this.pagination.descending, filter: this.filter})
+      await this.getCategories({
+        itemsPerPage: this.pagination.rowsPerPage,
+        page: this.pagination.page,
+        sortBy: this.pagination.sortBy,
+        desc: this.pagination.descending,
+        filter: this.filter,
+      })
       this.pagination.rowsNumber = this.totalItems
       this.loading = false
     },
 
-    onRequest (props) {
+    onRequest(props) {
       this.pagination = props.pagination
       this.filter = props.filter
       this.getCategoryData()
     },
 
-    onPageChange (page) {
+    onPageChange(page) {
       this.pagination.page = page
       this.getCategoryData()
     },
 
-    onItemDeleted () {
+    onItemDeleted() {
       // Close dialogs
       this.$refs.deleteConfirm.hide()
       this.$refs.itemDialog.hide()
@@ -261,7 +294,7 @@ export default defineComponent({
       this.getCategoryData()
     },
 
-    onCategoryCreate () {
+    onCategoryCreate() {
       this.selectedCategory = this.createdCategory
       this.dialogMode = "show"
 
@@ -269,21 +302,21 @@ export default defineComponent({
       this.getCategoryData()
     },
 
-    onCategoryUpdate () {
+    onCategoryUpdate() {
       this.selectedCategory = this.updatedCategory
       this.dialogMode = "show"
 
       // Refresh category list
       this.getCategoryData()
-    }
-  }
+    },
+  },
 })
 </script>
 
 <style lang="scss">
-  .category-table-color-circle {
-    height: 48px;
-    width: 48px;
-    border-radius: 50%;
-  }
+.category-table-color-circle {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
 </style>

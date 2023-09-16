@@ -9,13 +9,13 @@
 </template>
 
 <script>
-import { defineComponent } from 'vue'
+import { defineComponent } from "vue"
 import CategoryTable from "components/CategoryTable.vue"
 import FABCreateButton from "components/FABCreateButton.vue"
 import WrapperCard from "components/WrapperCard.vue"
 
 export default defineComponent({
-  name: 'CategoryPage',
+  name: "CategoryPage",
 
   components: {
     CategoryTable,
@@ -23,13 +23,13 @@ export default defineComponent({
     WrapperCard,
   },
 
-  data () {
+  data() {
     return {
       createDialog: false,
     }
   },
 
-  mounted () {
+  mounted() {
     // Check for "/create" in requested route
     if (this.$route.path.includes("/create")) {
       this.openCreateDialog()
@@ -37,9 +37,9 @@ export default defineComponent({
   },
 
   methods: {
-    openCreateDialog () {
+    openCreateDialog() {
       this.$refs.categoryTable.openCreateDialog()
-    }
-  }
+    },
+  },
 })
 </script>
