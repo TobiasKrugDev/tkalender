@@ -22,7 +22,6 @@
     $appointment->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $appointment->read();
-    $num = $result->rowCount();
 
     // Get Total Items Number
     $totalItems = $appointment->count();
@@ -36,14 +35,36 @@
 
         $post_item = array(
             'id' => $id,
-            'name' => $name,
-            'description' => $description,
+            'name' => $appointmentName,
+            'description' => $appointmentDescription,
             'startAt' => $startAt,
             'endAt' => $endAt,
-            'location' => $location,
-            'category' => $category,
             'icon' => $icon
         );
+
+        if (isset($locationID)) {
+            $post_item['location'] = array(
+                'id' => $locationID,
+                'name' => $locationName,
+                'description' => $locationDescription,
+                'streetAddress' => $streetAddress,
+                'postalCode' => $postalCode,
+                'city' => $city
+            );
+        } else {
+            $post_item['location'] = null;
+        }
+
+        if (isset($categoryID)) {
+            $post_item['category'] = array(
+                'id' => $categoryID,
+                'name' => $categoryName,
+                'description' => $categoryDescription,
+                'color' => $color
+            );
+        } else {
+            $post_item['category'] = null;
+        }
 
         array_push($posts_arr['items'], $post_item);
     }

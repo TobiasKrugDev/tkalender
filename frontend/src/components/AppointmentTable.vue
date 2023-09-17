@@ -15,6 +15,16 @@
       @row-click="onRowClick"
       @request="onRequest"
     >
+      <template #body-cell-category="props">
+        <td class="text-right">
+          <span v-if="props.row.category">{{ props.row.category.name }}</span>
+        </td>
+      </template>
+      <template #body-cell-location="props">
+        <td class="text-right">
+          <span v-if="props.row.location">{{ props.row.location.name }}</span>
+        </td>
+      </template>
       <template #body-cell-actions="props">
         <td class="text-right">
           <q-btn
@@ -170,13 +180,11 @@ export default defineComponent({
           name: "location",
           label: "Ort",
           align: "left",
-          field: "location",
         },
         {
           name: "category",
           label: "Kategorie",
           align: "left",
-          field: "category",
         },
         {
           name: "icon",
