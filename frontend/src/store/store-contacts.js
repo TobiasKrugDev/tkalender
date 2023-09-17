@@ -2,8 +2,8 @@ import { api, axios } from "src/boot/axios"
 
 const state = {
   contacts: [],
-  createdcontact: null,
-  updatedcontact: null,
+  createdContact: null,
+  updatedContact: null,
   totalItems: 0,
 }
 

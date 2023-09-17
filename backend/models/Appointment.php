@@ -13,6 +13,8 @@
 
         public $limit;
         public $offset;
+        public $sortBy;
+        public $orderDirection;
         public $searchQuery;
         public $contactFilter;
         public $locationFilter;
@@ -22,8 +24,10 @@
         }
 
         // Get Appointments
+        // ToDo: Sorting
         public function read() {
             if (isset($this->contactFilter)) {
+                // ToDo
                 $query = '
                     SELECT * 
                     FROM participations JOIN appointments ON participations.appointment = appointments.id
@@ -35,6 +39,7 @@
                 $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                 $stmt->execute();
             } elseif (isset($this->locationFilter)) {
+                // ToDo
                 $query = '
                     SELECT * 
                     FROM appointments
@@ -46,10 +51,16 @@
                 $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                 $stmt->execute();
             } else {
-                $query = 'SELECT * FROM appointments LIMIT ?, ?';
+                $query = 'SELECT * 
+                FROM appointments 
+                WHERE name LIKE ? OR description LIKE ? -- ToDo: Add more properties
+                LIMIT ?, ?';
                 $stmt = $this->conn->prepare($query);
-                $stmt->bindParam(1, $this->offset, PDO::PARAM_INT);
-                $stmt->bindParam(2, $this->limit, PDO::PARAM_INT);
+                $searchQuery = "%".$this->searchQuery."%";
+                $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(3, $this->offset, PDO::PARAM_INT);
+                $stmt->bindParam(4, $this->limit, PDO::PARAM_INT);
                 $stmt->execute();
             }
             
@@ -58,8 +69,13 @@
 
         // Get Total Items Number
         public function count() {
-            $query = 'SELECT COUNT(*) AS total FROM appointments';
+            $query = 'SELECT COUNT(*) AS total 
+            FROM appointments
+            WHERE name LIKE ? OR description LIKE ? -- ToDo: Add more properties';
             $stmt = $this->conn->prepare($query);
+            $searchQuery = "%".$this->searchQuery."%";
+            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -184,23 +200,5 @@
             // Print error message
             printf("Error: %s.\n", $stmt->error);
             return false;
-        }
-
-        // Search Appointments
-        public function search() {
-            $query = '
-                SELECT * 
-                FROM appointments 
-                WHERE name LIKE ? OR description LIKE ? 
-                LIMIT ?, ?';
-            $stmt = $this->conn->prepare($query);
-            $searchQuery = "%".$this->searchQuery."%";
-            $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
-            $stmt->bindParam(3, $this->offset, PDO::PARAM_INT);
-            $stmt->bindParam(4, $this->limit, PDO::PARAM_INT);
-            $stmt->execute();
-            
-            return $stmt;
         }
     }

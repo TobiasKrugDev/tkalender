@@ -1,20 +1,48 @@
-import { api } from "src/boot/axios"
+import { api, axios } from "src/boot/axios"
 
 const state = {
   appointments: [],
+  createdAppointment: null,
+  updatedAppointment: null,
+  totalItems: 0,
 }
 
 const mutations = {
   setAppointments(state, value) {
     state.appointments = value
   },
+
+  setCreatedAppointment(state, value) {
+    state.createdAppointment = value
+  },
+
+  setUpdatedAppointment(state, value) {
+    state.updatedAppointment = value
+  },
+
+  setTotalItems(state, value) {
+    state.totalItems = value
+  },
 }
 
 const actions = {
   // GET Appointments
-  async getAppointments({ commit }) {
-    const response = await api.get("/appointment/read")
+  async getAppointments(
+    { commit },
+    { rowsPerPage, page, sortBy, desc, filter }
+  ) {
+    const params = { itemsPerPage: rowsPerPage, page, filter }
+    if (sortBy) {
+      params.sortBy = sortBy
+      if (desc) {
+        params.orderDirection = "DESC"
+      } else {
+        params.orderDirection = "ASC"
+      }
+    }
+    const response = await api.get("/appointment/read", { params })
     commit("setAppointments", response.data.items)
+    commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Appointment
@@ -25,17 +53,19 @@ const actions = {
   },
 
   // POST / Create Appointment
-  async createAppointment({}, appointment) {
-    axios.post("/api/appointment/create", appointment, {
+  async createAppointment({ commit }, appointment) {
+    const response = await axios.post("/api/appointment/create", appointment, {
       headers: {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setCreatedAppointment", response.data)
   },
 
   // PUT / Update Appointment
-  async updateAppointment({}, appointment) {
-    axios.put("/api/appointment/update", appointment, {
+  async updateAppointment({ commit }, appointment) {
+    const response = await axios.put("/api/appointment/update", appointment, {
       params: {
         id: appointment.id,
       },
@@ -43,6 +73,8 @@ const actions = {
         "Content-Type": "application/json",
       },
     })
+
+    commit("setUpdatedAppointment", response.data)
   },
 }
 
