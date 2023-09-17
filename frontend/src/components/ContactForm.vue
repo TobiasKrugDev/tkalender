@@ -18,6 +18,7 @@
           icon="delete"
           size="20px"
           class="image-edit-btn"
+          @click="removeImage"
         />
       </div>
     </q-avatar>
@@ -112,6 +113,10 @@ export default defineComponent({
       } else {
         return true
       }
+    },
+
+    removeImage() {
+      this.contact.image = ""
     },
   },
 })
