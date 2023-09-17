@@ -337,15 +337,6 @@ export default defineComponent({
       // Refresh category list
       this.getContactData()
     },
-
-    onFileUpload() {
-      var file = this.$refs.contactImageUpload.files[0]
-      var reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onloadend = function () {
-        console.log("RESULT", reader.result)
-      }
-    },
   },
 })
 </script>

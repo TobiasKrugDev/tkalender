@@ -10,6 +10,7 @@
           icon="edit"
           size="20px"
           class="image-edit-btn"
+          @click="openFileBrowser"
         />
         <q-btn
           flat
@@ -37,9 +38,17 @@
           icon="edit"
           size="20px"
           class="image-edit-btn"
+          @click="openFileBrowser"
         />
       </div>
     </q-avatar>
+    <input
+      ref="fileInput"
+      type="file"
+      accept="image/*"
+      hidden
+      @change="onFileUpload"
+    />
   </div>
   <div class="q-mb-md">
     <q-input
@@ -117,6 +126,21 @@ export default defineComponent({
 
     removeImage() {
       this.contact.image = ""
+    },
+
+    openFileBrowser() {
+      this.$refs.fileInput.click()
+    },
+
+    onFileUpload() {
+      var file = this.$refs.fileInput.files[0]
+      var reader = new FileReader()
+      reader.readAsDataURL(file)
+      reader.onloadend = () => {
+        if (file.type.startsWith("image/")) {
+          this.contact.image = reader.result
+        }
+      }
     },
   },
 })
