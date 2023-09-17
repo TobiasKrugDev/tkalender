@@ -2,27 +2,36 @@
 
 // Override default q-card border-radius
 .q-card {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 // Override default outlined q-input border-radius
 .q-field--outlined .q-field__control {
-    border-radius: 8px;
+  border-radius: 8px;
 }
 
 // Show components
 .show-property-name {
-    font-weight: bold;
+  font-weight: bold;
 }
 
 // Override default q-table items per page select position
 .q-table__bottom {
-    justify-content: start;
-    .q-table__separator {
-        flex: initial;
-    }
+  justify-content: start;
+  .q-table__separator {
+    flex: initial;
+  }
 
-    .q-table__control {
-        margin-top: 25px;
-    }
+  .q-table__control {
+    margin-top: 25px;
+  }
+}
+
+// Some general helper classes
+.display-flex {
+  display: flex;
+}
+
+.additional-line-height {
+  line-height: 3rem;
 }

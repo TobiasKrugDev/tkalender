@@ -117,7 +117,7 @@
     </div>
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
-      <DialogCard :title="dialogCardTitle">
+      <DialogCard :title="dialogCardTitle" :color="dialogCardColor">
         <ItemCreate
           v-if="dialogMode === 'create'"
           entity="category"
@@ -243,6 +243,13 @@ export default defineComponent({
         return false
       } else {
         return true
+      }
+    },
+    dialogCardColor() {
+      if (this.dialogMode === "show") {
+        return this.selectedCategory.color
+      } else {
+        return ""
       }
     },
   },

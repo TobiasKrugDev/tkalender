@@ -2,7 +2,19 @@
   <q-card class="dialog-card shadow-7">
     <q-card-section>
       <div class="row items-center no-wrap">
-        <div class="text-h5 text-weight-medium">
+        <!-- ToDo: Profile Image -->
+        <div v-if="color || profileImage" class="display-flex">
+          <div
+            class="category-table-color-circle"
+            :style="'background-color: ' + color"
+          />
+          <div
+            class="text-h5 text-weight-medium q-ml-sm additional-line-height"
+          >
+            {{ title }}
+          </div>
+        </div>
+        <div v-else class="text-h5 text-weight-medium">
           {{ title }}
         </div>
         <q-space />
@@ -23,6 +35,16 @@ export default defineComponent({
 
   props: {
     title: {
+      type: String,
+      default: "",
+    },
+
+    color: {
+      type: String,
+      default: "",
+    },
+
+    profileImage: {
       type: String,
       default: "",
     },

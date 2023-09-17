@@ -69,15 +69,6 @@
         {{ item.description }}
       </div>
     </div>
-    <div>
-      <div class="show-property-name q-mb-xs">Farbe:</div>
-      <div>
-        <div
-          class="category-table-color-circle"
-          :style="'background-color: ' + item.color"
-        />
-      </div>
-    </div>
   </div>
 
   <div class="text-right q-mt-xl">
