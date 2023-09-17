@@ -79,7 +79,11 @@
     </div>
 
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
-      <DialogCard :title="dialogCardTitle">
+      <DialogCard
+        :title="dialogCardTitle"
+        :profile-image="dialogCardProfileImage"
+        :show-placeholder-image="showDialogCardPlaceholderImage"
+      >
         <ItemCreate
           v-if="dialogMode === 'create'"
           entity="contact"
@@ -216,6 +220,7 @@ export default defineComponent({
         return "Neuer Kontakt"
       }
     },
+
     showPagination() {
       if (!this.searchMode) return true
 
@@ -224,6 +229,26 @@ export default defineComponent({
       } else {
         return true
       }
+    },
+
+    dialogCardProfileImage() {
+      if (this.dialogMode === "show") {
+        if (this.selectedContact.image) {
+          return this.selectedContact.image
+        }
+      }
+
+      return ""
+    },
+
+    showDialogCardPlaceholderImage() {
+      if (this.dialogMode === "show") {
+        if (!this.selectedContact.image) {
+          return true
+        }
+      }
+
+      return false
     },
   },
 

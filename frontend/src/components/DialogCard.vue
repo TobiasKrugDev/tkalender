@@ -3,11 +3,23 @@
     <q-card-section>
       <div class="row items-center no-wrap">
         <!-- ToDo: Profile Image -->
-        <div v-if="color || profileImage" class="display-flex">
+        <div
+          v-if="color || profileImage || showPlaceholderImage"
+          class="display-flex"
+        >
           <div
+            v-if="color"
             class="category-table-color-circle"
             :style="'background-color: ' + color"
           />
+          <div v-if="profileImage">
+            <q-avatar>
+              <img :src="profileImage" />
+            </q-avatar>
+          </div>
+          <div v-if="showPlaceholderImage">
+            <q-avatar icon="mdi-account" color="grey-5" text-color="white" />
+          </div>
           <div
             class="text-h5 text-weight-medium q-ml-sm additional-line-height"
           >
@@ -47,6 +59,11 @@ export default defineComponent({
     profileImage: {
       type: String,
       default: "",
+    },
+
+    showPlaceholderImage: {
+      type: Boolean,
+      default: false,
     },
   },
 })
