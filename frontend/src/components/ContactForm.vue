@@ -1,4 +1,45 @@
 <template>
+  <div class="q-mb-md text-center">
+    <q-avatar v-if="contact.image" size="150px" class="relative-position">
+      <img :src="contact.image" />
+      <div class="image-edit-btn-container">
+        <q-btn
+          flat
+          round
+          color="white"
+          icon="edit"
+          size="20px"
+          class="image-edit-btn"
+        />
+        <q-btn
+          flat
+          round
+          color="white"
+          icon="delete"
+          size="20px"
+          class="image-edit-btn"
+        />
+      </div>
+    </q-avatar>
+    <q-avatar
+      v-else
+      icon="mdi-account"
+      size="150px"
+      color="grey-5"
+      text-color="white"
+    >
+      <div class="image-edit-btn-container">
+        <q-btn
+          flat
+          round
+          color="white"
+          icon="edit"
+          size="20px"
+          class="image-edit-btn"
+        />
+      </div>
+    </q-avatar>
+  </div>
   <div class="q-mb-md">
     <q-input
       ref="contactFirstnameInput"
@@ -31,7 +72,6 @@
   <div class="q-mb-md">
     <q-input v-model="contact.emailAdress" outlined label="E-Mail-Adresse" />
   </div>
-  <div class="q-mb-md">ToDo: Image</div>
 </template>
 
 <script>
@@ -76,3 +116,17 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.image-edit-btn-container {
+  position: absolute;
+  background-color: rgba(37, 34, 34, 0.5);
+  height: 100%;
+  width: 100%;
+  border-radius: 50%;
+}
+
+.image-edit-btn {
+  margin-top: 43px;
+}
+</style>
