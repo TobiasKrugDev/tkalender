@@ -61,7 +61,7 @@
         <q-toolbar-title>
           <router-link to="/">
             <img
-              src="/icons/favicon-128x128.png"
+              src="/tkalender-logo-mobile.png"
               class="absolute-center mobile-layout-toolbar-logo"
             />
           </router-link>
@@ -85,7 +85,7 @@
       <div class="relative-position q-my-lg layout-desktop-logo">
         <router-link to="/">
           <img
-            src="/icons/favicon-128x128.png"
+            src="/tkalender-logo.png"
             class="absolute-center layout-logo-img"
           />
         </router-link>
@@ -191,7 +191,7 @@ export default defineComponent({
 
 <style lang="scss">
 .layout-desktop-logo {
-  height: 140px;
+  height: 180px;
 }
 
 .q-drawer {
@@ -217,7 +217,7 @@ export default defineComponent({
 }
 
 .mobile-layout-toolbar-logo {
-  height: 80%;
+  height: 90%;
 }
 
 .logout-toolbar-card {
