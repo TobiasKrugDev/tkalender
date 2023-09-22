@@ -15,14 +15,46 @@
       @row-click="onRowClick"
       @request="onRequest"
     >
-      <template #body-cell-category="props">
-        <td class="text-right">
-          <span v-if="props.row.category">{{ props.row.category.name }}</span>
+      <template #body-cell-startAt="props">
+        <td class="text-left">
+          <AppointmentTableDateDisplay :appointment-date="props.row.startAt" />
+        </td>
+      </template>
+      <template #body-cell-name="props">
+        <td class="text-left">
+          <span style="font-size: 17px">{{ props.row.name }}</span>
         </td>
       </template>
       <template #body-cell-location="props">
-        <td class="text-right">
+        <td class="text-left">
           <span v-if="props.row.location">{{ props.row.location.name }}</span>
+        </td>
+      </template>
+      <template #body-cell-contacts="props">
+        <td class="text-left">
+          <q-chip
+            v-for="contact in props.row.contacts"
+            :key="contact.id"
+            color="primary"
+            text-color="white"
+          >
+            <q-avatar v-if="contact.image">
+              <img :src="contact.image" />
+            </q-avatar>
+            {{ contact.firstname }} {{ contact.lastname }}
+          </q-chip>
+        </td>
+      </template>
+      <template #body-cell-category="props">
+        <td class="text-left">
+          <span v-if="props.row.category">
+            <!-- ToDo: Text color depending on background color -->
+            <q-chip
+              text-color="white"
+              :style="'background-color: ' + props.row.category.color"
+              >{{ props.row.category.name }}</q-chip
+            ></span
+          >
         </td>
       </template>
       <template #body-cell-actions="props">
@@ -114,6 +146,7 @@ import ItemCreate from "src/components/ItemCreate.vue"
 import ItemShow from "src/components/ItemShow.vue"
 import ItemUpdate from "src/components/ItemUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
+import AppointmentTableDateDisplay from "./AppointmentTableDateDisplay.vue"
 
 export default defineComponent({
   name: "AppointmentTable",
@@ -125,6 +158,7 @@ export default defineComponent({
     ItemShow,
     ItemUpdate,
     CustomPagination,
+    AppointmentTableDateDisplay,
   },
 
   props: {
@@ -153,28 +187,16 @@ export default defineComponent({
       filter: this.searchMode ? this.$route.params.query : "",
       columns: [
         {
+          name: "startAt",
+          label: "Datum",
+          align: "center",
+          field: "startAt",
+        },
+        {
           name: "name",
           label: "Name",
           align: "left",
           field: "name",
-        },
-        {
-          name: "description",
-          label: "Beschreibung",
-          align: "left",
-          field: "description",
-        },
-        {
-          name: "startAt",
-          label: "Start",
-          align: "left",
-          field: "startAt",
-        },
-        {
-          name: "endAt",
-          label: "Ende",
-          align: "left",
-          field: "endAt",
         },
         {
           name: "location",
@@ -182,15 +204,14 @@ export default defineComponent({
           align: "left",
         },
         {
-          name: "category",
-          label: "Kategorie",
+          name: "contacts",
+          label: "Kontakte",
           align: "left",
         },
         {
-          name: "icon",
-          label: "Icon",
+          name: "category",
+          label: "Kategorie",
           align: "left",
-          field: "icon",
         },
         { name: "actions" },
       ],
