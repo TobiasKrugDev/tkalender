@@ -5,6 +5,7 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
+    include_once '../../models/Contact.php';
 
     // Instantiate DB & connect
     $database = new Database();
@@ -64,6 +65,27 @@
             );
         } else {
             $post_item['category'] = null;
+        }
+
+        $post_item['contacts'] = array();
+
+        $contact = new Contact($db);
+        $contact->appointmentFilter = $id;
+        $contactsResult = $contact->read();
+
+        while($contactRow = $contactsResult->fetch(PDO::FETCH_ASSOC)) {
+            extract($contactRow);
+            $contact_post_item = array(
+                'id' => $id,
+                'firstname' => $firstname,
+                'lastname' => $lastname,
+                'description' => $description,
+                'phoneNumber' => $phone_number,
+                'emailAddress' => $email_address,
+                'image' => $image,
+            );
+
+            array_push($post_item['contacts'], $contact_post_item);
         }
 
         array_push($posts_arr['items'], $post_item);
