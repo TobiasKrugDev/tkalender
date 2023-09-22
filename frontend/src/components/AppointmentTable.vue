@@ -32,17 +32,11 @@
       </template>
       <template #body-cell-contacts="props">
         <td class="text-left">
-          <q-chip
+          <ContactChip
             v-for="contact in props.row.contacts"
             :key="contact.id"
-            color="primary"
-            text-color="white"
-          >
-            <q-avatar v-if="contact.image">
-              <img :src="contact.image" />
-            </q-avatar>
-            {{ contact.firstname }} {{ contact.lastname }}
-          </q-chip>
+            :contact="contact"
+          />
         </td>
       </template>
       <template #body-cell-category="props">
@@ -147,6 +141,7 @@ import ItemShow from "src/components/ItemShow.vue"
 import ItemUpdate from "src/components/ItemUpdate.vue"
 import CustomPagination from "src/components/CustomPagination.vue"
 import AppointmentTableDateDisplay from "./AppointmentTableDateDisplay.vue"
+import ContactChip from "./ContactChip.vue"
 
 export default defineComponent({
   name: "AppointmentTable",
@@ -159,6 +154,7 @@ export default defineComponent({
     ItemUpdate,
     CustomPagination,
     AppointmentTableDateDisplay,
+    ContactChip,
   },
 
   props: {
