@@ -77,29 +77,51 @@
         </div>
       </div>
     </div>
-    <div class="q-mb-md">
-      <!-- ToDo: Use custom option slot for more information -->
-      <!-- ToDo: Adjust option-label -->
-      <q-select
-        outlined
-        v-model="appointment.contacts"
-        use-input
-        hide-selected
-        fill-input
-        input-debounce="250"
-        label="Kontakte"
-        :options="contacts"
-        option-label="lastname"
-        @filter="filterContacts"
-      >
-        <template v-slot:no-option>
-          <q-item>
-            <q-item-section class="text-grey">
-              Keine Ergebnisse
-            </q-item-section>
-          </q-item>
-        </template>
-      </q-select>
+    <div class="row q-mb-md">
+      <div class="col-10">
+        <!-- ToDo: Use custom option slot for more information -->
+        <!-- ToDo: Adjust option-label -->
+        <q-select
+          outlined
+          multiple
+          v-model="appointment.contacts"
+          use-input
+          fill-input
+          input-debounce="250"
+          label="Kontakte"
+          :options="contacts"
+          :option-label="
+            (contact) => contact.firstname + ' ' + contact.lastname
+          "
+          @filter="filterContacts"
+        >
+          <template v-slot:no-option>
+            <q-item>
+              <q-item-section class="text-grey">
+                Keine Ergebnisse
+              </q-item-section>
+            </q-item>
+          </template>
+          <template v-slot:selected-item="props">
+            <ContactChip
+              :contact="props.opt"
+              removable
+              @remove="onContactChipRemove(props.index)"
+            />
+          </template>
+        </q-select>
+      </div>
+      <div class="col-2">
+        <div class="relative-position full-height">
+          <q-btn
+            round
+            color="primary"
+            icon="add"
+            class="absolute-center"
+            @click="openCreateDialog('contact')"
+          />
+        </div>
+      </div>
     </div>
     <div class="row q-mb-md">
       <div class="col-10">
@@ -143,11 +165,14 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState, mapMutations } from "vuex"
+import ContactChip from "./ContactChip.vue"
 
 export default defineComponent({
   name: "AppointmentForm",
 
-  components: {},
+  components: {
+    ContactChip,
+  },
 
   props: {
     initialAppointmentData: {
@@ -170,7 +195,7 @@ export default defineComponent({
 
   watch: {
     createdContact(newValue) {
-      // ToDo
+      this.appointment.contacts.push(newValue)
     },
 
     createdLocation(newValue) {
@@ -232,6 +257,10 @@ export default defineComponent({
     openCreateDialog(entity) {
       this.setShortcutCreateEntity(entity)
       this.setShortcutCreateDialog(true)
+    },
+
+    onContactChipRemove(index) {
+      this.appointment.contacts.splice(index, 1)
     },
   },
 })
