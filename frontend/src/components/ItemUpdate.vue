@@ -1,4 +1,9 @@
 <template>
+  <AppointmentForm
+    v-if="entity === 'appointment'"
+    ref="appointmentForm"
+    :initial-contact-data="copiedItemData"
+  />
   <ContactForm
     v-if="entity === 'contact'"
     ref="contactForm"
@@ -39,6 +44,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions } from "vuex"
+import AppointmentForm from "./AppointmentForm.vue"
 import ContactForm from "components/ContactForm.vue"
 import LocationForm from "components/LocationForm.vue"
 import CategoryForm from "components/CategoryForm.vue"
@@ -47,6 +53,7 @@ export default defineComponent({
   name: "ItemUpdate",
 
   components: {
+    AppointmentForm,
     ContactForm,
     LocationForm,
     CategoryForm,
@@ -73,13 +80,18 @@ export default defineComponent({
   },
 
   methods: {
+    ...mapActions("appointments", ["updateAppointment"]),
     ...mapActions("contacts", ["updateContact"]),
     ...mapActions("locations", ["updateLocation"]),
     ...mapActions("categories", ["updateCategory"]),
 
     async onItemSave() {
       let isValid
-      if (this.entity === "contact") {
+      if (this.entity === "appointment") {
+        isValid = this.$refs.appointmentForm.validateAppointmentForm()
+        if (isValid)
+          await this.updateAppointment(this.$refs.appointmentForm.appointment)
+      } else if (this.entity === "contact") {
         isValid = this.$refs.contactForm.validateContactForm()
         if (isValid) await this.updateContact(this.$refs.contactForm.contact)
       } else if (this.entity === "location") {
