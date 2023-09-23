@@ -322,7 +322,7 @@ export default defineComponent({
     },
 
     onAppointmentUpdate() {
-      this.selectedContact = this.updatedContact
+      this.selectedAppointment = this.updatedAppointment
       this.dialogMode = "show"
 
       // Refresh category list
