@@ -142,7 +142,7 @@
 
 <script>
 import { defineComponent } from "vue"
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState, mapMutations } from "vuex"
 
 export default defineComponent({
   name: "AppointmentForm",
@@ -159,24 +159,26 @@ export default defineComponent({
   data() {
     return {
       appointment: {},
-      createDialog: false,
-      entityToBeCreated: "",
     }
   },
 
   computed: {
-    ...mapState("contacts", ["contacts"]),
-    ...mapState("locations", ["locations"]),
-    ...mapState("categories", ["categories"]),
+    ...mapState("contacts", ["contacts", "createdContact"]),
+    ...mapState("locations", ["locations", "createdLocation"]),
+    ...mapState("categories", ["categories", "createdCategory"]),
+  },
 
-    createDialogCardTitle() {
-      if (this.entityToBeCreated === "contact") {
-        return "Neuer Kontakt"
-      } else if (this.entityToBeCreated === "location") {
-        return "Neuer Ort"
-      } else {
-        return "Neue Kategorie"
-      }
+  watch: {
+    createdContact(newValue) {
+      // ToDo
+    },
+
+    createdLocation(newValue) {
+      this.appointment.location = newValue
+    },
+
+    createdCategory(newValue) {
+      this.appointment.category = newValue
     },
   },
 
@@ -190,6 +192,10 @@ export default defineComponent({
     ...mapActions("contacts", ["getContacts"]),
     ...mapActions("locations", ["getLocations"]),
     ...mapActions("categories", ["getCategories"]),
+    ...mapMutations("shortcuts", [
+      "setShortcutCreateDialog",
+      "setShortcutCreateEntity",
+    ]),
     validateAppointmentForm() {
       this.$refs.nameInput.validate()
       this.$refs.startAtInput.validate()
@@ -224,8 +230,8 @@ export default defineComponent({
     },
 
     openCreateDialog(entity) {
-      this.entityToBeCreated = entity
-      this.createDialog = true
+      this.setShortcutCreateEntity(entity)
+      this.setShortcutCreateDialog(true)
     },
   },
 })

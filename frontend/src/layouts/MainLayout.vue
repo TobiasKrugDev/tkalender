@@ -113,6 +113,15 @@
           </q-item-section>
         </q-item>
       </q-list>
+
+      <q-dialog ref="shortcutCreateDialog" v-model="createDialog" persistent>
+        <DialogCard :title="dialogCardTitle">
+          <ItemCreate
+            :entity="shortcutCreateEntity"
+            @item-created="onItemCreated"
+          />
+        </DialogCard>
+      </q-dialog>
     </q-drawer>
 
     <q-page-container class="page-container-background">
@@ -124,6 +133,8 @@
 <script>
 import { defineComponent } from "vue"
 import MenuLink from "components/MenuLink.vue"
+import DialogCard from "components/DialogCard.vue"
+import ItemCreate from "components/ItemCreate.vue"
 
 const linksList = [
   {
@@ -158,11 +169,14 @@ const linksList = [
   },
 ]
 
+import { mapState, mapMutations } from "vuex"
 export default defineComponent({
   name: "MainLayout",
 
   components: {
     MenuLink,
+    DialogCard,
+    ItemCreate,
   },
 
   data() {
@@ -170,10 +184,41 @@ export default defineComponent({
       searchInput: "",
       essentialLinks: linksList,
       leftDrawerOpen: false,
+      createDialog: false,
     }
   },
 
+  computed: {
+    ...mapState("shortcuts", ["shortcutCreateDialog", "shortcutCreateEntity"]),
+    dialogCardTitle() {
+      if (this.shortcutCreateEntity === "contact") {
+        return "Neuer Kontakt"
+      } else if (this.shortcutCreateEntity === "location") {
+        return "Neuer Ort"
+      } else {
+        return "Neue Kategorie"
+      }
+    },
+  },
+
+  watch: {
+    shortcutCreateDialog(newValue) {
+      if (newValue === true) this.createDialog = true
+    },
+
+    createDialog(newValue) {
+      if (newValue === false) {
+        this.setShortcutCreateEntity = ""
+        this.setShortcutCreateDialog(false)
+      }
+    },
+  },
+
   methods: {
+    ...mapMutations("shortcuts", [
+      "setShortcutCreateDialog",
+      "setShortcutCreateEntity",
+    ]),
     navigateToSearch() {
       if (this.searchInput) {
         const queryString = "/search/" + encodeURIComponent(this.searchInput)
@@ -184,6 +229,10 @@ export default defineComponent({
 
     toggleLeftDrawer() {
       this.leftDrawerOpen = !this.leftDrawerOpen
+    },
+
+    onItemCreated() {
+      this.$refs.shortcutCreateDialog.hide()
     },
   },
 })
