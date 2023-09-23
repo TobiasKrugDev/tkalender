@@ -183,10 +183,6 @@ export default defineComponent({
 
   emits: ["searchResultsFetched"],
 
-  computed: {
-    ...mapState("locations", ["locations"]),
-  },
-
   data() {
     return {
       selectedLocation: null,
