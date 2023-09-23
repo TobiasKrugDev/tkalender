@@ -2,7 +2,7 @@
   <AppointmentForm
     v-if="entity === 'appointment'"
     ref="appointmentForm"
-    :initial-contact-data="copiedItemData"
+    :initial-appointment-data="copiedItemData"
   />
   <ContactForm
     v-if="entity === 'contact'"
