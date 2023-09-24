@@ -9,6 +9,7 @@
         public $endAt;
         public $location;
         public $category;
+        public $contacts;
         public $icon;
 
         public $limit;
@@ -160,8 +161,28 @@
             $stmt->bindParam(':icon', $this->icon);
 
             $stmt->execute();
-            // Return ID of created item
+
             $createdAppointmentID = $this->conn->lastInsertId();
+
+            // Add appointment contact connections
+            foreach ($this->contacts as $contact) {
+                $query = 'INSERT INTO participations 
+                SET 
+                    appointment = :appointmentID,
+                    contact = :contactID';
+
+                $stmt = $this->conn->prepare($query);
+
+                // Sanitize user input
+                $contactID = htmlspecialchars(strip_tags($contact));
+
+                $stmt->bindParam(':appointmentID', $createdAppointmentID);
+                $stmt->bindParam(':contactID', $contactID);
+
+                $stmt->execute();
+            }
+
+            // Return ID of created item
             return $createdAppointmentID;
         }
 
@@ -200,13 +221,31 @@
             $stmt->bindParam(':icon', $this->icon);
             $stmt->bindParam(':id', $this->id);
 
-            if ($stmt->execute()) {
-                return true;
-            }
+            $stmt->execute();
 
-            // Print error message
-            printf("Error: %s.\n", $stmt->error);
-            return false;
+            // Update appointment contact connections
+            $query = 'DELETE FROM participations WHERE appointment = :id';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $this->id);
+
+            $stmt->execute();
+
+            foreach ($this->contacts as $contact) {
+                $query = 'INSERT INTO participations 
+                SET 
+                    appointment = :appointmentID,
+                    contact = :contactID';
+
+                $stmt = $this->conn->prepare($query);
+
+                // Sanitize user input
+                $contactID = htmlspecialchars(strip_tags($contact));
+
+                $stmt->bindParam(':appointmentID', $this->id);
+                $stmt->bindParam(':contactID', $contactID);
+
+                $stmt->execute();
+            }
         }
 
         // Delete Appointment

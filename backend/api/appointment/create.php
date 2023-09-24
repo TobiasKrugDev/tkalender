@@ -8,6 +8,7 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
+    include_once '../../models/Contact.php';
 
     // Instantiate DB & connect
     $database = new Database();
@@ -23,6 +24,7 @@
     $appointment->endAt = $data->endAt;
     $appointment->location = $data->location;
     $appointment->category = $data->category;
+    $appointment->contacts = $data->contacts;
     $appointment->icon = $data->icon;
 
     $createdAppointmentID = $appointment->create();
@@ -42,5 +44,27 @@
         'category' => $createdAppointment->category,
         'icon' => $createdAppointment->icon,
     );
+
+    // Fill contacts array
+    $appointment_array['contacts'] = array();
+
+    $contact = new Contact($db);
+    $contact->appointmentFilter = $createdAppointment->id;
+    $contactsResult = $contact->read();
+
+    while($contactRow = $contactsResult->fetch(PDO::FETCH_ASSOC)) {
+        extract($contactRow);
+        $contact_item = array(
+            'id' => $id,
+            'firstname' => $firstname,
+            'lastname' => $lastname,
+            'description' => $description,
+            'phoneNumber' => $phone_number,
+            'emailAddress' => $email_address,
+            'image' => $image,
+        );
+
+        array_push($appointment_array['contacts'], $contact_item);
+    }
 
     print_r(json_encode($appointment_array));
