@@ -218,7 +218,7 @@ export default defineComponent({
     ...mapState("appointments", [
       "appointments",
       "totalItems",
-      "createdAppontment",
+      "createdAppointment",
       "updatedAppointment",
     ]),
 
@@ -314,7 +314,7 @@ export default defineComponent({
     },
 
     onAppointmentCreate() {
-      this.selectedAppointment = this.createdAppontment
+      this.selectedAppointment = this.createdAppointment
       this.dialogMode = "show"
 
       // Refresh category list

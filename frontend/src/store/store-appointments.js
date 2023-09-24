@@ -1,4 +1,5 @@
 import { api, axios } from "src/boot/axios"
+import { date } from "quasar"
 
 const state = {
   appointments: [],
@@ -54,6 +55,13 @@ const actions = {
 
   // POST / Create Appointment
   async createAppointment({ commit }, appointment) {
+    // Convert datetimes into backend format
+    const jsStartAt = new Date(appointment.startAt)
+    const jsEndAt = new Date(appointment.endAt)
+
+    appointment.startAt = date.formatDate(jsStartAt, "YYYY-MM-DD HH:mm:00")
+    appointment.endAt = date.formatDate(jsEndAt, "YYYY-MM-DD HH:mm:00")
+
     const response = await axios.post("/api/appointment/create", appointment, {
       headers: {
         "Content-Type": "application/json",
