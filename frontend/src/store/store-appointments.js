@@ -54,7 +54,8 @@ const actions = {
   },
 
   // POST / Create Appointment
-  async createAppointment({ commit }, appointment) {
+  async createAppointment({ commit }, payloadAppointment) {
+    const appointment = { ...payloadAppointment } // Prevent side effects in components
     // Convert datetimes into backend format
     const jsStartAt = new Date(appointment.startAt)
     const jsEndAt = new Date(appointment.endAt)
@@ -64,6 +65,7 @@ const actions = {
 
     if (appointment.location) appointment.location = appointment.location.id
     if (appointment.category) appointment.category = appointment.category.id
+    appointment.contacts = appointment.contacts.map((contact) => contact.id)
 
     const response = await axios.post("/api/appointment/create", appointment, {
       headers: {
@@ -75,7 +77,19 @@ const actions = {
   },
 
   // PUT / Update Appointment
-  async updateAppointment({ commit }, appointment) {
+  async updateAppointment({ commit }, payloadAppointment) {
+    const appointment = { ...payloadAppointment } // Prevent side effects in components
+    // Convert datetimes into backend format
+    const jsStartAt = new Date(appointment.startAt)
+    const jsEndAt = new Date(appointment.endAt)
+
+    appointment.startAt = date.formatDate(jsStartAt, "YYYY-MM-DD HH:mm:00")
+    appointment.endAt = date.formatDate(jsEndAt, "YYYY-MM-DD HH:mm:00")
+
+    if (appointment.location) appointment.location = appointment.location.id
+    if (appointment.category) appointment.category = appointment.category.id
+    if (appointment.contacts)
+      appointment.contacts = appointment.contacts.map((contact) => contact.id)
     const response = await axios.put("/api/appointment/update", appointment, {
       params: {
         id: appointment.id,
