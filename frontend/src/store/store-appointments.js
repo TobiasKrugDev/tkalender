@@ -62,6 +62,9 @@ const actions = {
     appointment.startAt = date.formatDate(jsStartAt, "YYYY-MM-DD HH:mm:00")
     appointment.endAt = date.formatDate(jsEndAt, "YYYY-MM-DD HH:mm:00")
 
+    if (appointment.location) appointment.location = appointment.location.id
+    if (appointment.category) appointment.category = appointment.category.id
+
     const response = await axios.post("/api/appointment/create", appointment, {
       headers: {
         "Content-Type": "application/json",

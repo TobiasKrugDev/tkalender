@@ -85,8 +85,9 @@
 
         // Get Single Appointment
         public function read_single() {
-
-            $query = 'SELECT * FROM appointments WHERE id = ?';
+            $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
+            FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
+            WHERE appointments.id = ?';
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(1, $this->id);
             $stmt->execute();
@@ -94,13 +95,35 @@
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
             $this->id = $row['id'];
-            $this->name = $row['name'];
-            $this->description = $row['description'];
+            $this->name = $row['appointmentName'];
+            $this->description = $row['appointmentDescription'];
             $this->startAt = $row['startAt'];
             $this->endAt = $row['endAt'];
-            $this->location = $row['location'];
-            $this->category = $row['category'];
             $this->icon = $row['icon'];
+
+            if (isset($row['locationID'])) {
+                $this->location = array(
+                    'id' => $row['locationID'],
+                    'name' => $row['locationName'],
+                    'description' => $row['locationDescription'],
+                    'streetAddress' => $row['streetAddress'],
+                    'postalCode' => $row['postalCode'],
+                    'city' => $row['city']
+                );
+            } else {
+                $this->location = null;
+            }
+
+            if (isset($row['categoryID'])) {
+                $this->category = array(
+                    'id' => $row['categoryID'],
+                    'name' => $row['categoryName'],
+                    'description' => $row['categoryDescription'],
+                    'color' => $row['color'],
+                );
+            } else {
+                $this->category = null;
+            }
 
             return $stmt;
         }
