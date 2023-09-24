@@ -75,7 +75,13 @@ export default defineComponent({
   computed: {
     // Prevent vuex mutate errors
     copiedItemData() {
-      return { ...this.item }
+      if (this.entity === "appointment") {
+        const appointmentCopy = { ...this.item }
+        appointmentCopy.contacts = [...appointmentCopy.contacts]
+        return appointmentCopy
+      } else {
+        return { ...this.item }
+      }
     },
   },
 
