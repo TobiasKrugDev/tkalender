@@ -2,13 +2,20 @@
   <div>
     <vue-cal
       active-view="week"
-      style="height: 80vh; width: 80vw"
+      style="height: 75vh; width: 100%"
       :disable-views="['years', 'year']"
       locale="de"
       :events="events"
       events-on-month-view="short"
       :on-event-click="onEventClick"
-    />
+      today-button
+    >
+      <template #today-button>
+        <q-btn flat color="white" icon="gps_fixed">
+          <q-tooltip> Heute </q-tooltip>
+        </q-btn>
+      </template>
+    </vue-cal>
   </div>
 </template>
 
@@ -83,5 +90,24 @@ export default defineComponent({
 
 .vuecal__event:hover {
   cursor: pointer;
+}
+
+.vuecal__flex .vuecal__menu {
+  background-color: $primary;
+  color: white;
+}
+
+.vuecal__title-bar {
+  background-color: rgba(33, 33, 206, 0.7);
+  color: white;
+}
+
+.vuecal__title-bar button {
+  color: white;
+}
+
+.vuecal__menu {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 </style>
