@@ -35,36 +35,38 @@ export default defineComponent({
 
   computed: {
     ...mapState("appointments", ["appointments"]),
+
+    events() {
+      const result = []
+      for (let appointment of this.appointments) {
+        const event = {
+          start: appointment.startAt,
+          end: appointment.endAt,
+          title: appointment.name,
+          // class: appointment.category ? appointment.category : "no-category",
+          class: "no-category", // ToDo: dynamic category color
+        }
+
+        result.push(event)
+      }
+
+      return result
+    },
   },
 
   data() {
     return {
       selectedAppointment: null,
-      events: [],
     }
   },
 
   mounted() {
-    this.handleAppointments()
+    // ToDo: dynamic appointment loading
+    this.getAppointments({ rowsPerPage: 25, page: 1 })
   },
 
   methods: {
     ...mapActions("appointments", ["getAppointments"]),
-
-    async handleAppointments() {
-      await this.getAppointments()
-      this.events = []
-      for (let appointment of this.appointments) {
-        let event = {
-          start: new Date(appointment.startAt),
-          end: new Date(appointment.endAt),
-          title: appointment.name,
-          class: appointment.category ? appointment.category : "no-category",
-        }
-
-        this.events = [...this.events, event]
-      }
-    },
 
     onEventClick(event, e) {
       this.selectedAppointment = event
@@ -109,5 +111,9 @@ export default defineComponent({
 .vuecal__menu {
   border-top-left-radius: 8px;
   border-top-right-radius: 8px;
+}
+
+.vuecal__event {
+  border-radius: 4px;
 }
 </style>
