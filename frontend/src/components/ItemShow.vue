@@ -31,7 +31,7 @@
                 outline
                 color="primary"
                 :label="showMap ? 'Karte schließen' : 'Karte öffnen'"
-                icon="location_on"
+                :icon="showMap ? 'close' : 'location_on'"
                 @click="toggleMapEmbed"
               />
             </div>
