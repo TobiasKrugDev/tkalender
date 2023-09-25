@@ -16,6 +16,37 @@
         </q-btn>
       </template>
     </vue-cal>
+
+    <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
+      <DialogCard :title="dialogCardTitle">
+        <ItemCreate
+          v-if="dialogMode === 'create'"
+          entity="appointment"
+          @item-created="onAppointmentCreate"
+        />
+        <ItemShow
+          v-if="dialogMode === 'show'"
+          :item="selectedAppointment"
+          entity="appointment"
+          @delete-click="onDeleteClick"
+          @edit-click="openUpdateDialog"
+        />
+        <ItemUpdate
+          v-if="dialogMode === 'update'"
+          :item="selectedAppointment"
+          entity="appointment"
+          @item-updated="onAppointmentUpdate"
+        />
+      </DialogCard>
+    </q-dialog>
+
+    <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
+      <DeleteConfirm
+        :item="selectedAppointment"
+        entity="appointment"
+        @item-deleted="onItemDeleted"
+      />
+    </q-dialog>
   </div>
 </template>
 
@@ -24,6 +55,11 @@ import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
 import VueCal from "vue-cal"
 import "vue-cal/dist/vuecal.css"
+import DialogCard from "components/DialogCard.vue"
+import ItemCreate from "src/components/ItemCreate.vue"
+import ItemShow from "src/components/ItemShow.vue"
+import ItemUpdate from "src/components/ItemUpdate.vue"
+import DeleteConfirm from "src/components/DeleteConfirm.vue"
 
 export default defineComponent({
   // eslint-disable-next-line vue/multi-word-component-names
@@ -31,15 +67,25 @@ export default defineComponent({
 
   components: {
     VueCal,
+    DialogCard,
+    ItemCreate,
+    ItemShow,
+    ItemUpdate,
+    DeleteConfirm,
   },
 
   computed: {
-    ...mapState("appointments", ["appointments"]),
+    ...mapState("appointments", [
+      "appointments",
+      "createdAppointment",
+      "updatedAppointment",
+    ]),
 
     events() {
       const result = []
       for (let appointment of this.appointments) {
         const event = {
+          id: appointment.id,
           start: appointment.startAt,
           end: appointment.endAt,
           title: appointment.name,
@@ -52,11 +98,24 @@ export default defineComponent({
 
       return result
     },
+
+    dialogCardTitle() {
+      if (this.dialogMode === "show") {
+        return this.selectedAppointment.name
+      } else if (this.dialogMode === "update") {
+        return "Termin bearbeiten"
+      } else {
+        return "Neuer Termin"
+      }
+    },
   },
 
   data() {
     return {
       selectedAppointment: null,
+      dialogMode: "",
+      itemDialog: false,
+      showDeleteDialog: false,
     }
   },
 
@@ -68,13 +127,57 @@ export default defineComponent({
   methods: {
     ...mapActions("appointments", ["getAppointments"]),
 
+    openCreateDialog() {
+      this.dialogMode = "create"
+      this.itemDialog = true
+    },
+
+    openUpdateDialog() {
+      this.dialogMode = "update"
+      this.itemDialog = true
+    },
+
+    onAppointmentCreate() {
+      this.selectedAppointment = this.createdAppointment
+      this.dialogMode = "show"
+
+      // Refresh category list
+      // ToDo: dynamic appointment loading
+      this.getAppointments({ rowsPerPage: 25, page: 1 })
+    },
+
+    onAppointmentUpdate() {
+      this.selectedAppointment = this.updatedAppointment
+      this.dialogMode = "show"
+
+      // Refresh category list
+      // ToDo: dynamic appointment loading
+      this.getAppointments({ rowsPerPage: 25, page: 1 })
+    },
+
     onEventClick(event, e) {
-      this.selectedAppointment = event
-      console.log(event)
-      // this.showDialog = true
+      this.selectedAppointment = this.appointments.find(
+        (appointment) => appointment.id === event.id
+      )
+      this.dialogMode = "show"
+      this.itemDialog = true
 
       // Prevent navigating to narrower view (default vue-cal behavior).
       e.stopPropagation()
+    },
+
+    onDeleteClick() {
+      this.showDeleteDialog = true
+    },
+
+    onItemDeleted() {
+      // Close dialogs
+      this.$refs.deleteConfirm.hide()
+      this.$refs.itemDialog.hide()
+
+      // Refresh category list
+      // ToDo: dynamic appointment loading
+      this.getAppointments({ rowsPerPage: 25, page: 1 })
     },
   },
 })
