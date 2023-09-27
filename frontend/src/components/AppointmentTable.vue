@@ -67,6 +67,17 @@
       <template #pagination>
         <!-- Hide default pagination -->
       </template>
+      <template #top-left>
+        <q-toggle
+          v-model="timespanToggle"
+          color="primary"
+          label="Nur anstehende Termine"
+          left-label
+          checked-icon="check"
+          unchecked-icon="clear"
+          keep-color
+        />
+      </template>
       <template v-if="!searchMode" #top-right>
         <q-input
           outlined
@@ -232,6 +243,7 @@ export default defineComponent({
       showDeleteDialog: false,
       dialogMode: "",
       loading: false,
+      timespanToggle: false,
       pagination: {
         // sortBy: 'name',
         // descending: false,
@@ -395,3 +407,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scope>
+.q-toggle__label {
+  color: #546e7a;
+}
+</style>
