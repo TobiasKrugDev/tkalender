@@ -55,12 +55,7 @@
     <div v-if="item.category" class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Kategorie:</div>
       <div>
-        <!-- ToDo: Text color depending on background color -->
-        <q-chip
-          text-color="white"
-          :style="'background-color: ' + item.category.color"
-          >{{ item.category.name }}</q-chip
-        >
+        <CategoryChip :category="item.category" />
       </div>
     </div>
   </div>
@@ -147,6 +142,7 @@
 import { defineComponent } from "vue"
 import { date } from "quasar"
 import ContactChip from "./ContactChip.vue"
+import CategoryChip from "./CategoryChip.vue"
 import GoogleMapsEmbed from "./GoogleMapsEmbed.vue"
 
 export default defineComponent({
@@ -154,7 +150,7 @@ export default defineComponent({
 
   components: {
     ContactChip,
-    ContactChip,
+    CategoryChip,
     GoogleMapsEmbed,
   },
 

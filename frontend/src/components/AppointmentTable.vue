@@ -42,13 +42,8 @@
       <template #body-cell-category="props">
         <td class="text-left">
           <span v-if="props.row.category">
-            <!-- ToDo: Text color depending on background color -->
-            <q-chip
-              text-color="white"
-              :style="'background-color: ' + props.row.category.color"
-              >{{ props.row.category.name }}</q-chip
-            ></span
-          >
+            <CategoryChip :category="props.row.category"
+          /></span>
         </td>
       </template>
       <template #body-cell-actions="props">
