@@ -67,7 +67,7 @@
       <template #pagination>
         <!-- Hide default pagination -->
       </template>
-      <template #top-left>
+      <template v-if="!searchMode" #top-left>
         <q-toggle
           v-model="timespanToggle"
           color="primary"
@@ -243,7 +243,7 @@ export default defineComponent({
       showDeleteDialog: false,
       dialogMode: "",
       loading: false,
-      timespanToggle: false,
+      timespanToggle: true,
       pagination: {
         // sortBy: 'name',
         // descending: false,
