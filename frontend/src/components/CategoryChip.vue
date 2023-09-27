@@ -1,12 +1,16 @@
 <!--- ToDo: Integrate CategryChip on all occasions -->
 <template>
-  <q-chip text-color="white" :style="'background-color: ' + category.color">
+  <q-chip
+    :text-color="textColor"
+    :style="'background-color: ' + category.color"
+  >
     {{ category.name }}
   </q-chip>
 </template>
 
 <script>
 import { defineComponent } from "vue"
+import { colors } from "quasar"
 
 export default defineComponent({
   name: "CategoryChip",
@@ -20,6 +24,16 @@ export default defineComponent({
 
   data() {
     return {}
+  },
+
+  computed: {
+    textColor() {
+      if (colors) {
+        return colors.brightness(this.category.color) < 128 ? "white" : "black"
+      } else {
+        return "black"
+      }
+    },
   },
 
   methods: {},
