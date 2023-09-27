@@ -20,6 +20,7 @@
     $appointment->offset = isset($_GET['page']) ? $appointment->limit * ($_GET['page'] - 1) : 0;
     $appointment->sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
     $appointment->orderDirection = isset($_GET['orderDirection']) ? $_GET['orderDirection'] : 'ASC';
+    $appointment->timespanStart = isset($_GET['futureAppointmentsOnly']) && $_GET['futureAppointmentsOnly'] == true ? date("Y-m-d H:i:s") : "1970-01-01 00:00:00";
     $appointment->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
 
     $result = $appointment->read();

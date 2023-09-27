@@ -314,6 +314,13 @@ export default defineComponent({
     },
   },
 
+  watch: {
+    timespanToggle() {
+      this.pagination.page = 1
+      this.getAppointmentData()
+    },
+  },
+
   async mounted() {
     await this.getAppointmentData()
     if (this.searchMode) {
@@ -359,6 +366,7 @@ export default defineComponent({
       await this.getAppointments({
         ...this.pagination,
         filter: this.filter,
+        futureAppointmentsOnly: this.timespanToggle,
       })
       this.pagination.rowsNumber = this.totalItems
       this.loading = false

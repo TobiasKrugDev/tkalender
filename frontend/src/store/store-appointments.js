@@ -30,7 +30,7 @@ const actions = {
   // GET Appointments
   async getAppointments(
     { commit },
-    { rowsPerPage, page, sortBy, desc, filter }
+    { rowsPerPage, page, sortBy, desc, filter, futureAppointmentsOnly }
   ) {
     const params = { itemsPerPage: rowsPerPage, page, filter }
     if (sortBy) {
@@ -41,6 +41,8 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
+
+    if (futureAppointmentsOnly) params.futureAppointmentsOnly = true
     const response = await api.get("/appointment/read", { params })
     commit("setAppointments", response.data.items)
     commit("setTotalItems", response.data.totalItems)
