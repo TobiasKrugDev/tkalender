@@ -52,9 +52,11 @@
                 $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                 $stmt->execute();
             } else {
+                // ToDo: Look at this beauty
                 $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
                 FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
                 WHERE appointments.name LIKE ? OR appointments.description LIKE ? -- ToDo: Add more properties
+                ORDER BY startAt ASC
                 LIMIT ?, ?';
                 $stmt = $this->conn->prepare($query);
                 $searchQuery = "%".$this->searchQuery."%";
