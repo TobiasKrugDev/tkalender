@@ -1,4 +1,3 @@
-<!--- ToDo: Integrate CategryChip on all occasions -->
 <template>
   <q-chip
     :text-color="textColor"
