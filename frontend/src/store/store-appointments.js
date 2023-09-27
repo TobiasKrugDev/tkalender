@@ -3,14 +3,20 @@ import { date } from "quasar"
 
 const state = {
   appointments: [],
+  calendarAppointments: [],
   createdAppointment: null,
   updatedAppointment: null,
   totalItems: 0,
+  calendarTotalItems: 0,
 }
 
 const mutations = {
   setAppointments(state, value) {
     state.appointments = value
+  },
+
+  setCalendarAppointments(state, value) {
+    state.calendarAppointments = value
   },
 
   setCreatedAppointment(state, value) {
@@ -23,6 +29,10 @@ const mutations = {
 
   setTotalItems(state, value) {
     state.totalItems = value
+  },
+
+  setCalendarTotalItems(state, value) {
+    state.calendarTotalItems = value
   },
 }
 
@@ -46,6 +56,22 @@ const actions = {
     const response = await api.get("/appointment/read", { params })
     commit("setAppointments", response.data.items)
     commit("setTotalItems", response.data.totalItems)
+  },
+
+  async getCalendarAppointments({ commit }, { start, end }) {
+    console.log(start)
+    const calendarTimespanStart = date.formatDate(start, "YYYY-MM-DD HH:mm:00")
+    const calendarTimespanEnd = date.formatDate(end, "YYYY-MM-DD HH:mm:00")
+
+    const params = {
+      calendarMode: true,
+      calendarTimespanStart,
+      calendarTimespanEnd,
+    }
+
+    const response = await api.get("/appointment/read", { params })
+    commit("setCalendarAppointments", response.data.items)
+    commit("setCalendarTotalItems", response.data.totalItems)
   },
 
   // DELETE Appointment

@@ -9,6 +9,8 @@
       events-on-month-view="short"
       :on-event-click="onEventClick"
       today-button
+      @ready="onCalendarReady"
+      @view-change="onViewChange($event)"
     >
       <template #today-button>
         <q-btn flat color="white" icon="gps_fixed">
@@ -53,7 +55,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
-import { colors } from "quasar"
+import { colors, date } from "quasar"
 import VueCal from "vue-cal"
 import "vue-cal/dist/vuecal.css"
 import DialogCard from "components/DialogCard.vue"
@@ -77,7 +79,7 @@ export default defineComponent({
 
   computed: {
     ...mapState("appointments", [
-      "appointments",
+      "calendarAppointments",
       "createdAppointment",
       "updatedAppointment",
     ]),
@@ -85,7 +87,7 @@ export default defineComponent({
 
     events() {
       const result = []
-      for (let appointment of this.appointments) {
+      for (let appointment of this.calendarAppointments) {
         const event = {
           id: appointment.id,
           start: appointment.startAt,
@@ -119,17 +121,14 @@ export default defineComponent({
       dialogMode: "",
       itemDialog: false,
       showDeleteDialog: false,
+      currentStartMonth: new Date().getMonth(),
+      timespanStart: null,
+      calendarTimespanEnd: null,
     }
   },
 
-  async mounted() {
-    await this.getAppointmentCategoryColors()
-    // ToDo: dynamic appointment loading
-    this.getAppointments({ rowsPerPage: 25, page: 1 })
-  },
-
   methods: {
-    ...mapActions("appointments", ["getAppointments"]),
+    ...mapActions("appointments", ["getCalendarAppointments"]),
     ...mapActions("categories", ["getCategories"]),
 
     // Generate dynamic CSS classes for appointment background colors depending on category
@@ -163,7 +162,10 @@ export default defineComponent({
 
       // Refresh category list
       // ToDo: dynamic appointment loading
-      this.getAppointments({ rowsPerPage: 25, page: 1 })
+      this.getCalendarAppointments({
+        start: this.timespanStart,
+        end: this.timespanEnd,
+      })
     },
 
     onAppointmentUpdate() {
@@ -172,11 +174,14 @@ export default defineComponent({
 
       // Refresh category list
       // ToDo: dynamic appointment loading
-      this.getAppointments({ rowsPerPage: 25, page: 1 })
+      this.getCalendarAppointments({
+        start: this.timespanStart,
+        end: this.timespanEnd,
+      })
     },
 
     onEventClick(event, e) {
-      this.selectedAppointment = this.appointments.find(
+      this.selectedAppointment = this.calendarAppointments.find(
         (appointment) => appointment.id === event.id
       )
       this.dialogMode = "show"
@@ -197,7 +202,55 @@ export default defineComponent({
 
       // Refresh category list
       // ToDo: dynamic appointment loading
-      this.getAppointments({ rowsPerPage: 25, page: 1 })
+      this.getCalendarAppointments({
+        start: this.timespanStart,
+        end: this.timespanEnd,
+      })
+    },
+
+    async onCalendarReady(e) {
+      await this.getAppointmentCategoryColors()
+
+      const start = new Date(
+        e.startDate.getFullYear(),
+        e.startDate.getMonth() - 1
+      )
+      const end = new Date(
+        e.startDate.getFullYear(),
+        e.startDate.getMonth() + 1
+      )
+
+      this.timespanStart = start
+      this.timespanEnd = end
+
+      this.getCalendarAppointments({
+        start: this.timespanStart,
+        end: this.timespanEnd,
+      })
+    },
+
+    onViewChange(e) {
+      // Fetch appointments on month change
+      if (e.startDate.getMonth() !== this.currentStartMonth) {
+        const start = new Date(
+          e.startDate.getFullYear(),
+          e.startDate.getMonth() - 1
+        )
+        const end = new Date(
+          e.startDate.getFullYear(),
+          e.startDate.getMonth() + 1
+        )
+
+        this.timespanStart = start
+        this.timespanEnd = end
+
+        this.getCalendarAppointments({
+          start: this.timespanStart,
+          end: this.timespanEnd,
+        })
+
+        this.currentStartMonth = e.startDate.getMonth()
+      }
     },
   },
 })

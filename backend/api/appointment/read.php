@@ -22,6 +22,9 @@
     $appointment->orderDirection = isset($_GET['orderDirection']) ? $_GET['orderDirection'] : 'ASC';
     $appointment->timespanStart = isset($_GET['futureAppointmentsOnly']) && $_GET['futureAppointmentsOnly'] == true ? date("Y-m-d H:i:s") : "1970-01-01 00:00:00";
     $appointment->searchQuery = isset($_GET['filter']) ? $_GET['filter'] : '';
+    $appointment->calendarMode = isset($_GET['calendarMode']) ? $_GET['calendarMode'] : false;
+    $appointment->calendarTimespanStart = isset($_GET['calendarTimespanStart']) ? $_GET['calendarTimespanStart'] : date("Y-m-d H:i:s");
+    $appointment->calendarTimespanEnd = isset($_GET['calendarTimespanEnd']) ? $_GET['calendarTimespanEnd'] : date("Y-m-d H:i:s");
 
     $result = $appointment->read();
 
