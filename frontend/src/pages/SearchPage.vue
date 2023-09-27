@@ -1,7 +1,14 @@
 <template>
   <q-page class="flex">
     <WrapperCard title="Suchergebnisse">
-      <!-- ToDo: AppointmentTable -->
+      <AppointmentTable
+        v-if="displayAppointmentTable"
+        :searchMode="true"
+        class="q-mb-lg search-result-table"
+        @search-results-fetched="
+          (foundItems) => handleSearchResults('appointment', foundItems)
+        "
+      />
       <ContactTable
         v-if="displayContactTable"
         :searchMode="true"
@@ -47,6 +54,7 @@ import { defineComponent } from "vue"
 import { useQuasar } from "quasar"
 // import FABCreateButton from "components/FABCreateButton.vue"
 import WrapperCard from "components/WrapperCard.vue"
+import AppointmentTable from "components/AppointmentTable.vue"
 import ContactTable from "components/ContactTable.vue"
 import LocationTable from "components/LocationTable.vue"
 import CategoryTable from "components/CategoryTable.vue"
@@ -57,6 +65,7 @@ export default defineComponent({
   components: {
     // FABCreateButton,
     WrapperCard,
+    AppointmentTable,
     ContactTable,
     LocationTable,
     CategoryTable,
@@ -96,11 +105,11 @@ export default defineComponent({
         }
       }
 
-      // ToDo: Adjust this number and if statement
-      if (this.fetchedEntities.length === 3) {
+      if (this.fetchedEntities.length === 4) {
         // Hide loading screen
         this.$q.loading.hide()
         if (
+          this.displayAppointmentTable === false &&
           this.displayContactTable === false &&
           this.displayLocationTable === false &&
           this.displayCategoryTable === false
