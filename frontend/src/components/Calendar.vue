@@ -53,6 +53,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
+import { colors } from "quasar"
 import VueCal from "vue-cal"
 import "vue-cal/dist/vuecal.css"
 import DialogCard from "components/DialogCard.vue"
@@ -80,6 +81,7 @@ export default defineComponent({
       "createdAppointment",
       "updatedAppointment",
     ]),
+    ...mapState("categories", ["categories"]),
 
     events() {
       const result = []
@@ -89,8 +91,9 @@ export default defineComponent({
           start: appointment.startAt,
           end: appointment.endAt,
           title: appointment.name,
-          // class: appointment.category ? appointment.category : "no-category",
-          class: "no-category", // ToDo: dynamic category color
+          class: appointment.category
+            ? `calendar-appointment-category-${appointment.category.id}`
+            : "no-category",
         }
 
         result.push(event)
@@ -119,13 +122,30 @@ export default defineComponent({
     }
   },
 
-  mounted() {
+  async mounted() {
+    await this.getAppointmentCategoryColors()
     // ToDo: dynamic appointment loading
     this.getAppointments({ rowsPerPage: 25, page: 1 })
   },
 
   methods: {
     ...mapActions("appointments", ["getAppointments"]),
+    ...mapActions("categories", ["getCategories"]),
+
+    // Generate dynamic CSS classes for appointment background colors depending on category
+    async getAppointmentCategoryColors() {
+      await this.getCategories({ rowsPerPage: 25, page: 1 }) // ToDo: Fetch all pages if there are more than 25 categories
+
+      const styleSheet = document.styleSheets[document.styleSheets.length - 1]
+      for (let category of this.categories) {
+        const selectorClass = `calendar-appointment-category-${category.id}`
+        const fontColor =
+          colors.brightness(category.color) < 128 ? "white" : "black"
+        styleSheet.insertRule(
+          `.${selectorClass}{ background-color: ${category.color}; color: ${fontColor}; }`
+        )
+      }
+    },
 
     openCreateDialog() {
       this.dialogMode = "create"
