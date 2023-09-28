@@ -3,6 +3,7 @@
     <div class="row">
       <div class="col-sm col-12 left-dashboard-column q-my-md">
         <div class="dashboard-btn-container shadow-7">
+          <!-- ToDo: Maybe put these buttons into a reusable component -->
           <q-btn
             to="/contacts"
             icon="mdi-account-group"
