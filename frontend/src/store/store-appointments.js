@@ -8,6 +8,8 @@ const state = {
   updatedAppointment: null,
   totalItems: 0,
   calendarTotalItems: 0,
+  createdTimespanStart: "",
+  createdTimespanEnd: "",
 }
 
 const mutations = {
@@ -33,6 +35,14 @@ const mutations = {
 
   setCalendarTotalItems(state, value) {
     state.calendarTotalItems = value
+  },
+
+  setCreatedTimespanStart(state, value) {
+    state.createdTimespanStart = value
+  },
+
+  setCreatedTimespanEnd(state, value) {
+    state.createdTimespanEnd = value
   },
 }
 

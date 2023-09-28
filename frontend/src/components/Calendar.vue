@@ -15,12 +15,14 @@
         drag: true,
         resize: true,
         delete: false,
-        create: false,
+        create: true,
       }"
       :snap-to-time="15"
       @ready="onCalendarReady"
       @view-change="onViewChange"
       @event-change="onEventChange"
+      :on-event-create="onEventCreate"
+      @event-drag-create="onEventDragCreate"
     >
       <template #today-button>
         <q-btn flat color="white" icon="gps_fixed">
@@ -29,7 +31,12 @@
       </template>
     </vue-cal>
 
-    <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
+    <q-dialog
+      ref="itemDialog"
+      v-model="itemDialog"
+      persistent
+      @before-hide="onDialogHide"
+    >
       <DialogCard :title="dialogCardTitle">
         <ItemCreate
           v-if="dialogMode === 'create'"
@@ -64,7 +71,7 @@
 
 <script>
 import { defineComponent } from "vue"
-import { mapActions, mapState } from "vuex"
+import { mapActions, mapState, mapMutations } from "vuex"
 import { colors, date } from "quasar"
 import { getHolidays } from "feiertagejs"
 import VueCal from "vue-cal"
@@ -201,10 +208,15 @@ export default defineComponent({
       timespanStart: null,
       calendarTimespanEnd: null,
       holidays: [],
+      deleteEventFunction: () => {},
     }
   },
 
   methods: {
+    ...mapMutations("appointments", [
+      "setCreatedTimespanStart",
+      "setCreatedTimespanEnd",
+    ]),
     ...mapActions("appointments", [
       "getCalendarAppointments",
       "updateAppointment",
@@ -221,7 +233,7 @@ export default defineComponent({
         const fontColor =
           colors.brightness(category.color) < 128 ? "white" : "black"
         styleSheet.insertRule(
-          `.${selectorClass}{ background-color: ${category.color}; color: ${fontColor}; }`
+          `.${selectorClass}{ background-color: ${category.color}; border-color: ${category.color}; color: ${fontColor}; }`
         )
       }
     },
@@ -367,6 +379,26 @@ export default defineComponent({
 
       this.updateAppointment(appointment)
     },
+
+    onEventCreate(e, deleteEventFunction) {
+      this.deleteEventFunction = deleteEventFunction
+      return e
+    },
+
+    onEventDragCreate(e) {
+      this.setCreatedTimespanStart(
+        date.formatDate(e.start, "YYYY-MM-DD HH:mm:00")
+      )
+
+      this.setCreatedTimespanEnd(date.formatDate(e.end, "YYYY-MM-DD HH:mm:00"))
+      this.openCreateDialog()
+    },
+
+    onDialogHide() {
+      this.deleteEventFunction()
+      this.setCreatedTimespanStart("")
+      this.setCreatedTimespanEnd("")
+    },
   },
 })
 </script>
@@ -375,6 +407,8 @@ export default defineComponent({
 .vuecal__now-line {
   color: #06c;
 }
+
+.vuecal__event,
 .vuecal__event.no-category {
   background-color: rgba(3, 36, 252, 0.9);
   border: 1px solid rgb(3, 36, 252);

@@ -188,6 +188,7 @@ export default defineComponent({
   },
 
   computed: {
+    ...mapState("appointments", ["createdTimespanStart", "createdTimespanEnd"]),
     ...mapState("contacts", ["contacts", "createdContact"]),
     ...mapState("locations", ["locations", "createdLocation"]),
     ...mapState("categories", ["categories", "createdCategory"]),
@@ -211,6 +212,11 @@ export default defineComponent({
     if (this.initialAppointmentData) {
       this.appointment = this.initialAppointmentData
     }
+
+    if (this.createdTimespanStart)
+      this.appointment.startAt = this.createdTimespanStart
+    if (this.createdTimespanEnd)
+      this.appointment.endAt = this.createdTimespanEnd
   },
 
   methods: {
