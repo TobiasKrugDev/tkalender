@@ -114,6 +114,52 @@ export default defineComponent({
           class: "calendar-holiday",
           allDay: true,
         }
+        // feiertage.js's holiday naming is pretty ugly so we replace it with more readable titles
+        switch (holiday.name) {
+          case "NEUJAHRSTAG":
+            event.title = "Neujahr"
+            break
+          case "HEILIGEDREIKOENIGE":
+            event.title = "Hl. drei Könige"
+            break
+          case "KARFREITAG":
+            event.title = "Karfreitag"
+            break
+          case "OSTERMONTAG":
+            event.title = "Ostermontag"
+            break
+          case "TAG_DER_ARBEIT":
+            event.title = "Tag der Arbeit"
+            break
+          case "CHRISTIHIMMELFAHRT":
+            event.title = "Christi Himmelfahrt"
+            break
+          case "PFINGSTMONTAG":
+            event.title = "Pfingstmontag"
+            break
+          case "FRONLEICHNAM":
+            event.title = "Fronleichnam"
+            break
+          case "MARIAHIMMELFAHRT":
+            event.title = "Maria Himmelfahrt"
+            break
+          case "DEUTSCHEEINHEIT":
+            event.title = "Tag der dt. Einheit"
+            break
+          case "ALLERHEILIGEN":
+            event.title = "Allerheiligen"
+            break
+          case "ERSTERWEIHNACHTSFEIERTAG":
+            event.title = "1. Weihnachtsfeiertag"
+            break
+          case "ZWEITERWEIHNACHTSFEIERTAG":
+            event.title = "2. Weihnachtsfeiertag"
+            break
+          default:
+            event.title = holiday.name
+
+          //ToDo: maybe add holidays like Heiligabend, Silvester, Ostersonntag
+        }
 
         result.push(event)
       }
