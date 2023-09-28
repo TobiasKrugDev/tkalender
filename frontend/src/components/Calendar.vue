@@ -10,8 +10,17 @@
       show-all-day-events="short"
       :on-event-click="onEventClick"
       today-button
+      :editable-events="{
+        title: false,
+        drag: true,
+        resize: true,
+        delete: false,
+        create: false,
+      }"
+      :snap-to-time="15"
       @ready="onCalendarReady"
-      @view-change="onViewChange($event)"
+      @view-change="onViewChange"
+      @event-change="onEventChange"
     >
       <template #today-button>
         <q-btn flat color="white" icon="gps_fixed">
@@ -56,7 +65,7 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
-import { colors } from "quasar"
+import { colors, date } from "quasar"
 import { getHolidays } from "feiertagejs"
 import VueCal from "vue-cal"
 import "vue-cal/dist/vuecal.css"
@@ -113,6 +122,9 @@ export default defineComponent({
           title: holiday.name,
           class: "calendar-holiday",
           allDay: true,
+          draggable: false,
+          resizable: false,
+          isHoliday: true,
         }
         // feiertage.js's holiday naming is pretty ugly so we replace it with more readable titles
         switch (holiday.name) {
@@ -193,7 +205,10 @@ export default defineComponent({
   },
 
   methods: {
-    ...mapActions("appointments", ["getCalendarAppointments"]),
+    ...mapActions("appointments", [
+      "getCalendarAppointments",
+      "updateAppointment",
+    ]),
     ...mapActions("categories", ["getCategories"]),
 
     // Generate dynamic CSS classes for appointment background colors depending on category
@@ -246,6 +261,7 @@ export default defineComponent({
     },
 
     onEventClick(event, e) {
+      if (event.isHoliday) return // Do nothing if holiday is clicked
       this.selectedAppointment = this.calendarAppointments.find(
         (appointment) => appointment.id === event.id
       )
@@ -332,6 +348,24 @@ export default defineComponent({
 
         this.currentStartYear = e.startDate.getFullYear()
       }
+    },
+
+    onEventChange(e) {
+      if (e.event.isHoliday) return // Do nothing if holiday is clicked
+      this.selectedAppointment = this.calendarAppointments.find(
+        (appointment) => appointment.id === e.event.id
+      )
+
+      const appointment = { ...this.selectedAppointment } // Copy appointment to prevent vuex mutation errors
+
+      appointment.startAt = date.formatDate(
+        e.event.start,
+        "YYYY-MM-DD HH:mm:00"
+      )
+
+      appointment.endAt = date.formatDate(e.event.end, "YYYY-MM-DD HH:mm:00")
+
+      this.updateAppointment(appointment)
     },
   },
 })
