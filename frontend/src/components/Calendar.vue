@@ -23,6 +23,7 @@
       @event-change="onEventChange"
       :on-event-create="onEventCreate"
       @event-drag-create="onEventDragCreate"
+      @cell-click="onCellClick"
     >
       <template #today-button>
         <q-btn flat color="white" icon="gps_fixed">
@@ -398,6 +399,11 @@ export default defineComponent({
       this.deleteEventFunction()
       this.setCreatedTimespanStart("")
       this.setCreatedTimespanEnd("")
+    },
+
+    onCellClick(e) {
+      this.setCreatedTimespanStart(date.formatDate(e, "YYYY-MM-DD HH:mm:00"))
+      this.openCreateDialog()
     },
   },
 })
