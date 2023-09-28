@@ -59,7 +59,6 @@ const actions = {
   },
 
   async getCalendarAppointments({ commit }, { start, end }) {
-    console.log(start)
     const calendarTimespanStart = date.formatDate(start, "YYYY-MM-DD HH:mm:00")
     const calendarTimespanEnd = date.formatDate(end, "YYYY-MM-DD HH:mm:00")
 
