@@ -7,6 +7,7 @@
       locale="de"
       :events="events"
       events-on-month-view="short"
+      show-all-day-events="short"
       :on-event-click="onEventClick"
       today-button
       @ready="onCalendarReady"
@@ -55,7 +56,8 @@
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState } from "vuex"
-import { colors, date } from "quasar"
+import { colors } from "quasar"
+import { getHolidays } from "feiertagejs"
 import VueCal from "vue-cal"
 import "vue-cal/dist/vuecal.css"
 import DialogCard from "components/DialogCard.vue"
@@ -87,6 +89,8 @@ export default defineComponent({
 
     events() {
       const result = []
+
+      // Appointments
       for (let appointment of this.calendarAppointments) {
         const event = {
           id: appointment.id,
@@ -96,6 +100,19 @@ export default defineComponent({
           class: appointment.category
             ? `calendar-appointment-category-${appointment.category.id}`
             : "no-category",
+        }
+
+        result.push(event)
+      }
+
+      // Holidays
+      for (let holiday of this.holidays) {
+        const event = {
+          start: holiday.dateString,
+          end: holiday.dateString,
+          title: holiday.name,
+          class: "calendar-holiday",
+          allDay: true,
         }
 
         result.push(event)
@@ -122,8 +139,10 @@ export default defineComponent({
       itemDialog: false,
       showDeleteDialog: false,
       currentStartMonth: new Date().getMonth(),
+      currentStartYear: new Date().getFullYear(),
       timespanStart: null,
       calendarTimespanEnd: null,
+      holidays: [],
     }
   },
 
@@ -209,6 +228,11 @@ export default defineComponent({
     },
 
     async onCalendarReady(e) {
+      this.holidays = [
+        ...getHolidays(e.startDate.getFullYear() - 1, "BY"),
+        ...getHolidays(e.startDate.getFullYear(), "BY"),
+        ...getHolidays(e.startDate.getFullYear() + 1, "BY"),
+      ]
       await this.getAppointmentCategoryColors()
 
       const start = new Date(
@@ -251,6 +275,17 @@ export default defineComponent({
 
         this.currentStartMonth = e.startDate.getMonth()
       }
+
+      // Get holidays on year change
+      if (e.startDate.getFullYear() !== this.currentStartYear) {
+        this.holidays = [
+          ...getHolidays(e.startDate.getFullYear() - 1, "BY"),
+          ...getHolidays(e.startDate.getFullYear(), "BY"),
+          ...getHolidays(e.startDate.getFullYear() + 1, "BY"),
+        ]
+
+        this.currentStartYear = e.startDate.getFullYear()
+      }
     },
   },
 })
@@ -263,6 +298,12 @@ export default defineComponent({
 .vuecal__event.no-category {
   background-color: rgba(3, 36, 252, 0.9);
   border: 1px solid rgb(3, 36, 252);
+  color: #fff;
+}
+
+.vuecal__event.calendar-holiday {
+  background-color: #6363dc;
+  border: 1px solid #6363dc;
   color: #fff;
 }
 
