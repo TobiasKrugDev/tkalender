@@ -1,6 +1,7 @@
 <template>
   <div>
     <vue-cal
+      id="vuecal"
       active-view="week"
       :style="dashboardMode ? 'height: 50vh' : 'height: 75vh'"
       :disable-views="['years', 'year']"
@@ -20,6 +21,7 @@
         create: true,
       }"
       :snap-to-time="15"
+      :time-cell-height="timeCellHeight"
       @ready="onCalendarReady"
       @view-change="onViewChange"
       @event-change="onEventChange"
@@ -219,6 +221,7 @@ export default defineComponent({
       calendarTimespanEnd: null,
       holidays: [],
       deleteEventFunction: () => {},
+      timeCellHeight: 30,
     }
   },
 
@@ -312,6 +315,7 @@ export default defineComponent({
     },
 
     async onCalendarReady(e) {
+      this.scrollToCurrentTime()
       this.holidays = [
         ...getHolidays(e.startDate.getFullYear() - 1, "BY"),
         ...getHolidays(e.startDate.getFullYear(), "BY"),
@@ -413,6 +417,16 @@ export default defineComponent({
     onCellClick(e) {
       this.setCreatedTimespanStart(date.formatDate(e, "YYYY-MM-DD HH:mm:00"))
       this.openCreateDialog()
+    },
+
+    scrollToCurrentTime() {
+      const calendar = document.querySelector("#vuecal .vuecal__bg")
+      const now = new Date()
+      const hours = now.getHours() + now.getMinutes() / 60
+      calendar.scrollTo({
+        top: hours * this.timeCellHeight,
+        behavior: "smooth",
+      })
     },
   },
 })
