@@ -17,10 +17,10 @@
               @keyup.enter="navigateToSearch"
             />
             <q-btn
-              id="search-button"
               color="primary"
               icon="search"
-              class="q-px-xl"
+              class="search-button q-px-xl"
+              @click="navigateToSearch"
             />
           </div>
         </q-toolbar-title>
@@ -76,7 +76,32 @@
           size="lg"
           class="q-mr-md"
         >
-          <q-popup-proxy> ToDo: Mobile Suche </q-popup-proxy>
+          <q-popup-proxy
+            :breakpoint="0"
+            transition-show="flip-up"
+            transition-hide="flip-down"
+          >
+            <div class="bg-white shadow-7 rounded-borders q-pl-lg q-pr-none">
+              <div>
+                <div class="row no-wrap">
+                  <q-input
+                    v-model="searchInput"
+                    borderless
+                    placeholder="Suche nach..."
+                    class="col"
+                    type="search"
+                    @keyup.enter="navigateToSearch"
+                  />
+                  <q-btn
+                    color="primary"
+                    icon="search"
+                    class="search-button q-px-xl"
+                    @click="navigateToSearch"
+                  />
+                </div>
+              </div>
+            </div>
+          </q-popup-proxy>
         </q-btn>
       </q-toolbar>
     </q-header>
@@ -261,7 +286,7 @@ export default defineComponent({
   background-color: #f5f6fa;
 }
 
-#search-button {
+.search-button {
   border-radius: 8px;
 }
 
