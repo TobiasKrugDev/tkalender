@@ -227,7 +227,7 @@ export default defineComponent({
       "setShortcutCreateDialog",
       "setShortcutCreateEntity",
     ]),
-    validateAppointmentForm() {
+    validateForm() {
       this.$refs.nameInput.validate()
       this.$refs.startAtInput.validate()
       this.$refs.endAtInput.validate()

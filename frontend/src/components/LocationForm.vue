@@ -57,7 +57,7 @@ export default defineComponent({
   },
 
   methods: {
-    validateLocationForm() {
+    validateForm() {
       this.$refs.locationNameInput.validate()
 
       if (this.$refs.locationNameInput.hasError) {

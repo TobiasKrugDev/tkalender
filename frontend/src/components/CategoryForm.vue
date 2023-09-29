@@ -52,7 +52,7 @@ export default defineComponent({
   },
 
   methods: {
-    validateCategoryForm() {
+    validateForm() {
       // ToDo: Color Picker Validation
       this.$refs.categoryNameInput.validate()
 

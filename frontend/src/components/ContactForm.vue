@@ -111,7 +111,7 @@ export default defineComponent({
 
   methods: {
     // ToDo: Email validation (+ other specific types?)
-    validateContactForm() {
+    validateForm() {
       this.$refs.contactFirstnameInput.validate()
       this.$refs.contactLastnameInput.validate()
       if (

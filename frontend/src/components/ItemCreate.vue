@@ -61,17 +61,17 @@ export default defineComponent({
     async onItemSave() {
       let isValid
       if (this.entity === "appointment") {
-        isValid = this.$refs.appointmentForm.validateAppointmentForm()
+        isValid = this.$refs.appointmentForm.validateForm()
         if (isValid)
           await this.createAppointment(this.$refs.appointmentForm.appointment)
       } else if (this.entity === "contact") {
-        isValid = this.$refs.contactForm.validateContactForm()
+        isValid = this.$refs.contactForm.validateForm()
         if (isValid) await this.createContact(this.$refs.contactForm.contact)
       } else if (this.entity === "location") {
-        isValid = this.$refs.locationForm.validateLocationForm()
+        isValid = this.$refs.locationForm.validateForm()
         if (isValid) await this.createLocation(this.$refs.locationForm.location)
       } else if (this.entity === "category") {
-        isValid = this.$refs.categoryForm.validateCategoryForm()
+        isValid = this.$refs.categoryForm.validateForm()
         if (isValid) await this.createCategory(this.$refs.categoryForm.category)
       }
 
