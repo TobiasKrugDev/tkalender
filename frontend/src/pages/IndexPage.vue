@@ -16,49 +16,12 @@
         </div>
       </div>
       <div class="row">
-        <div class="col-sm col-12 left-dashboard-column q-my-lg">
-          <div class="dashboard-btn-container shadow-7">
-            <!-- ToDo: Maybe put these buttons into a reusable component -->
-            <q-btn
-              to="/contacts"
-              icon="mdi-account-group"
-              label="Kontakte"
-              flat
-              stack
-              :size="dashboardBtnSize"
-              class="dashboard-btn"
-              color="grey-7"
-            />
-          </div>
-        </div>
-        <div class="col-sm col-12 q-my-lg">
-          <div class="dashboard-btn-container shadow-7">
-            <q-btn
-              to="/locations"
-              icon="mdi-map-marker-radius"
-              label="Orte"
-              flat
-              stack
-              :size="dashboardBtnSize"
-              class="dashboard-btn"
-              color="grey-7"
-            />
-          </div>
-        </div>
-        <div class="col-sm col-12 q-my-lg">
-          <div class="dashboard-btn-container shadow-7">
-            <q-btn
-              to="/categories"
-              icon="mdi-palette"
-              label="Kategorien"
-              flat
-              stack
-              :size="dashboardBtnSize"
-              class="dashboard-btn"
-              color="grey-7"
-            />
-          </div>
-        </div>
+        <DashboardEntityButton
+          v-for="(entity, index) in entityButtons"
+          :key="entity"
+          :entity-data="entity"
+          :class="{ 'left-dashboard-column': index === 0 }"
+        />
       </div>
     </div>
 
@@ -72,6 +35,7 @@ import FABCreateButton from "components/FABCreateButton.vue"
 import WrapperCard from "components/WrapperCard.vue"
 import Calendar from "components/Calendar.vue"
 import AppointmentTable from "components/AppointmentTable.vue"
+import DashboardEntityButton from "components/DashboardEntityButton.vue"
 
 export default defineComponent({
   name: "IndexPage",
@@ -81,30 +45,22 @@ export default defineComponent({
     WrapperCard,
     Calendar,
     AppointmentTable,
+    DashboardEntityButton,
   },
 
-  computed: {
-    dashboardBtnSize() {
-      if (this.$q.screen.gt.md) {
-        return "25px"
-      } else {
-        return "20px"
-      }
-    },
+  data() {
+    return {
+      entityButtons: [
+        { to: "/contacts", icon: "mdi-account-group", label: "Kontakte" },
+        { to: "/locations", icon: "mdi-map-marker-radius", label: "Orte" },
+        { to: "/categories", icon: "mdi-palette", label: "Kategorien" },
+      ],
+    }
   },
 })
 </script>
 
 <style lang="scss">
-.dashboard-btn-container {
-  height: 150px;
-  width: 300px;
-  position: relative;
-  margin: auto;
-  background-color: #fff;
-  border-radius: 8px;
-}
-
 .dashboard-btn {
   width: 100%;
   height: 100%;
@@ -118,19 +74,9 @@ export default defineComponent({
   padding-right: 31px;
 }
 
-@media screen and (min-width: 600px) {
-  .dashboard-btn-container {
-    width: 165px;
-  }
-}
-
 @media screen and (min-width: 1024px) {
   .left-dashboard-column {
     margin-left: 18px;
-  }
-
-  .dashboard-btn-container {
-    width: 200px;
   }
 
   .dashboard-appointment-list-col {
@@ -144,11 +90,6 @@ export default defineComponent({
 }
 
 @media screen and (min-width: 1440px) {
-  .dashboard-btn-container {
-    height: 200px;
-    width: 300px;
-  }
-
   .dashboard-calendar-col {
     padding-right: 16px;
   }
