@@ -2,7 +2,7 @@
   <div>
     <vue-cal
       active-view="week"
-      style="height: 75vh; width: 100%"
+      :style="dashboardMode ? 'height: 50vh' : 'height: 75vh'"
       :disable-views="['years', 'year']"
       locale="de"
       :events="events"
@@ -10,6 +10,7 @@
       show-all-day-events="short"
       :on-event-click="onEventClick"
       today-button
+      class="full-width"
       :editable-events="{
         title: false,
         drag: true,
@@ -94,6 +95,13 @@ export default defineComponent({
     ItemShow,
     ItemUpdate,
     DeleteConfirm,
+  },
+
+  props: {
+    dashboardMode: {
+      type: Boolean,
+      deafult: false,
+    },
   },
 
   computed: {

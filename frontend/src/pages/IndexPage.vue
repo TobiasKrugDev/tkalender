@@ -3,11 +3,13 @@
     <div class="container">
       <div class="row">
         <div class="col-8 q-pr-md">
-          <WrapperCard title="Kalender"><Calendar /></WrapperCard>
+          <WrapperCard title="Kalender"
+            ><Calendar dashboard-mode
+          /></WrapperCard>
         </div>
         <div class="col-4 q-pl-md" style="padding-right: 62px">
           <WrapperCard title="Anstehende Termine"
-            ><AppointmentTable dashboard-mode
+            ><AppointmentTable dashboard-mode class="appointment-list"
           /></WrapperCard>
         </div>
       </div>
@@ -107,6 +109,11 @@ export default defineComponent({
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+}
+
+.appointment-list {
+  height: 50vh;
+  overflow-y: scroll;
 }
 
 @media screen and (min-width: 600px) {
