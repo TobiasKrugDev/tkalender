@@ -11,6 +11,7 @@
       :on-event-click="onEventClick"
       today-button
       class="full-width"
+      :xsmall="$q.screen.lt.lg"
       :editable-events="{
         title: false,
         drag: true,

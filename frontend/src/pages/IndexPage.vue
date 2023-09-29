@@ -2,19 +2,21 @@
   <q-page>
     <div class="container">
       <div class="row">
-        <div class="col-8 q-pr-md">
+        <div class="col-lg-8 col-md-6 col-12 q-pr-md dashboard-calendar-col">
           <WrapperCard title="Kalender"
             ><Calendar dashboard-mode
           /></WrapperCard>
         </div>
-        <div class="col-4 q-pl-md" style="padding-right: 62px">
+        <div
+          class="col-lg-4 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
+        >
           <WrapperCard title="Anstehende Termine"
             ><AppointmentTable dashboard-mode class="appointment-list"
           /></WrapperCard>
         </div>
       </div>
       <div class="row">
-        <div class="col-sm col-12 left-dashboard-column q-my-md">
+        <div class="col-sm col-12 left-dashboard-column q-my-lg">
           <div class="dashboard-btn-container shadow-7">
             <!-- ToDo: Maybe put these buttons into a reusable component -->
             <q-btn
@@ -29,7 +31,7 @@
             />
           </div>
         </div>
-        <div class="col-sm col-12 q-my-md">
+        <div class="col-sm col-12 q-my-lg">
           <div class="dashboard-btn-container shadow-7">
             <q-btn
               to="/locations"
@@ -43,7 +45,7 @@
             />
           </div>
         </div>
-        <div class="col-sm col-12 q-my-md">
+        <div class="col-sm col-12 q-my-lg">
           <div class="dashboard-btn-container shadow-7">
             <q-btn
               to="/categories"
@@ -111,9 +113,9 @@ export default defineComponent({
   transform: translate(-50%, -50%);
 }
 
-.appointment-list {
-  height: 50vh;
-  overflow-y: scroll;
+.dashboard-calendar-col,
+.dashboard-appointment-list-col {
+  padding-right: 31px;
 }
 
 @media screen and (min-width: 600px) {
@@ -130,12 +132,25 @@ export default defineComponent({
   .dashboard-btn-container {
     width: 200px;
   }
+
+  .dashboard-appointment-list-col {
+    padding-right: 63px;
+  }
+
+  .appointment-list {
+    height: 50vh;
+    overflow-y: scroll;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .dashboard-btn-container {
     height: 200px;
     width: 300px;
+  }
+
+  .dashboard-calendar-col {
+    padding-right: 16px;
   }
 }
 </style>
