@@ -5,13 +5,13 @@
       :rows="appointments"
       :columns="columns"
       rows-per-page-label="Einträge pro Seite"
-      :grid="$q.screen.xs"
+      :grid="isGridActivated"
       :rows-per-page-options="[10, 25, 50, 100]"
       v-model:pagination="pagination"
       :loading="loading"
       :filter="filter"
       :title="searchMode ? 'Termine' : ''"
-      :hide-pagination="searchMode ? true : false"
+      :hide-pagination="searchMode || dashboardMode ? true : false"
       @row-click="onRowClick"
       @request="onRequest"
     >
@@ -67,7 +67,7 @@
       <template #pagination>
         <!-- Hide default pagination -->
       </template>
-      <template v-if="!searchMode" #top-left>
+      <template v-if="!searchMode && !dashboardMode" #top-left>
         <q-toggle
           v-model="timespanToggle"
           color="primary"
@@ -78,7 +78,7 @@
           keep-color
         />
       </template>
-      <template v-if="!searchMode" #top-right>
+      <template v-if="!searchMode && !dashboardMode" #top-right>
         <q-input
           outlined
           dense
@@ -232,6 +232,11 @@ export default defineComponent({
       type: Boolean,
       deafult: false,
     },
+
+    dashboardMode: {
+      type: Boolean,
+      deafult: false,
+    },
   },
 
   emits: ["searchResultsFetched"],
@@ -310,6 +315,14 @@ export default defineComponent({
         return false
       } else {
         return true
+      }
+    },
+
+    isGridActivated() {
+      if (this.dashboardMode) {
+        return true
+      } else {
+        return this.$q.screen.xs
       }
     },
   },
