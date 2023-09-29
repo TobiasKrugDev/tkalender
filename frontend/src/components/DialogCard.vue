@@ -2,7 +2,6 @@
   <q-card class="dialog-card shadow-7">
     <q-card-section>
       <div class="row items-center no-wrap">
-        <!-- ToDo: Profile Image -->
         <div
           v-if="color || profileImage || showPlaceholderImage"
           class="display-flex"

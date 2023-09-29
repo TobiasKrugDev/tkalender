@@ -266,7 +266,6 @@ export default defineComponent({
       this.dialogMode = "show"
 
       // Refresh category list
-      // ToDo: dynamic appointment loading
       this.getCalendarAppointments({
         start: this.timespanStart,
         end: this.timespanEnd,
@@ -278,7 +277,6 @@ export default defineComponent({
       this.dialogMode = "show"
 
       // Refresh category list
-      // ToDo: dynamic appointment loading
       this.getCalendarAppointments({
         start: this.timespanStart,
         end: this.timespanEnd,
@@ -307,7 +305,6 @@ export default defineComponent({
       this.$refs.itemDialog.hide()
 
       // Refresh category list
-      // ToDo: dynamic appointment loading
       this.getCalendarAppointments({
         start: this.timespanStart,
         end: this.timespanEnd,
