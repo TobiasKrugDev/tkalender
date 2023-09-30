@@ -92,62 +92,62 @@
         </q-input>
       </template>
       <template #item="props">
-        <div class="col-10 q-pl-md">
-          <div class="text-grey-7 text-weight-medium">
-            {{ formatMobileStartAt(props.row.startAt) }}
-          </div>
-          <div class="text-h6 q-mb-md">
-            <div>{{ props.row.name }}</div>
-          </div>
-          <div class="q-table__grid-item-title">Ort</div>
-          <div class="q-mb-md">
-            <span v-if="props.row.location">{{ props.row.location.name }}</span>
-            <span v-else>-</span>
-          </div>
-          <div class="q-table__grid-item-title">Kontakte</div>
-          <div class="q-mb-md">
-            <span v-if="!props.row.contacts.length">-</span>
-            <div v-else>
-              <ContactChip
-                v-for="contact in props.row.contacts"
-                :key="contact.id"
-                :contact="contact"
-              />
+        <div class="col-12">
+          <div class="row">
+            <div class="col-6">
+              <div class="text-grey-7 text-weight-medium">
+                {{ formatMobileStartAt(props.row.startAt) }}
+              </div>
+              <div class="text-h6">
+                {{ props.row.name }}
+              </div>
+              <div class="text-grey-7 q-mb-xs">
+                <span v-if="props.row.location">{{
+                  props.row.location.name
+                }}</span>
+              </div>
+            </div>
+            <div class="col-5 text-right">
+              <span v-if="props.row.category">
+                <CategoryChip :category="props.row.category" />
+              </span>
+            </div>
+            <div class="col-1">
+              <q-btn flat round dense color="grey-7" icon="more_vert">
+                <q-menu transition-show="flip-up" transition-hide="flip-down">
+                  <q-list style="min-width: 100px">
+                    <q-item clickable @click="onRowClick(null, props.row)">
+                      <q-item-section side>
+                        <q-icon name="mdi-eye-outline" />
+                      </q-item-section>
+                      <q-item-section> Ansehen </q-item-section>
+                    </q-item>
+                    <q-item clickable @click="openUpdateDialog(props.row)">
+                      <q-item-section side>
+                        <q-icon name="mdi-pencil" />
+                      </q-item-section>
+                      <q-item-section avatar> Bearbeiten </q-item-section>
+                    </q-item>
+                    <q-item clickable @click="onDeleteClick(props.row)">
+                      <q-item-section side>
+                        <q-icon name="mdi-delete" />
+                      </q-item-section>
+                      <q-item-section avatar> Löschen </q-item-section>
+                    </q-item>
+                  </q-list>
+                </q-menu>
+              </q-btn>
+            </div>
+            <div class="col-12">
+              <div>
+                <ContactChip
+                  v-for="contact in props.row.contacts"
+                  :key="contact.id"
+                  :contact="contact"
+                />
+              </div>
             </div>
           </div>
-          <div class="q-table__grid-item-title">Kategorie</div>
-          <div>
-            <div v-if="props.row.category">
-              <CategoryChip :category="props.row.category" />
-            </div>
-            <span v-else>-</span>
-          </div>
-        </div>
-        <div class="col-2 text-right">
-          <q-btn flat round dense color="grey-7" icon="more_vert">
-            <q-menu transition-show="flip-up" transition-hide="flip-down">
-              <q-list style="min-width: 100px">
-                <q-item clickable @click="onRowClick(null, props.row)">
-                  <q-item-section side>
-                    <q-icon name="mdi-eye-outline" />
-                  </q-item-section>
-                  <q-item-section> Ansehen </q-item-section>
-                </q-item>
-                <q-item clickable @click="openUpdateDialog(props.row)">
-                  <q-item-section side>
-                    <q-icon name="mdi-pencil" />
-                  </q-item-section>
-                  <q-item-section avatar> Bearbeiten </q-item-section>
-                </q-item>
-                <q-item clickable @click="onDeleteClick(props.row)">
-                  <q-item-section side>
-                    <q-icon name="mdi-delete" />
-                  </q-item-section>
-                  <q-item-section avatar> Löschen </q-item-section>
-                </q-item>
-              </q-list>
-            </q-menu>
-          </q-btn>
         </div>
         <div class="col-12">
           <q-separator class="q-my-md" />
