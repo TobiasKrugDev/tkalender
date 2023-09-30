@@ -17,12 +17,23 @@
     />
   </div>
   <div>
-    <q-color
+    <q-field
+      ref="colorPickerInput"
       v-model="category.color"
-      no-header-tabs
-      no-footer
-      class="my-picker q-mx-auto"
-    />
+      label="Farbe"
+      stack-label
+      outlined
+      :rules="[(val) => !!val || 'Farbe ist ein Pflichtfeld']"
+    >
+      <template v-slot:control>
+        <q-color
+          v-model="category.color"
+          no-header-tabs
+          no-footer
+          class="my-picker q-mx-auto q-my-lg"
+        />
+      </template>
+    </q-field>
   </div>
 </template>
 
@@ -53,10 +64,13 @@ export default defineComponent({
 
   methods: {
     validateForm() {
-      // ToDo: Color Picker Validation
       this.$refs.categoryNameInput.validate()
+      this.$refs.colorPickerInput.validate()
 
-      if (this.$refs.categoryNameInput.hasError) {
+      if (
+        this.$refs.categoryNameInput.hasError ||
+        this.$refs.colorPickerInput.hasError
+      ) {
         return false
       } else {
         return true
@@ -65,3 +79,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.q-color-picker {
+  width: 250px;
+}
+</style>
