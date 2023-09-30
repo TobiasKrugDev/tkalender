@@ -150,7 +150,15 @@
     </q-drawer>
 
     <q-page-container class="page-container-background">
-      <router-view :key="$route.fullPath" />
+      <router-view v-slot="{ Component }">
+        <transition
+          enter-active-class="animated slideInLeft"
+          leave-active-class="animated slideOutRight"
+          mode="out-in"
+        >
+          <component :is="Component" :key="$route.fullPath" />
+        </transition>
+      </router-view>
     </q-page-container>
   </q-layout>
 </template>
