@@ -80,7 +80,18 @@
     <q-input v-model="contact.phoneNumber" outlined label="Telefonnr." />
   </div>
   <div class="q-mb-md">
-    <q-input v-model="contact.emailAdress" outlined label="E-Mail-Adresse" />
+    <q-input
+      v-model="contact.emailAdress"
+      outlined
+      label="E-Mail-Adresse"
+      lazy-rules
+      :rules="[
+        (val) =>
+          !!val.match(
+            /^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/
+          ) || 'Bitte geben Sie eine gültige E-Mail-Adresse an',
+      ]"
+    />
   </div>
 </template>
 
@@ -110,7 +121,6 @@ export default defineComponent({
   },
 
   methods: {
-    // ToDo: Email validation (+ other specific types?)
     validateForm() {
       this.$refs.contactFirstnameInput.validate()
       this.$refs.contactLastnameInput.validate()
