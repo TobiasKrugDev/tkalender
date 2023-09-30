@@ -27,6 +27,13 @@
   }
 }
 
+// Category color indicator circle
+.category-table-color-circle {
+  height: 48px;
+  width: 48px;
+  border-radius: 50%;
+}
+
 // Some general helper classes
 .display-flex {
   display: flex;

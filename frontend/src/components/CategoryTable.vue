@@ -344,12 +344,6 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.category-table-color-circle {
-  height: 48px;
-  width: 48px;
-  border-radius: 50%;
-}
-
 .q-table__title {
   margin-bottom: 20px;
 }
