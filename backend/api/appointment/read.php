@@ -96,7 +96,7 @@
                     'description' => $description,
                     'phoneNumber' => $phone_number,
                     'emailAddress' => $email_address,
-                    // 'image' => $image,
+                    'image' => $image,
                 );
 
                 array_push($post_item['contacts'], $contact_post_item);
