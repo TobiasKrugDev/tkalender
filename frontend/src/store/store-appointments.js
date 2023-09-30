@@ -4,10 +4,12 @@ import { date } from "quasar"
 const state = {
   appointments: [],
   calendarAppointments: [],
+  entityAppointments: [],
   createdAppointment: null,
   updatedAppointment: null,
   totalItems: 0,
   calendarTotalItems: 0,
+  entityTotalItems: 0,
   createdTimespanStart: "",
   createdTimespanEnd: "",
 }
@@ -19,6 +21,10 @@ const mutations = {
 
   setCalendarAppointments(state, value) {
     state.calendarAppointments = value
+  },
+
+  setEntityAppointments(state, value) {
+    state.entityAppointments = value
   },
 
   setCreatedAppointment(state, value) {
@@ -35,6 +41,10 @@ const mutations = {
 
   setCalendarTotalItems(state, value) {
     state.calendarTotalItems = value
+  },
+
+  setEntityTotalItems(state, value) {
+    state.entityTotalItems = value
   },
 
   setCreatedTimespanStart(state, value) {
@@ -81,6 +91,25 @@ const actions = {
     const response = await api.get("/appointment/read", { params })
     commit("setCalendarAppointments", response.data.items)
     commit("setCalendarTotalItems", response.data.totalItems)
+  },
+
+  async getEntityAppointments(
+    { commit },
+    { rowsPerPage, page, entity, filterID }
+  ) {
+    const params = { itemsPerPage: rowsPerPage, page }
+
+    if (entity === "contact") {
+      params.filter_contact = filterID
+    } else if (entity === "location") {
+      params.filter_location = filterID
+    } else if (entity === "category") {
+      params.filter_category = filterID
+    }
+
+    const response = await api.get("/appointment/read", { params })
+    commit("setEntityAppointments", response.data.items)
+    commit("setEntityTotalItems", response.data.totalItems)
   },
 
   // DELETE Appointment

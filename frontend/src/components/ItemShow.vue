@@ -117,6 +117,16 @@
     </div>
   </div>
 
+  <!-- EntityAppointmentList -->
+  <div v-if="entity !== 'appointment'">
+    <div class="q-mb-lg">
+      <div class="show-property-name q-mb-xs">Termine:</div>
+      <div>
+        <EntityAppointmentList :entity="entity" :entity-id="item.id" />
+      </div>
+    </div>
+  </div>
+
   <div class="text-right q-mt-xl">
     <q-btn
       rounded
@@ -144,6 +154,7 @@ import { date } from "quasar"
 import ContactChip from "./ContactChip.vue"
 import CategoryChip from "./CategoryChip.vue"
 import GoogleMapsEmbed from "./GoogleMapsEmbed.vue"
+import EntityAppointmentList from "./EntityAppointmentList.vue"
 
 export default defineComponent({
   name: "ItemShow",
@@ -152,6 +163,7 @@ export default defineComponent({
     ContactChip,
     CategoryChip,
     GoogleMapsEmbed,
+    EntityAppointmentList,
   },
 
   props: {
