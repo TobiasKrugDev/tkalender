@@ -30,6 +30,12 @@ export default defineComponent({
     }
   },
 
+  watch: {
+    appointmentDate() {
+      this.splitDate()
+    },
+  },
+
   mounted() {
     this.splitDate()
   },
