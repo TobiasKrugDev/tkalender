@@ -43,7 +43,6 @@
     </div>
     <div class="row q-mb-md">
       <div class="col-10">
-        <!-- ToDo: Use custom option slot for more information -->
         <q-select
           outlined
           v-model="appointment.location"
@@ -94,8 +93,6 @@
     </div>
     <div class="row q-mb-md">
       <div class="col-10">
-        <!-- ToDo: Use custom option slot for more information -->
-        <!-- ToDo: Adjust option-label -->
         <q-select
           outlined
           multiple
@@ -105,11 +102,38 @@
           input-debounce="250"
           label="Kontakte"
           :options="contacts"
-          :option-label="
-            (contact) => contact.firstname + ' ' + contact.lastname
-          "
           @filter="filterContacts"
         >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <q-avatar v-if="scope.opt.image">
+                  <img :src="scope.opt.image" />
+                </q-avatar>
+                <q-avatar
+                  v-else
+                  icon="mdi-account"
+                  color="grey-5"
+                  text-color="white"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label
+                  >{{ scope.opt.firstname }}
+                  {{ scope.opt.lastname }}</q-item-label
+                >
+                <q-item-label v-if="scope.opt.description" caption>{{
+                  scope.opt.description
+                }}</q-item-label>
+                <q-item-label v-if="scope.opt.emailAddress" caption>{{
+                  scope.opt.emailAddress
+                }}</q-item-label>
+                <q-item-label v-if="scope.opt.phoneNumber" caption>{{
+                  scope.opt.phoneNumber
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
           <template v-slot:no-option>
             <q-item>
               <q-item-section class="text-grey">
