@@ -56,6 +56,21 @@
           option-label="name"
           @filter="filterLocations"
         >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section>
+                <q-item-label>{{ scope.opt.name }}</q-item-label>
+                <q-item-label caption class="ellipsis">{{
+                  scope.opt.description
+                }}</q-item-label>
+                <q-item-label caption
+                  >{{ scope.opt.streetAddress
+                  }}<span v-if="scope.opt.postalCode || scope.opt.city">,</span>
+                  {{ scope.opt.postalCode }} {{ scope.opt.city }}</q-item-label
+                >
+              </q-item-section>
+            </q-item>
+          </template>
           <template v-slot:no-option>
             <q-item>
               <q-item-section class="text-grey">
