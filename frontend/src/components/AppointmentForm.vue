@@ -177,6 +177,22 @@
           option-label="name"
           @filter="filterCategories"
         >
+          <template v-slot:option="scope">
+            <q-item v-bind="scope.itemProps">
+              <q-item-section avatar>
+                <div
+                  class="category-table-color-circle"
+                  :style="'background-color: ' + scope.opt.color"
+                />
+              </q-item-section>
+              <q-item-section>
+                <q-item-label>{{ scope.opt.name }}</q-item-label>
+                <q-item-label v-if="scope.opt.description" caption>{{
+                  scope.opt.description
+                }}</q-item-label>
+              </q-item-section>
+            </q-item>
+          </template>
           <template v-slot:no-option>
             <q-item>
               <q-item-section class="text-grey">
