@@ -29,7 +29,6 @@
         }
 
         // Get Appointments
-        // ToDo: Sorting
         public function read() {
             if (isset($this->calendarMode) && $this->calendarMode == true) {
                 $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
@@ -46,6 +45,7 @@
                         SELECT * 
                         FROM participations JOIN appointments ON participations.appointment = appointments.id
                         WHERE participations.contact = ?
+                        ORDER BY startAt ASC
                         LIMIT ?, ?';
                     $stmt = $this->conn->prepare($query);
                     $stmt->bindParam(1, $this->contactFilter);
@@ -58,12 +58,14 @@
                         SELECT * 
                         FROM appointments
                         WHERE location = ?
+                        ORDER BY startAt ASC
                         LIMIT ?, ?';
                     $stmt = $this->conn->prepare($query);
                     $stmt->bindParam(1, $this->locationFilter);
                     $stmt->bindParam(2, $this->offset, PDO::PARAM_INT);
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
+                    // ToDo Category Filter
                 } else {
                     // ToDo: Look at this beauty
                     $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city

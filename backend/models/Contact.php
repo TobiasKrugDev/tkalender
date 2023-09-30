@@ -23,12 +23,12 @@
 
         // Get Contact List
         public function read() {
-            // ToDo: Sorting
             if (isset($this->appointmentFilter)) {
                 $query = '
                     SELECT * 
                     FROM participations JOIN contacts ON participations.contact = contacts.id
-                    WHERE participations.appointment = ?';
+                    WHERE participations.appointment = ?
+                    ORDER BY lastname ASC, firstname ASC';
                     // No pagination here
                 $stmt = $this->conn->prepare($query);
                 $stmt->bindParam(1, $this->appointmentFilter);
@@ -37,6 +37,7 @@
                 $query = 'SELECT * 
                 FROM contacts 
                 WHERE firstname LIKE ? OR lastname LIKE ? OR description LIKE ? OR email_address LIKE ?
+                ORDER BY lastname ASC, firstname ASC
                 LIMIT ?, ?';
                 $stmt = $this->conn->prepare($query);
                 $searchQuery = "%".$this->searchQuery."%";

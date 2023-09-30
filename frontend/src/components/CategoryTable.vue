@@ -207,7 +207,6 @@ export default defineComponent({
           label: "Name",
           align: "left",
           field: "name",
-          sortable: true,
         },
         {
           name: "description",

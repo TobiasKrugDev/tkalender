@@ -236,16 +236,16 @@ export default defineComponent({
           field: "image",
         },
         {
-          name: "firstname",
-          label: "Vorname",
-          align: "left",
-          field: "firstname",
-        },
-        {
           name: "lastname",
           label: "Nachname",
           align: "left",
           field: "lastname",
+        },
+        {
+          name: "firstname",
+          label: "Vorname",
+          align: "left",
+          field: "firstname",
         },
         {
           name: "description",

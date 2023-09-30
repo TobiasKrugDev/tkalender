@@ -21,10 +21,10 @@
 
         // Get Location List
         public function read() {
-            // ToDo: Sorting
             $query = 'SELECT * 
             FROM locations 
             WHERE name LIKE ? OR description LIKE ? OR street_address LIKE ? OR postal_code LIKE ? OR city LIKE ?
+            ORDER BY name ASC
             LIMIT ?, ?';
             $stmt = $this->conn->prepare($query);
             $searchQuery = "%".$this->searchQuery."%";

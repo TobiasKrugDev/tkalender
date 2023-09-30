@@ -19,29 +19,12 @@
 
         // Get Category List
         public function read() {
-            // ToDo: Maybe try to refactor this
-            // Note: apparently bindParam doesn't work for column names as well as ASC/DESC
-            if ($this->sortBy == 'name') {
-                if ($this->orderDirection == 'DESC') {
-                    $query = 'SELECT * 
-                    FROM categories 
-                    WHERE name LIKE ? OR description LIKE ?  
-                    ORDER BY name DESC 
-                    LIMIT ?, ?';
-                } else {
-                    $query = 'SELECT * 
-                    FROM categories 
-                    WHERE name LIKE ? OR description LIKE ?
-                    ORDER BY name ASC 
-                    LIMIT ?, ?';
-                }
-            } else {
-                $query = 'SELECT * 
-                FROM categories 
-                WHERE name LIKE ? OR description LIKE ?
-                ORDER BY id ASC 
-                LIMIT ?, ?';
-            }
+            $query = 'SELECT * 
+            FROM categories 
+            WHERE name LIKE ? OR description LIKE ?
+            ORDER BY name ASC 
+            LIMIT ?, ?';
+
             $stmt = $this->conn->prepare($query);
             $searchQuery = "%".$this->searchQuery."%";
             $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
