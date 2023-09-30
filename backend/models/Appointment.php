@@ -103,11 +103,12 @@
 
                 $query = 'SELECT COUNT(*) AS total 
                 FROM appointments
-                WHERE name LIKE ? OR description LIKE ? -- ToDo: Add more properties';
+                WHERE appointments.startAt > ? AND (appointments.name LIKE ? OR appointments.description LIKE ?)'; // ToDo: Add more properties
                 $stmt = $this->conn->prepare($query);
                 $searchQuery = "%".$this->searchQuery."%";
-                $stmt->bindParam(1, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(1, $this->timespanStart, PDO::PARAM_STR);
                 $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+                $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
                 $stmt->execute();
             }
 
