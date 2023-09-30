@@ -40,10 +40,9 @@
                     $stmt->bindParam(2, $this->calendarTimespanEnd, PDO::PARAM_STR);
                     $stmt->execute();
             } else {
-                // ToDo: Maybe refactor this
                 if (isset($this->contactFilter)) {
                     $query = '
-                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
+                        SELECT id, name, startAt
                         FROM participations JOIN appointments ON participations.appointment = appointments.id
                         WHERE participations.contact = ?
                         ORDER BY startAt ASC
@@ -55,7 +54,7 @@
                     $stmt->execute();
                 } elseif (isset($this->locationFilter)) {
                     $query = '
-                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
+                        SELECT id, name, startAt
                         FROM appointments
                         WHERE location = ?
                         ORDER BY startAt ASC
@@ -67,7 +66,7 @@
                     $stmt->execute();
                 } elseif (isset($this->categoryFilter)) {
                     $query = '
-                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
+                        SELECT id, name, startAt
                         FROM appointments
                         WHERE category = ?
                         ORDER BY startAt ASC

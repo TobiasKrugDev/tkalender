@@ -36,64 +36,75 @@
     $posts_arr['items'] = array();
     $posts_arr['totalItems'] = $totalItems;
 
+    $isEntityFilterSet = isset($appointment->contactFilter) || isset($appointment->locationFilter) || isset($appointment->categoryFilter);
+
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $post_item = array(
-            'id' => $id,
-            'name' => $appointmentName,
-            'description' => $appointmentDescription,
-            'startAt' => $startAt,
-            'endAt' => $endAt,
-            'icon' => $icon
-        );
-
-        if (isset($locationID)) {
-            $post_item['location'] = array(
-                'id' => $locationID,
-                'name' => $locationName,
-                'description' => $locationDescription,
-                'streetAddress' => $streetAddress,
-                'postalCode' => $postalCode,
-                'city' => $city
-            );
-        } else {
-            $post_item['location'] = null;
-        }
-
-        if (isset($categoryID)) {
-            $post_item['category'] = array(
-                'id' => $categoryID,
-                'name' => $categoryName,
-                'description' => $categoryDescription,
-                'color' => $color
-            );
-        } else {
-            $post_item['category'] = null;
-        }
-
-        $post_item['contacts'] = array();
-
-        $contact = new Contact($db);
-        $contact->appointmentFilter = $id;
-        $contactsResult = $contact->read();
-
-        while($contactRow = $contactsResult->fetch(PDO::FETCH_ASSOC)) {
-            extract($contactRow);
-            $contact_post_item = array(
+        if ($isEntityFilterSet) {
+            $post_item = array(
                 'id' => $id,
-                'firstname' => $firstname,
-                'lastname' => $lastname,
-                'description' => $description,
-                'phoneNumber' => $phone_number,
-                'emailAddress' => $email_address,
-                // 'image' => $image,
+                'name' => $name,
+                'startAt' => $startAt,
+            );
+        } else {
+            $post_item = array(
+                'id' => $id,
+                'name' => $appointmentName,
+                'description' => $appointmentDescription,
+                'startAt' => $startAt,
+                'endAt' => $endAt,
+                'icon' => $icon
             );
 
-            array_push($post_item['contacts'], $contact_post_item);
+            if (isset($locationID)) {
+                $post_item['location'] = array(
+                    'id' => $locationID,
+                    'name' => $locationName,
+                    'description' => $locationDescription,
+                    'streetAddress' => $streetAddress,
+                    'postalCode' => $postalCode,
+                    'city' => $city
+                );
+            } else {
+                $post_item['location'] = null;
+            }
+
+            if (isset($categoryID)) {
+                $post_item['category'] = array(
+                    'id' => $categoryID,
+                    'name' => $categoryName,
+                    'description' => $categoryDescription,
+                    'color' => $color
+                );
+            } else {
+                $post_item['category'] = null;
+            }
+
+            $post_item['contacts'] = array();
+
+            $contact = new Contact($db);
+            $contact->appointmentFilter = $id;
+            $contactsResult = $contact->read();
+
+            while($contactRow = $contactsResult->fetch(PDO::FETCH_ASSOC)) {
+                extract($contactRow);
+                $contact_post_item = array(
+                    'id' => $id,
+                    'firstname' => $firstname,
+                    'lastname' => $lastname,
+                    'description' => $description,
+                    'phoneNumber' => $phone_number,
+                    'emailAddress' => $email_address,
+                    // 'image' => $image,
+                );
+
+                array_push($post_item['contacts'], $contact_post_item);
+            }
         }
 
         array_push($posts_arr['items'], $post_item);
+
     }
 
     echo json_encode($posts_arr);
