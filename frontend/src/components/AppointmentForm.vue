@@ -164,13 +164,10 @@
     </div>
     <div class="row q-mb-md">
       <div class="col-10">
-        <!-- ToDo: Use custom option slot for more information -->
         <q-select
           outlined
           v-model="appointment.category"
           use-input
-          hide-selected
-          fill-input
           input-debounce="250"
           label="Kategorie"
           :options="categories"
@@ -200,6 +197,9 @@
               </q-item-section>
             </q-item>
           </template>
+          <template v-slot:selected-item="props">
+            <CategoryChip :category="props.opt" />
+          </template>
         </q-select>
       </div>
       <div class="col-2">
@@ -221,12 +221,14 @@
 import { defineComponent } from "vue"
 import { mapActions, mapState, mapMutations } from "vuex"
 import ContactChip from "./ContactChip.vue"
+import CategoryChip from "./CategoryChip.vue"
 
 export default defineComponent({
   name: "AppointmentForm",
 
   components: {
     ContactChip,
+    CategoryChip,
   },
 
   props: {
