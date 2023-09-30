@@ -16,6 +16,7 @@
 
     $appointment->contactFilter = isset($_GET['filter_contact']) ? $_GET['filter_contact'] : null;
     $appointment->locationFilter = isset($_GET['filter_location']) ? $_GET['filter_location'] : null;
+    $appointment->categoryFilter = isset($_GET['filter_category']) ? $_GET['filter_category'] : null;
     $appointment->limit = isset($_GET['itemsPerPage']) ? $_GET['itemsPerPage'] : 10;
     $appointment->offset = isset($_GET['page']) ? $appointment->limit * ($_GET['page'] - 1) : 0;
     $appointment->sortBy = isset($_GET['sortBy']) ? $_GET['sortBy'] : 'id';
@@ -86,7 +87,7 @@
                 'description' => $description,
                 'phoneNumber' => $phone_number,
                 'emailAddress' => $email_address,
-                'image' => $image,
+                // 'image' => $image,
             );
 
             array_push($post_item['contacts'], $contact_post_item);

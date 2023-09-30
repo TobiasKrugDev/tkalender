@@ -20,6 +20,7 @@
         public $searchQuery;
         public $contactFilter;
         public $locationFilter;
+        public $categoryFilter;
         public $calendarMode;
         public $calendarTimespanStart;
         public $calendarTimespanEnd;
@@ -39,10 +40,10 @@
                     $stmt->bindParam(2, $this->calendarTimespanEnd, PDO::PARAM_STR);
                     $stmt->execute();
             } else {
+                // ToDo: Maybe refactor this
                 if (isset($this->contactFilter)) {
-                    // ToDo
                     $query = '
-                        SELECT * 
+                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
                         FROM participations JOIN appointments ON participations.appointment = appointments.id
                         WHERE participations.contact = ?
                         ORDER BY startAt ASC
@@ -53,9 +54,8 @@
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
                 } elseif (isset($this->locationFilter)) {
-                    // ToDo
                     $query = '
-                        SELECT * 
+                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
                         FROM appointments
                         WHERE location = ?
                         ORDER BY startAt ASC
@@ -65,7 +65,18 @@
                     $stmt->bindParam(2, $this->offset, PDO::PARAM_INT);
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
-                    // ToDo Category Filter
+                } elseif (isset($this->categoryFilter)) {
+                    $query = '
+                        SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon
+                        FROM appointments
+                        WHERE category = ?
+                        ORDER BY startAt ASC
+                        LIMIT ?, ?';
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->bindParam(1, $this->categoryFilter);
+                    $stmt->bindParam(2, $this->offset, PDO::PARAM_INT);
+                    $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
+                    $stmt->execute();
                 } else {
                     // ToDo: Look at this beauty
                     $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
@@ -104,18 +115,43 @@
                 $stmt->execute();
 
             } else {
-
-                $query = 'SELECT COUNT(*) AS total 
-                FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
-                WHERE appointments.startAt > ? AND (appointments.name LIKE ? OR appointments.description LIKE ? OR categories.name LIKE ? OR locations.name LIKE ?)';
-                $stmt = $this->conn->prepare($query);
-                $searchQuery = "%".$this->searchQuery."%";
-                $stmt->bindParam(1, $this->timespanStart, PDO::PARAM_STR);
-                $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
-                $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
-                $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
-                $stmt->bindParam(5, $searchQuery, PDO::PARAM_STR);
-                $stmt->execute();
+                if (isset($this->contactFilter)) {
+                    $query = '
+                        SELECT COUNT(*) AS total
+                        FROM participations JOIN appointments ON participations.appointment = appointments.id
+                        WHERE participations.contact = ?';
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->bindParam(1, $this->contactFilter);
+                    $stmt->execute();
+                } elseif (isset($this->locationFilter)) {
+                    $query = '
+                        SELECT COUNT(*) AS total
+                        FROM appointments
+                        WHERE location = ?';
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->bindParam(1, $this->locationFilter);
+                    $stmt->execute();
+                } elseif (isset($this->categoryFilter)) {
+                    $query = '
+                        SELECT COUNT(*) AS total
+                        FROM appointments
+                        WHERE category = ?';
+                    $stmt = $this->conn->prepare($query);
+                    $stmt->bindParam(1, $this->categoryFilter);
+                    $stmt->execute();
+                } else {
+                    $query = 'SELECT COUNT(*) AS total 
+                    FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
+                    WHERE appointments.startAt > ? AND (appointments.name LIKE ? OR appointments.description LIKE ? OR categories.name LIKE ? OR locations.name LIKE ?)';
+                    $stmt = $this->conn->prepare($query);
+                    $searchQuery = "%".$this->searchQuery."%";
+                    $stmt->bindParam(1, $this->timespanStart, PDO::PARAM_STR);
+                    $stmt->bindParam(2, $searchQuery, PDO::PARAM_STR);
+                    $stmt->bindParam(3, $searchQuery, PDO::PARAM_STR);
+                    $stmt->bindParam(4, $searchQuery, PDO::PARAM_STR);
+                    $stmt->bindParam(5, $searchQuery, PDO::PARAM_STR);
+                    $stmt->execute();
+                }
             }
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
