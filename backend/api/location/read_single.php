@@ -5,6 +5,10 @@
 
     include_once '../../config/Database.php';
     include_once '../../models/Location.php';
+    include_once '../../helpers/auth_check.php';
+
+    // Check user authentication first
+    checkAuthentication();
 
     // Instantiate DB & connect
     $database = new Database();
