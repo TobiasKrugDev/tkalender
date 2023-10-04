@@ -38,6 +38,7 @@
             :label="$q.screen.gt.md ? 'Abmelden' : ''"
             flat
             class="full-width full-height"
+            @click="onLogoutClick"
           />
         </q-toolbar-title>
       </q-toolbar>
@@ -128,6 +129,7 @@
           target="_self"
           to="/"
           class="text-white mobile-logout-link lt-md"
+          @click="onLogoutClick"
         >
           <q-item-section avatar>
             <q-icon name="mdi-logout" />
@@ -202,7 +204,7 @@ const linksList = [
   },
 ]
 
-import { mapState, mapMutations } from "vuex"
+import { mapState, mapMutations, mapActions } from "vuex"
 export default defineComponent({
   name: "MainLayout",
 
@@ -248,6 +250,7 @@ export default defineComponent({
   },
 
   methods: {
+    ...mapActions("authentication", ["logout"]),
     ...mapMutations("shortcuts", [
       "setShortcutCreateDialog",
       "setShortcutCreateEntity",
@@ -258,6 +261,11 @@ export default defineComponent({
         this.$router.push(queryString)
         this.searchInput = ""
       }
+    },
+
+    async onLogoutClick() {
+      const response = await this.logout()
+      if (response.success) this.$router.push("/login")
     },
 
     toggleLeftDrawer() {
