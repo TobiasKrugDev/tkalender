@@ -5,6 +5,7 @@ import locations from "./store-locations"
 import contacts from "./store-contacts"
 import appointments from "./store-appointments"
 import shortcuts from "./store-shortcuts"
+import authentication from "./store-authentication"
 
 /*
  * If not building with SSR mode, you can
@@ -23,6 +24,7 @@ export default store(function (/* { ssrContext } */) {
       contacts,
       appointments,
       shortcuts,
+      authentication,
     },
 
     // enable strict mode (adds overhead!)
