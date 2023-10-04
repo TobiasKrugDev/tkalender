@@ -1,4 +1,4 @@
-import { api, axios } from "src/boot/axios"
+import { axios } from "src/boot/axios"
 
 const state = {
   categories: [],
@@ -37,14 +37,14 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
-    const response = await api.get("/category/read", { params })
+    const response = await axios.get("/api/category/read", { params })
     commit("setCategories", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Category
   async deleteCategory({}, id) {
-    await api.delete("/category/delete", {
+    await axios.delete("/api/category/delete", {
       params: { id },
     })
   },

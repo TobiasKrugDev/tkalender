@@ -1,4 +1,4 @@
-import { api, axios } from "src/boot/axios"
+import { axios } from "src/boot/axios"
 
 const state = {
   contacts: [],
@@ -37,14 +37,14 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
-    const response = await api.get("/contact/read", { params })
+    const response = await axios.get("/api/contact/read", { params })
     commit("setContacts", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Contacts
   async deleteContact({}, id) {
-    await api.delete("/contact/delete", {
+    await axios.delete("/api/contact/delete", {
       params: { id },
     })
   },

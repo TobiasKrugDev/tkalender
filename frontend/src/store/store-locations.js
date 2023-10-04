@@ -1,4 +1,4 @@
-import { api, axios } from "src/boot/axios"
+import { axios } from "src/boot/axios"
 
 const state = {
   locations: [],
@@ -37,14 +37,14 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
-    const response = await api.get("/location/read", { params })
+    const response = await axios.get("/api/location/read", { params })
     commit("setLocations", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
 
   // DELETE Location
   async deleteLocation({}, id) {
-    await api.delete("/location/delete", {
+    await axios.delete("/api/location/delete", {
       params: { id },
     })
   },

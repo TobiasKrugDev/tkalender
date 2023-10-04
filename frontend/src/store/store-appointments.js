@@ -1,4 +1,4 @@
-import { api, axios } from "src/boot/axios"
+import { axios } from "src/boot/axios"
 import { date } from "quasar"
 
 const state = {
@@ -73,7 +73,7 @@ const actions = {
     }
 
     if (futureAppointmentsOnly) params.futureAppointmentsOnly = true
-    const response = await api.get("/appointment/read", { params })
+    const response = await axios.get("/api/appointment/read", { params })
     commit("setAppointments", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
@@ -88,7 +88,7 @@ const actions = {
       calendarTimespanEnd,
     }
 
-    const response = await api.get("/appointment/read", { params })
+    const response = await axios.get("/api/appointment/read", { params })
     commit("setCalendarAppointments", response.data.items)
     commit("setCalendarTotalItems", response.data.totalItems)
   },
@@ -107,14 +107,14 @@ const actions = {
       params.filter_category = filterID
     }
 
-    const response = await api.get("/appointment/read", { params })
+    const response = await axios.get("/api/appointment/read", { params })
     commit("setEntityAppointments", response.data.items)
     commit("setEntityTotalItems", response.data.totalItems)
   },
 
   // DELETE Appointment
   async deleteAppointment({}, id) {
-    await api.delete("/appointment/delete", {
+    await axios.delete("/api/appointment/delete", {
       params: { id },
     })
   },
