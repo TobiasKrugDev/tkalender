@@ -86,7 +86,7 @@
   </div>
   <div class="q-mb-md">
     <q-input
-      v-model="contact.emailAdress"
+      v-model="contact.emailAddress"
       outlined
       label="E-Mail-Adresse"
       lazy-rules
