@@ -2,13 +2,13 @@
   <q-page>
     <div class="container">
       <div class="row">
-        <div class="col-lg-8 col-md-6 col-12 q-pr-md dashboard-calendar-col">
+        <div class="col-lg-6 col-md-6 col-12 q-pr-md dashboard-calendar-col">
           <WrapperCard title="Kalender"
             ><Calendar dashboard-mode
           /></WrapperCard>
         </div>
         <div
-          class="col-lg-4 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
+          class="col-lg-6 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
         >
           <WrapperCard title="Anstehende Termine"
             ><AppointmentTable dashboard-mode class="appointment-list"
@@ -85,7 +85,7 @@ export default defineComponent({
 
   .appointment-list {
     height: 50vh;
-    overflow-y: scroll;
+    overflow-y: auto;
   }
 }
 
