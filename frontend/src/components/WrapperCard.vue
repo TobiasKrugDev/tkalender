@@ -7,6 +7,9 @@
             {{ title }}
           </div>
         </div>
+        <div class="col text-right">
+          <slot name="top-right" />
+        </div>
       </div>
     </q-card-section>
     <q-card-section>
