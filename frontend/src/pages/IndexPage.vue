@@ -4,15 +4,25 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12 q-pr-md dashboard-calendar-col">
           <WrapperCard title="Kalender"
-            ><Calendar dashboard-mode
-          /></WrapperCard>
+            ><Calendar dashboard-mode />
+            <template #top-right>
+              <q-btn color="primary" label="Zum Kalender" flat to="/calendar" />
+            </template>
+          </WrapperCard>
         </div>
         <div
           class="col-lg-6 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
         >
           <WrapperCard title="Anstehende Termine"
-            ><AppointmentTable dashboard-mode class="appointment-list"
-          /></WrapperCard>
+            ><AppointmentTable dashboard-mode class="appointment-list" />
+            <template #top-right>
+              <q-btn
+                color="primary"
+                label="Zur Terminliste"
+                flat
+                to="/appointments"
+              /> </template
+          ></WrapperCard>
         </div>
       </div>
       <div class="row">
