@@ -8,55 +8,63 @@
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Beschreibung:</div>
       <div>
-        {{ item.description }}
+        <span v-if="item.description"></span>
+        <span v-else>-</span>
       </div>
     </div>
-    <div v-if="item.location" class="q-mb-lg">
+    <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Ort:</div>
-      <div class="row">
-        <div class="col">
-          <div>
-            {{ item.location.name }}
+      <div v-if="item.location">
+        <div class="row">
+          <div class="col">
+            <div>
+              {{ item.location.name }}
+            </div>
+            <div>
+              {{ item.location.streetAddress }}
+            </div>
+            <div>{{ item.location.postalCode }} {{ item.location.city }}</div>
           </div>
-          <div>
-            {{ item.location.streetAddress }}
-          </div>
-          <div>{{ item.location.postalCode }} {{ item.location.city }}</div>
-        </div>
-        <div class="col">
-          <div class="relative-position full-height">
-            <div class="location-map-button">
-              <q-btn
-                rounded
-                outline
-                color="primary"
-                :label="showMap ? 'Karte schließen' : 'Karte öffnen'"
-                :icon="showMap ? 'close' : 'location_on'"
-                @click="toggleMapEmbed"
-              />
+          <div class="col">
+            <div class="relative-position full-height">
+              <div class="location-map-button">
+                <q-btn
+                  rounded
+                  outline
+                  color="primary"
+                  :label="showMap ? 'Karte schließen' : 'Karte öffnen'"
+                  :icon="showMap ? 'close' : 'location_on'"
+                  @click="toggleMapEmbed"
+                />
+              </div>
             </div>
           </div>
         </div>
+        <q-slide-transition>
+          <div v-show="showMap">
+            <GoogleMapsEmbed :location="item.location" class="q-mt-lg" />
+          </div>
+        </q-slide-transition>
       </div>
-      <q-slide-transition>
-        <div v-show="showMap">
-          <GoogleMapsEmbed :location="item.location" class="q-mt-lg" />
-        </div>
-      </q-slide-transition>
+      <div v-else>-</div>
     </div>
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Kontakte:</div>
-      <ContactChip
-        v-for="contact in item.contacts"
-        :key="contact.id"
-        :contact="contact"
-      />
+      <div v-if="item.contacts.length">
+        <ContactChip
+          v-for="contact in item.contacts"
+          :key="contact.id"
+          :contact="contact"
+        />
+      </div>
+      <div v-else>-</div>
     </div>
-    <div v-if="item.category" class="q-mb-lg">
+    <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Kategorie:</div>
-      <div>
+      <div v-if="item.category">
         <CategoryChip :category="item.category" />
       </div>
+      <div v-else>-</div>
     </div>
   </div>
 
@@ -65,19 +73,22 @@
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Beschreibung:</div>
       <div>
-        {{ item.description }}
+        <span v-if="item.description">{{ item.description }}</span>
+        <span v-else>-</span>
       </div>
     </div>
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Telefonnr.:</div>
       <div>
-        {{ item.phoneNumber }}
+        <span v-if="item.phoneNumber">{{ item.phoneNumber }}</span>
+        <span v-else>-</span>
       </div>
     </div>
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">E-Mail-Adresse:</div>
       <div>
-        {{ item.emailAddress }}
+        <span v-if="item.emailAddress">{{ item.emailAddress }}</span>
+        <span v-else>-</span>
       </div>
     </div>
   </div>
@@ -87,22 +98,26 @@
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Beschreibung:</div>
       <div>
-        {{ item.description }}
+        <span v-if="item.description">{{ item.description }}</span>
+        <span v-else>-</span>
       </div>
     </div>
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Adresse:</div>
-      <div>
-        {{ item.streetAddress }}
+      <div v-if="isAddressDataGiven">
+        <div>
+          {{ item.streetAddress }}
+        </div>
+        <div>
+          {{ item.postalCode }}
+        </div>
+        <div>
+          {{ item.city }}
+        </div>
       </div>
-      <div>
-        {{ item.postalCode }}
-      </div>
-      <div>
-        {{ item.city }}
-      </div>
+      <span v-else>-</span>
     </div>
-    <div class="q-mb-lg text-center">
+    <div v-if="isAddressDataGiven" class="q-mb-lg text-center">
       <GoogleMapsEmbed :location="item" />
     </div>
   </div>
@@ -112,7 +127,8 @@
     <div class="q-mb-lg">
       <div class="show-property-name q-mb-xs">Beschreibung:</div>
       <div>
-        {{ item.description }}
+        <span v-if="item.description">{{ item.description }}</span>
+        <span v-else>-</span>
       </div>
     </div>
   </div>
@@ -201,6 +217,14 @@ export default defineComponent({
           date.formatDate(jsEndAt, "DD. MMMM YYYY - HH:mm") +
           " Uhr"
         )
+      }
+    },
+
+    isAddressDataGiven() {
+      if (this.item.street || this.item.postalCode || this.item.city) {
+        return true
+      } else {
+        return false
       }
     },
   },
