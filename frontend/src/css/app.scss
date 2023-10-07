@@ -36,6 +36,11 @@
     0 3px 3px -2px rgba(0, 0, 0, 0.12);
 }
 
+// Display floating action button in front of calendar
+.fixed-bottom-right {
+  z-index: 5;
+}
+
 // Some general helper classes
 .display-flex {
   display: flex;
