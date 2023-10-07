@@ -119,12 +119,7 @@
 
   <!-- EntityAppointmentList -->
   <div v-if="entity !== 'appointment'">
-    <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Termine:</div>
-      <div>
-        <EntityAppointmentList :entity="entity" :entity-id="item.id" />
-      </div>
-    </div>
+    <EntityAppointmentList :entity="entity" :entity-id="item.id" />
   </div>
 
   <div class="text-right q-mt-xl">

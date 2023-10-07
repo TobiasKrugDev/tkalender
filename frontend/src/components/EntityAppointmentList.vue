@@ -1,24 +1,27 @@
 <template>
-  <div>
-    <div
-      v-for="appointment in appointments"
-      :key="appointment.id"
-      class="row q-mb-xs"
-    >
-      <div class="col text-grey-7 text-weight-medium">
-        {{ formatAppointmentDate(appointment.startAt) }}
+  <div v-if="appointments.length" class="q-mb-lg">
+    <div class="show-property-name q-mb-xs">Termine:</div>
+    <div>
+      <div
+        v-for="appointment in appointments"
+        :key="appointment.id"
+        class="row q-mb-xs"
+      >
+        <div class="col text-grey-7 text-weight-medium">
+          {{ formatAppointmentDate(appointment.startAt) }}
+        </div>
+        <div class="col">{{ appointment.name }}</div>
       </div>
-      <div class="col">{{ appointment.name }}</div>
-    </div>
 
-    <!-- Pagination -->
-    <div v-if="showPagination" class="flex flex-center q-my-lg">
-      <CustomPagination
-        :totalItems="entityTotalItems"
-        :itemsPerPage="pagination.rowsPerPage"
-        class="q-mx-auto"
-        @page-change="onPageChange"
-      />
+      <!-- Pagination -->
+      <div v-if="showPagination" class="flex flex-center q-my-lg">
+        <CustomPagination
+          :totalItems="entityTotalItems"
+          :itemsPerPage="pagination.rowsPerPage"
+          class="q-mx-auto"
+          @page-change="onPageChange"
+        />
+      </div>
     </div>
   </div>
 </template>
