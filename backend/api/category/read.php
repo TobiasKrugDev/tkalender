@@ -28,21 +28,21 @@
     // Get Total Items Number
     $totalItems = $category->count();
 
-    $posts_arr = array();
-    $posts_arr['items'] = array();
-    $posts_arr['totalItems'] = $totalItems;
+    $category_array = array();
+    $category_array['items'] = array();
+    $category_array['totalItems'] = $totalItems;
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $post_item = array(
+        $category_item = array(
             'id' => $id,
             'name' => $name,
             'description' => $description,
             'color' => $color,
         );
 
-        array_push($posts_arr['items'], $post_item);
+        array_push($category_array['items'], $category_item);
     }
 
-    echo json_encode($posts_arr);
+    echo json_encode($category_array);

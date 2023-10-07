@@ -29,14 +29,14 @@
     // Get Total Items Number
     $totalItems = $location->count();
 
-    $posts_arr = array();
-    $posts_arr['items'] = array();
-    $posts_arr['totalItems'] = $totalItems;
+    $location_array = array();
+    $location_array['items'] = array();
+    $location_array['totalItems'] = $totalItems;
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $post_item = array(
+        $location_item = array(
             'id' => $id,
             'name' => $name,
             'description' => $description,
@@ -45,7 +45,7 @@
             'city' => $city
         );
 
-        array_push($posts_arr['items'], $post_item);
+        array_push($location_array['items'], $location_item);
     }
 
-    echo json_encode($posts_arr);
+    echo json_encode($location_array);

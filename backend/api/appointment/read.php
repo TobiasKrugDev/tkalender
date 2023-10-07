@@ -36,9 +36,9 @@
     // Get Total Items Number
     $totalItems = $appointment->count();
 
-    $posts_arr = array();
-    $posts_arr['items'] = array();
-    $posts_arr['totalItems'] = $totalItems;
+    $appointment_array = array();
+    $appointment_array['items'] = array();
+    $appointment_array['totalItems'] = $totalItems;
 
     $isEntityFilterSet = isset($appointment->contactFilter) || isset($appointment->locationFilter) || isset($appointment->categoryFilter);
 
@@ -46,13 +46,13 @@
         extract($row);
 
         if ($isEntityFilterSet) {
-            $post_item = array(
+            $appointment_item = array(
                 'id' => $id,
                 'name' => $name,
                 'startAt' => $startAt,
             );
         } else {
-            $post_item = array(
+            $appointment_item = array(
                 'id' => $id,
                 'name' => $appointmentName,
                 'description' => $appointmentDescription,
@@ -62,7 +62,7 @@
             );
 
             if (isset($locationID)) {
-                $post_item['location'] = array(
+                $appointment_item['location'] = array(
                     'id' => $locationID,
                     'name' => $locationName,
                     'description' => $locationDescription,
@@ -71,21 +71,21 @@
                     'city' => $city
                 );
             } else {
-                $post_item['location'] = null;
+                $appointment_item['location'] = null;
             }
 
             if (isset($categoryID)) {
-                $post_item['category'] = array(
+                $appointment_item['category'] = array(
                     'id' => $categoryID,
                     'name' => $categoryName,
                     'description' => $categoryDescription,
                     'color' => $color
                 );
             } else {
-                $post_item['category'] = null;
+                $appointment_item['category'] = null;
             }
 
-            $post_item['contacts'] = array();
+            $appointment_item['contacts'] = array();
 
             $contact = new Contact($db);
             $contact->appointmentFilter = $id;
@@ -93,7 +93,7 @@
 
             while($contactRow = $contactsResult->fetch(PDO::FETCH_ASSOC)) {
                 extract($contactRow);
-                $contact_post_item = array(
+                $contact_appointment_item = array(
                     'id' => $id,
                     'firstname' => $firstname,
                     'lastname' => $lastname,
@@ -103,12 +103,12 @@
                     'image' => $image,
                 );
 
-                array_push($post_item['contacts'], $contact_post_item);
+                array_push($appointment_item['contacts'], $contact_appointment_item);
             }
         }
 
-        array_push($posts_arr['items'], $post_item);
+        array_push($appointment_array['items'], $appointment_item);
 
     }
 
-    echo json_encode($posts_arr);
+    echo json_encode($appointment_array);

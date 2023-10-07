@@ -30,14 +30,14 @@
     // Get Total Items Number
     $totalItems = $contact->count();
 
-    $posts_arr = array();
-    $posts_arr['items'] = array();
-    $posts_arr['totalItems'] = $totalItems;
+    $contact_array = array();
+    $contact_array['items'] = array();
+    $contact_array['totalItems'] = $totalItems;
 
     while($row = $result->fetch(PDO::FETCH_ASSOC)) {
         extract($row);
 
-        $post_item = array(
+        $contact_item = array(
             'id' => $id,
             'firstname' => $firstname,
             'lastname' => $lastname,
@@ -47,7 +47,7 @@
             'image' => $image,
         );
 
-        array_push($posts_arr['items'], $post_item);
+        array_push($contact_array['items'], $contact_item);
     }
 
-    echo json_encode($posts_arr);
+    echo json_encode($contact_array);
