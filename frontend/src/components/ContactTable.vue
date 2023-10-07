@@ -60,6 +60,7 @@
           debounce="300"
           v-model="filter"
           placeholder="Suche"
+          class="q-mb-lg"
         >
           <template #append>
             <q-icon name="search" />

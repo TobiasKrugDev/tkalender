@@ -76,6 +76,7 @@
           checked-icon="check"
           unchecked-icon="clear"
           keep-color
+          class="q-mb-lg"
         />
       </template>
       <template v-if="!searchMode && !dashboardMode" #top-right>
@@ -85,6 +86,7 @@
           debounce="300"
           v-model="filter"
           placeholder="Suche"
+          class="q-mb-lg"
         >
           <template #append>
             <q-icon name="search" />
