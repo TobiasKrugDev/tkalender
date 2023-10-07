@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-md">
+  <div class="validation-input">
     <q-input
       ref="locationNameInput"
       v-model="location.name"
@@ -8,7 +8,7 @@
       :rules="[(val) => !!val || 'Name ist ein Pflichtfeld']"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="no-validation-input">
     <q-input
       v-model="location.description"
       label="Beschreibung"
@@ -26,7 +26,7 @@
   <div class="q-mb-md">
     <q-input v-model="location.postalCode" label="Postleitzahl" outlined />
   </div>
-  <div class="q-mb-md">
+  <div>
     <q-input v-model="location.city" label="Ort" outlined />
   </div>
 </template>

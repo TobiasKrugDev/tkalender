@@ -55,7 +55,7 @@
       @change="onFileUpload"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="validation-input">
     <q-input
       ref="contactFirstnameInput"
       v-model="contact.firstname"
@@ -64,7 +64,7 @@
       :rules="[(val) => !!val || 'Vorname ist ein Pflichtfeld']"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="validation-input">
     <q-input
       ref="contactLastnameInput"
       v-model="contact.lastname"
@@ -73,7 +73,7 @@
       :rules="[(val) => !!val || 'Nachname ist ein Pflichtfeld']"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="no-validation-input">
     <q-input
       v-model="contact.description"
       label="Beschreibung"
@@ -81,10 +81,10 @@
       type="textarea"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="no-validation-input">
     <q-input v-model="contact.phoneNumber" outlined label="Telefonnr." />
   </div>
-  <div class="q-mb-md">
+  <div class="no-validation-input">
     <q-input
       v-model="contact.emailAddress"
       outlined

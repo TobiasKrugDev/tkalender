@@ -1,5 +1,5 @@
 <template>
-  <div class="q-mb-md">
+  <div class="validation-input">
     <q-input
       ref="categoryNameInput"
       v-model="category.name"
@@ -8,7 +8,7 @@
       :rules="[(val) => !!val || 'Name ist ein Pflichtfeld']"
     />
   </div>
-  <div class="q-mb-md">
+  <div class="no-validation-input">
     <q-input
       v-model="category.description"
       label="Beschreibung"

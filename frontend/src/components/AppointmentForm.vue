@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div class="q-mb-md">
+    <div class="validation-input">
       <q-input
         ref="nameInput"
         v-model="appointment.name"
@@ -9,7 +9,7 @@
         :rules="[(val) => !!val || 'Name ist ein Pflichtfeld']"
       />
     </div>
-    <div class="q-mb-md row">
+    <div class="validation-input row">
       <div class="col q-mr-sm">
         <q-input
           ref="startAtInput"
@@ -33,7 +33,7 @@
         />
       </div>
     </div>
-    <div class="q-mb-md">
+    <div class="no-validation-input">
       <q-input
         v-model="appointment.description"
         label="Beschreibung"
@@ -41,7 +41,7 @@
         type="textarea"
       />
     </div>
-    <div class="row q-mb-md">
+    <div class="row no-validation-input">
       <div class="col-10">
         <q-select
           outlined
@@ -91,7 +91,7 @@
         </div>
       </div>
     </div>
-    <div class="row q-mb-md">
+    <div class="row no-validation-input">
       <div class="col-10">
         <q-select
           outlined
