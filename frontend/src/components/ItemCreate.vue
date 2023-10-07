@@ -20,8 +20,10 @@
       icon="mdi-content-save"
       label="Speichern"
       class="q-ml-xs"
+      :loading="loading"
       @click="onItemSave"
-    />
+      ><template v-slot:loading> <q-spinner-hourglass /> </template
+    ></q-btn>
   </div>
 </template>
 
@@ -52,6 +54,12 @@ export default defineComponent({
 
   emits: ["itemCreated"],
 
+  data() {
+    return {
+      loading: false,
+    }
+  },
+
   methods: {
     ...mapActions("appointments", ["createAppointment"]),
     ...mapActions("contacts", ["createContact"]),
@@ -59,6 +67,7 @@ export default defineComponent({
     ...mapActions("categories", ["createCategory"]),
 
     async onItemSave() {
+      this.loading = true
       let isValid
       if (this.entity === "appointment") {
         isValid = this.$refs.appointmentForm.validateForm()
@@ -76,6 +85,7 @@ export default defineComponent({
       }
 
       if (isValid) this.$emit("itemCreated")
+      this.loading = false
     },
   },
 })

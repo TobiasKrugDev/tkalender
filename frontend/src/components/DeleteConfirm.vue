@@ -19,7 +19,13 @@
 
     <q-card-actions align="right">
       <q-btn v-close-popup flat label="Abbrechen" color="primary" />
-      <q-btn label="Löschen" color="negative" @click="deleteItem" />
+      <q-btn
+        label="Löschen"
+        color="negative"
+        @click="deleteItem"
+        :loading="loading"
+        ><template v-slot:loading> <q-spinner-hourglass /> </template
+      ></q-btn>
     </q-card-actions>
   </q-card>
 </template>
@@ -47,6 +53,12 @@ export default defineComponent({
 
   emits: ["itemDeleted"],
 
+  data() {
+    return {
+      loading: false,
+    }
+  },
+
   computed: {
     itemName() {
       if (this.entity === "contact") {
@@ -64,6 +76,7 @@ export default defineComponent({
     ...mapActions("categories", ["deleteCategory"]),
 
     async deleteItem() {
+      this.loading = true
       switch (this.entity) {
         case "appointment":
           await this.deleteAppointment(this.item.id)
@@ -80,6 +93,7 @@ export default defineComponent({
       }
 
       this.$emit("itemDeleted")
+      this.loading = false
     },
   },
 })

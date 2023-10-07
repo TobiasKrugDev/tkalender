@@ -36,8 +36,11 @@
       icon="mdi-content-save"
       label="Speichern"
       class="q-ml-xs"
+      :loading="loading"
       @click="onItemSave"
-    />
+    >
+      <template v-slot:loading> <q-spinner-hourglass /> </template
+    ></q-btn>
   </div>
 </template>
 
@@ -72,6 +75,12 @@ export default defineComponent({
 
   emits: ["itemUpdated"],
 
+  data() {
+    return {
+      loading: false,
+    }
+  },
+
   computed: {
     // Prevent vuex mutate errors
     copiedItemData() {
@@ -92,6 +101,7 @@ export default defineComponent({
     ...mapActions("categories", ["updateCategory"]),
 
     async onItemSave() {
+      this.loading = true
       let isValid
       if (this.entity === "appointment") {
         isValid = this.$refs.appointmentForm.validateForm()
@@ -109,6 +119,7 @@ export default defineComponent({
       }
 
       if (isValid) this.$emit("itemUpdated")
+      this.loading = false
     },
   },
 })
