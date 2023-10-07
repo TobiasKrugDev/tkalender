@@ -18,7 +18,7 @@
       <template #body-cell-image="props">
         <q-td :props="props">
           <div>
-            <q-avatar v-if="props.row.image">
+            <q-avatar v-if="props.row.image" class="shadow-3">
               <img :src="props.row.image" />
             </q-avatar>
             <q-avatar
@@ -26,6 +26,7 @@
               icon="mdi-account"
               color="grey-5"
               text-color="white"
+              class="shadow-3"
             />
           </div>
         </q-td>
@@ -76,6 +77,7 @@
               icon="mdi-account"
               color="grey-5"
               text-color="white"
+              class="shadow-3"
             />
             <div class="q-ml-sm">
               {{ props.row.firstname }} {{ props.row.lastname }}

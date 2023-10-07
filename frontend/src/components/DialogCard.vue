@@ -12,12 +12,17 @@
             :style="'background-color: ' + color"
           />
           <div v-if="profileImage">
-            <q-avatar>
+            <q-avatar class="shadow-3">
               <img :src="profileImage" />
             </q-avatar>
           </div>
           <div v-if="showPlaceholderImage">
-            <q-avatar icon="mdi-account" color="grey-5" text-color="white" />
+            <q-avatar
+              icon="mdi-account"
+              color="grey-5"
+              text-color="white"
+              class="shadow-3"
+            />
           </div>
           <div
             class="text-h5 text-weight-medium q-ml-sm additional-line-height"

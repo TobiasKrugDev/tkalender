@@ -1,6 +1,10 @@
 <template>
   <div class="q-mb-md text-center">
-    <q-avatar v-if="contact.image" size="150px" class="relative-position">
+    <q-avatar
+      v-if="contact.image"
+      size="150px"
+      class="relative-position shadow-3"
+    >
       <img :src="contact.image" />
       <div class="image-edit-btn-container">
         <q-btn
@@ -29,6 +33,7 @@
       size="150px"
       color="grey-5"
       text-color="white"
+      class="shadow-3"
     >
       <div class="image-edit-btn-container">
         <q-btn

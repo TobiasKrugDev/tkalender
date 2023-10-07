@@ -107,7 +107,7 @@
           <template v-slot:option="scope">
             <q-item v-bind="scope.itemProps">
               <q-item-section avatar>
-                <q-avatar v-if="scope.opt.image">
+                <q-avatar v-if="scope.opt.image" class="shadow-3">
                   <img :src="scope.opt.image" />
                 </q-avatar>
                 <q-avatar
@@ -115,6 +115,7 @@
                   icon="mdi-account"
                   color="grey-5"
                   text-color="white"
+                  class="shadow-3"
                 />
               </q-item-section>
               <q-item-section>
