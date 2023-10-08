@@ -1,5 +1,5 @@
 <template>
-  <q-page-sticky position="bottom-right" :offset="[75, 75]">
+  <q-page-sticky position="bottom-right" :offset="[50, 50]">
     <!-- Expandable Floating Action Button -->
     <q-fab
       v-if="expandableFab"
