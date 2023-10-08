@@ -97,4 +97,21 @@ export default defineComponent({
 .custom-expandable-floating-action-button .q-fab__icon-holder {
   min-width: 40px;
 }
+
+@media screen and (max-width: 600px) {
+  .custom-floating-action-button,
+  .custom-expandable-floating-action-button {
+    width: 75px;
+    height: 75px;
+  }
+
+  .custom-floating-action-button .q-icon,
+  .custom-expandable-floating-action-button .q-fab__icon-holder .q-icon {
+    font-size: 30px;
+  }
+
+  .custom-expandable-floating-action-button .q-fab__icon-holder {
+    min-width: 30px;
+  }
+}
 </style>
