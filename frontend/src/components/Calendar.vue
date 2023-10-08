@@ -107,6 +107,8 @@ export default defineComponent({
     },
   },
 
+  emits: ["appointmentChange"],
+
   computed: {
     ...mapState("appointments", [
       "calendarAppointments",
@@ -270,6 +272,8 @@ export default defineComponent({
         start: this.timespanStart,
         end: this.timespanEnd,
       })
+
+      this.$emit("appointmentChange")
     },
 
     onAppointmentUpdate() {
@@ -281,6 +285,8 @@ export default defineComponent({
         start: this.timespanStart,
         end: this.timespanEnd,
       })
+
+      this.$emit("appointmentChange")
     },
 
     onEventClick(event, e) {
@@ -309,6 +315,8 @@ export default defineComponent({
         start: this.timespanStart,
         end: this.timespanEnd,
       })
+
+      this.$emit("appointmentChange")
     },
 
     async onCalendarReady(e) {
@@ -373,7 +381,7 @@ export default defineComponent({
       }
     },
 
-    onEventChange(e) {
+    async onEventChange(e) {
       if (e.event.isHoliday) return // Do nothing if holiday is clicked
       this.selectedAppointment = this.calendarAppointments.find(
         (appointment) => appointment.id === e.event.id
@@ -388,7 +396,9 @@ export default defineComponent({
 
       appointment.endAt = date.formatDate(e.event.end, "YYYY-MM-DD HH:mm:00")
 
-      this.updateAppointment(appointment)
+      await this.updateAppointment(appointment)
+
+      this.$emit("appointmentChange")
     },
 
     onEventCreate(e, deleteEventFunction) {
@@ -423,6 +433,13 @@ export default defineComponent({
       calendar.scrollTo({
         top: hours * this.timeCellHeight,
         behavior: "smooth",
+      })
+    },
+
+    refreshAppointments() {
+      this.getCalendarAppointments({
+        start: this.timespanStart,
+        end: this.timespanEnd,
       })
     },
   },

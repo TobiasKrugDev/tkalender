@@ -241,7 +241,7 @@ export default defineComponent({
     },
   },
 
-  emits: ["searchResultsFetched"],
+  emits: ["searchResultsFetched", "appointmentChange"],
 
   data() {
     return {
@@ -405,6 +405,8 @@ export default defineComponent({
 
       // Refresh category list
       this.getAppointmentData()
+
+      this.$emit("appointmentChange")
     },
 
     onAppointmentCreate() {
@@ -413,6 +415,8 @@ export default defineComponent({
 
       // Refresh category list
       this.getAppointmentData()
+
+      this.$emit("appointmentChange")
     },
 
     onAppointmentUpdate() {
@@ -421,6 +425,8 @@ export default defineComponent({
 
       // Refresh category list
       this.getAppointmentData()
+
+      this.$emit("appointmentChange")
     },
 
     formatMobileStartAt(startAt) {

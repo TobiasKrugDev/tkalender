@@ -4,7 +4,11 @@
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12 q-pr-md dashboard-calendar-col">
           <WrapperCard title="Kalender"
-            ><Calendar dashboard-mode />
+            ><Calendar
+              ref="calendar"
+              dashboard-mode
+              @appointment-change="onCalendarAppointmentChange"
+            />
             <template #top-right>
               <q-btn color="primary" label="Zum Kalender" flat to="/calendar" />
             </template>
@@ -14,7 +18,11 @@
           class="col-lg-6 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
         >
           <WrapperCard title="Anstehende Termine"
-            ><AppointmentTable dashboard-mode class="appointment-list" />
+            ><AppointmentTable
+              ref="appointmentTable"
+              dashboard-mode
+              class="appointment-list"
+              @appointment-change="onTableAppointmentChange" />
             <template #top-right>
               <q-btn
                 color="primary"
@@ -66,6 +74,16 @@ export default defineComponent({
         { to: "/categories", icon: "mdi-palette", label: "Kategorien" },
       ],
     }
+  },
+
+  methods: {
+    onCalendarAppointmentChange() {
+      this.$refs.appointmentTable.getAppointmentData()
+    },
+
+    onTableAppointmentChange() {
+      this.$refs.calendar.refreshAppointments()
+    },
   },
 })
 </script>
