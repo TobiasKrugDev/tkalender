@@ -34,12 +34,17 @@
         </div>
       </div>
       <div class="row">
-        <DashboardEntityButton
-          v-for="(entity, index) in entityButtons"
-          :key="entity"
-          :entity-data="entity"
-          :class="{ 'left-dashboard-column': index === 0 }"
-        />
+        <div class="col-sm-10 col-12">
+          <div class="row dashboard-btn-row">
+            <DashboardEntityButton
+              v-for="(entity, index) in entityButtons"
+              :key="entity"
+              :entity-data="entity"
+              :class="{ 'left-dashboard-column': index === 0 }"
+            />
+          </div>
+        </div>
+        <div class="col-2" />
       </div>
     </div>
 
@@ -104,7 +109,7 @@ export default defineComponent({
 
 @media screen and (min-width: 1024px) {
   .left-dashboard-column {
-    margin-left: 18px;
+    padding-left: 18px;
   }
 
   .dashboard-appointment-list-col {
@@ -114,6 +119,12 @@ export default defineComponent({
   .appointment-list {
     height: 50vh;
     overflow-y: auto;
+  }
+}
+
+@media screen and (max-width: 1024px) {
+  .dashboard-btn-row {
+    margin-bottom: 50px;
   }
 }
 

@@ -52,13 +52,13 @@ export default defineComponent({
 
 @media screen and (min-width: 600px) {
   .dashboard-btn-container {
-    width: 165px;
+    width: 150px;
   }
 }
 
 @media screen and (min-width: 1024px) {
   .dashboard-btn-container {
-    width: 200px;
+    width: 150px;
   }
 }
 
