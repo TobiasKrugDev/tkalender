@@ -27,7 +27,7 @@
           </div>
           <div class="col">
             <div class="relative-position full-height">
-              <div class="location-map-button">
+              <div class="center-action-btn">
                 <q-btn
                   rounded
                   outline
@@ -78,17 +78,53 @@
       </div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Telefonnr.:</div>
-      <div>
-        <span v-if="item.phoneNumber">{{ item.phoneNumber }}</span>
-        <span v-else>-</span>
+      <div class="row">
+        <div class="col">
+          <div class="show-property-name q-mb-xs">Telefonnr.:</div>
+          <div v-if="item.phoneNumber">
+            {{ item.phoneNumber }}
+          </div>
+          <div v-else>-</div>
+        </div>
+        <div v-if="item.phoneNumber" class="col">
+          <div class="relative-position full-height">
+            <div class="center-action-btn">
+              <q-btn
+                rounded
+                outline
+                color="primary"
+                label="Anrufen"
+                icon="call"
+                :href="'tel:' + item.phoneNumber"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">E-Mail-Adresse:</div>
-      <div>
-        <span v-if="item.emailAddress">{{ item.emailAddress }}</span>
-        <span v-else>-</span>
+      <div class="row">
+        <div class="col">
+          <div class="show-property-name q-mb-xs">E-Mail-Adresse:</div>
+          <div v-if="item.emailAddress">
+            {{ item.emailAddress }}
+          </div>
+          <div v-else>-</div>
+        </div>
+        <div v-if="item.emailAddress" class="col">
+          <div class="relative-position full-height">
+            <div class="center-action-btn">
+              <q-btn
+                rounded
+                outline
+                color="primary"
+                label="E-Mail senden"
+                icon="email"
+                :href="'mailto:' + item.emailAddress"
+              />
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -246,7 +282,7 @@ export default defineComponent({
 </script>
 
 <style lang="scss">
-.location-map-button {
+.center-action-btn {
   position: absolute;
   top: 50%;
   right: 0;
