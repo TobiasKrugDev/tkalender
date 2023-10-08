@@ -1,19 +1,23 @@
 <template>
   <q-card>
     <q-card-section class="row items-center q-pb-none">
-      <div class="text-h6">Löschen?</div>
+      <div class="text-h6">
+        <q-icon name="warning" color="negative" size="2rem" class="q-mr-xs" />
+        Sind Sie sicher?
+      </div>
       <q-space />
       <q-btn icon="close" flat round dense v-close-popup />
     </q-card-section>
 
-    <q-card-section>
+    <q-card-section class="q-my-lg">
       <div>
-        Sicher, dass Sie
-        <span v-if="entity === 'appointment'">den Termin</span>
-        <span v-if="entity === 'contact'">den Kontakt</span>
-        <span v-if="entity === 'location'">den Ort</span>
-        <span v-if="entity === 'category'">die Kategorie</span>
-        "{{ itemName }}" wirklich löschen möchten?
+        Wollen Sie
+        <span v-if="entity === 'appointment'"> den Termin </span>
+        <span v-if="entity === 'contact'"> den Kontakt </span>
+        <span v-if="entity === 'location'"> den Ort </span>
+        <span v-if="entity === 'category'"> die Kategorie </span>
+        <span class="text-weight-medium">"{{ itemName }}"</span> wirklich
+        löschen?
       </div>
     </q-card-section>
 
