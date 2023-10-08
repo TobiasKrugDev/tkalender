@@ -126,8 +126,6 @@
 
         <q-item
           clickable
-          target="_self"
-          to="/"
           class="text-white mobile-logout-link lt-md"
           @click="onLogoutClick"
         >

@@ -41,6 +41,11 @@
   z-index: 5;
 }
 
+.q-router-link--exact-active {
+  background-color: white;
+  color: $primary !important;
+}
+
 // Some general helper classes
 .display-flex {
   display: flex;
