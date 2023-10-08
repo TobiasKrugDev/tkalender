@@ -215,12 +215,36 @@
         </div>
       </div>
     </div>
+
+    <q-dialog v-model="timespanErrorAlert">
+      <q-card>
+        <q-card-section>
+          <div class="text-h6">
+            <q-icon
+              name="warning"
+              color="negative"
+              size="2rem"
+              class="q-mr-sm"
+            />Warnung!
+          </div>
+        </q-card-section>
+
+        <q-card-section class="q-pt-none text-weight-medium q-my-md">
+          Das angegebene Enddatum des Termins liegt vor dem Startdatum.
+        </q-card-section>
+
+        <q-card-actions align="right">
+          <q-btn flat label="OK" color="primary" v-close-popup />
+        </q-card-actions>
+      </q-card>
+    </q-dialog>
   </div>
 </template>
 
 <script>
 import { defineComponent } from "vue"
 import { mapActions, mapState, mapMutations } from "vuex"
+import { date } from "quasar"
 import ContactChip from "./ContactChip.vue"
 import CategoryChip from "./CategoryChip.vue"
 
@@ -242,6 +266,7 @@ export default defineComponent({
   data() {
     return {
       appointment: {},
+      timespanErrorAlert: false,
     }
   },
 
@@ -296,7 +321,15 @@ export default defineComponent({
       ) {
         return false
       } else {
-        return true
+        // Extra check if end date is set earlier than start date
+        const startAt = new Date(this.appointment.startAt)
+        const endAt = new Date(this.appointment.endAt)
+        if (startAt > endAt) {
+          this.timespanErrorAlert = true
+          return false
+        } else {
+          return true
+        }
       }
     },
 
