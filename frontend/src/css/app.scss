@@ -12,7 +12,8 @@
 
 // Show components
 .show-property-name {
-  font-weight: bold;
+  font-weight: 500;
+  color: #757575;
 }
 
 // Override default q-table items per page select position
@@ -41,6 +42,7 @@
   z-index: 5;
 }
 
+// Mark active menu link
 .q-router-link--exact-active {
   background-color: white;
   color: $primary !important;

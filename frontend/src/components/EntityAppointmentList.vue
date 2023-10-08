@@ -1,6 +1,6 @@
 <template>
   <div v-if="appointments.length" class="q-mb-lg">
-    <div class="show-property-name q-mb-xs">Termine:</div>
+    <div class="show-property-name q-mb-xs">Termine</div>
     <div>
       <div
         v-for="appointment in appointments"

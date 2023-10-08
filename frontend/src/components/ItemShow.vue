@@ -2,18 +2,18 @@
   <!-- Appointment -->
   <div v-if="entity === 'appointment'">
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Datum:</div>
+      <div class="show-property-name q-mb-xs">Datum</div>
       <div>{{ appointmentDateSpan }}</div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Beschreibung:</div>
+      <div class="show-property-name q-mb-xs">Beschreibung</div>
       <div>
-        <span v-if="item.description"></span>
+        <span v-if="item.description">{{ item.description }}</span>
         <span v-else>-</span>
       </div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Ort:</div>
+      <div class="show-property-name q-mb-xs">Ort</div>
       <div v-if="item.location">
         <div class="row">
           <div class="col">
@@ -49,7 +49,7 @@
       <div v-else>-</div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Kontakte:</div>
+      <div class="show-property-name q-mb-xs">Kontakte</div>
       <div v-if="item.contacts.length">
         <ContactChip
           v-for="contact in item.contacts"
@@ -60,7 +60,7 @@
       <div v-else>-</div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Kategorie:</div>
+      <div class="show-property-name q-mb-xs">Kategorie</div>
       <div v-if="item.category">
         <CategoryChip :category="item.category" />
       </div>
@@ -71,7 +71,7 @@
   <!-- Contact -->
   <div v-if="entity === 'contact'">
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Beschreibung:</div>
+      <div class="show-property-name q-mb-xs">Beschreibung</div>
       <div>
         <span v-if="item.description">{{ item.description }}</span>
         <span v-else>-</span>
@@ -80,7 +80,7 @@
     <div class="q-mb-lg">
       <div class="row">
         <div class="col">
-          <div class="show-property-name q-mb-xs">Telefonnr.:</div>
+          <div class="show-property-name q-mb-xs">Telefonnr.</div>
           <div v-if="item.phoneNumber">
             {{ item.phoneNumber }}
           </div>
@@ -105,7 +105,7 @@
     <div class="q-mb-lg">
       <div class="row">
         <div class="col">
-          <div class="show-property-name q-mb-xs">E-Mail-Adresse:</div>
+          <div class="show-property-name q-mb-xs">E-Mail-Adresse</div>
           <div v-if="item.emailAddress">
             {{ item.emailAddress }}
           </div>
@@ -132,14 +132,14 @@
   <!-- Location -->
   <div v-if="entity === 'location'">
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Beschreibung:</div>
+      <div class="show-property-name q-mb-xs">Beschreibung</div>
       <div>
         <span v-if="item.description">{{ item.description }}</span>
         <span v-else>-</span>
       </div>
     </div>
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Adresse:</div>
+      <div class="show-property-name q-mb-xs">Adresse</div>
       <div v-if="isAddressDataGiven">
         <div>
           {{ item.streetAddress }}
@@ -161,7 +161,7 @@
   <!-- Category -->
   <div v-if="entity === 'category'">
     <div class="q-mb-lg">
-      <div class="show-property-name q-mb-xs">Beschreibung:</div>
+      <div class="show-property-name q-mb-xs">Beschreibung</div>
       <div>
         <span v-if="item.description">{{ item.description }}</span>
         <span v-else>-</span>
