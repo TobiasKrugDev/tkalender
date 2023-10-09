@@ -298,6 +298,10 @@ export default defineComponent({
 
 .page-container-background {
   background-color: #f5f6fa;
+  background-image: url("tkalender-background-logo.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
 }
 
 .search-button {
@@ -338,11 +342,19 @@ export default defineComponent({
   .q-header {
     left: 317px !important;
   }
+
+  .page-container-background {
+    background-position: 65% 50%;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .logout-toolbar-card {
     width: 200px;
+  }
+
+  .page-container-background {
+    background-position: 60% 50%;
   }
 }
 </style>

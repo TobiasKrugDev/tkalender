@@ -1,5 +1,5 @@
 <template>
-  <q-page>
+  <q-page class="dashboard-background">
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12 q-pr-md dashboard-calendar-col">
@@ -126,6 +126,11 @@ export default defineComponent({
 .dashboard-calendar-col,
 .dashboard-appointment-list-col {
   padding-right: 31px;
+}
+
+// Add extra background layer to override background logo ONLY on dashbaord
+.dashboard-background {
+  background-color: #f5f6fa;
 }
 
 @media screen and (min-width: 1024px) {
