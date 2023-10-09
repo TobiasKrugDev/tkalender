@@ -48,6 +48,11 @@
   color: $primary !important;
 }
 
+// Crop avatar image to prevent stretching
+.q-avatar img {
+  object-fit: cover;
+}
+
 // Some general helper classes
 .display-flex {
   display: flex;
