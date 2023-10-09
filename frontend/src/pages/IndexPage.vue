@@ -193,7 +193,7 @@ export default defineComponent({
   }
 }
 
-@media screen and (min-height: 1100px) {
+@media screen and (min-height: 1100px) and (min-width: 1024px) {
   .appointment-list {
     height: 55vh;
   }
