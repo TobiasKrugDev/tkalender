@@ -324,7 +324,7 @@ export default defineComponent({
       if (this.dashboardMode) {
         return true
       } else {
-        return this.$q.screen.xs
+        return this.$q.screen.lt.lg
       }
     },
   },

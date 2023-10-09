@@ -5,7 +5,7 @@
       :rows="locations"
       :columns="columns"
       rows-per-page-label="Einträge pro Seite"
-      :grid="$q.screen.xs"
+      :grid="$q.screen.lt.lg"
       :rows-per-page-options="[10, 25, 50, 100]"
       v-model:pagination="pagination"
       :loading="loading"
@@ -15,6 +15,13 @@
       @row-click="onRowClick"
       @request="onRequest"
     >
+      <template #body-cell-description="props">
+        <q-td :props="props">
+          <div class="location-table-description ellipsis">
+            {{ props.row.description }}
+          </div>
+        </q-td>
+      </template>
       <template #body-cell-actions="props">
         <td class="text-right">
           <q-btn
@@ -350,3 +357,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.location-table-description {
+  max-width: 10vw;
+}
+</style>

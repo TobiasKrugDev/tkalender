@@ -5,7 +5,7 @@
       :rows="categories"
       :columns="columns"
       rows-per-page-label="Einträge pro Seite"
-      :grid="$q.screen.xs"
+      :grid="$q.screen.lt.lg"
       :rows-per-page-options="[10, 25, 50, 100]"
       v-model:pagination="pagination"
       :loading="loading"
@@ -21,6 +21,13 @@
             class="category-table-color-circle"
             :style="'background-color: ' + props.value"
           />
+        </q-td>
+      </template>
+      <template #body-cell-description="props">
+        <q-td :props="props">
+          <div class="category-table-description ellipsis">
+            {{ props.row.description }}
+          </div>
         </q-td>
       </template>
       <template #body-cell-actions="props">
@@ -351,5 +358,9 @@ export default defineComponent({
 .mobile-item-title-circle {
   display: flex;
   line-height: 3rem;
+}
+
+.category-table-description {
+  max-width: 30vw;
 }
 </style>

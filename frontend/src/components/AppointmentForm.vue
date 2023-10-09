@@ -59,9 +59,11 @@
             <q-item v-bind="scope.itemProps">
               <q-item-section>
                 <q-item-label>{{ scope.opt.name }}</q-item-label>
-                <q-item-label caption class="ellipsis">{{
-                  scope.opt.description
-                }}</q-item-label>
+                <q-item-label
+                  caption
+                  class="option-slot-description ellipsis"
+                  >{{ scope.opt.description }}</q-item-label
+                >
                 <q-item-label caption
                   >{{ scope.opt.streetAddress
                   }}<span v-if="scope.opt.postalCode || scope.opt.city">,</span>
@@ -123,9 +125,12 @@
                   >{{ scope.opt.firstname }}
                   {{ scope.opt.lastname }}</q-item-label
                 >
-                <q-item-label v-if="scope.opt.description" caption>{{
-                  scope.opt.description
-                }}</q-item-label>
+                <q-item-label
+                  v-if="scope.opt.description"
+                  caption
+                  class="option-slot-description ellipsis"
+                  >{{ scope.opt.description }}</q-item-label
+                >
                 <q-item-label v-if="scope.opt.emailAddress" caption>{{
                   scope.opt.emailAddress
                 }}</q-item-label>
@@ -185,9 +190,12 @@
               </q-item-section>
               <q-item-section>
                 <q-item-label>{{ scope.opt.name }}</q-item-label>
-                <q-item-label v-if="scope.opt.description" caption>{{
-                  scope.opt.description
-                }}</q-item-label>
+                <q-item-label
+                  v-if="scope.opt.description"
+                  caption
+                  class="option-slot-description ellipsis"
+                  >{{ scope.opt.description }}</q-item-label
+                >
               </q-item-section>
             </q-item>
           </template>
@@ -363,4 +371,14 @@ export default defineComponent({
 })
 </script>
 
-<style lang="scss"></style>
+<style lang="scss">
+.option-slot-description {
+  max-width: 400px;
+}
+
+@media screen and (max-width: 600px) {
+  .option-slot-description {
+    max-width: 200px;
+  }
+}
+</style>

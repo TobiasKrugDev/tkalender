@@ -5,7 +5,7 @@
       :rows="contacts"
       :columns="columns"
       rows-per-page-label="Einträge pro Seite"
-      :grid="$q.screen.xs"
+      :grid="$q.screen.lt.lg"
       :rows-per-page-options="[10, 25, 50, 100]"
       v-model:pagination="pagination"
       :loading="loading"
@@ -15,6 +15,13 @@
       @row-click="onRowClick"
       @request="onRequest"
     >
+      <template #body-cell-description="props">
+        <q-td :props="props">
+          <div class="contact-table-description ellipsis">
+            {{ props.row.description }}
+          </div>
+        </q-td>
+      </template>
       <template #body-cell-image="props">
         <q-td :props="props">
           <div>
@@ -410,3 +417,9 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss">
+.contact-table-description {
+  max-width: 250px;
+}
+</style>
