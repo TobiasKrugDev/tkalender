@@ -3,7 +3,7 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-6 col-md-6 col-12 q-pr-md dashboard-calendar-col">
-          <WrapperCard title="Kalender"
+          <WrapperCard title="Kalender" class="dashboard-wrapper-card"
             ><Calendar
               ref="calendar"
               dashboard-mode
@@ -17,7 +17,7 @@
         <div
           class="col-lg-6 col-md-6 col-12 q-pl-lg-md dashboard-appointment-list-col"
         >
-          <WrapperCard title="Anstehende Termine"
+          <WrapperCard title="Anstehende Termine" class="dashboard-wrapper-card"
             ><AppointmentTable
               ref="appointmentTable"
               dashboard-mode
@@ -33,18 +33,39 @@
           ></WrapperCard>
         </div>
       </div>
-      <div class="row">
+      <div class="row absolute-dashboard-buttons">
+        <div style="position: absolute; bottom: 24px; width: 100%">
+          <div class="container">
+            <div class="row">
+              <div class="col-sm-10 col-12">
+                <div class="row dashboard-btn-row">
+                  <DashboardEntityButton
+                    v-for="(entity, index) in entityButtons"
+                    :key="entity"
+                    :entity-data="entity"
+                    :class="{ 'left-dashboard-column': index === 0 }"
+                  />
+                </div>
+              </div>
+              <div class="col-2" />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row regular-dashboard-buttons">
         <div class="col-sm-10 col-12">
           <div class="row dashboard-btn-row">
             <DashboardEntityButton
               v-for="(entity, index) in entityButtons"
               :key="entity"
               :entity-data="entity"
-              :class="{ 'left-dashboard-column': index === 0 }"
+              :class="{
+                'left-dashboard-column': index === 0,
+                'q-mb-md': $q.screen.xs,
+              }"
             />
           </div>
         </div>
-        <div class="col-2" />
       </div>
     </div>
 
@@ -120,17 +141,61 @@ export default defineComponent({
     height: 50vh;
     overflow-y: auto;
   }
+
+  .dashboard-calendar-col .wrapper-card,
+  .dashboard-appointment-list-col .wrapper-card {
+    margin-bottom: 3vh;
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .dashboard-wrapper-card {
+    height: 100%;
+  }
+}
+
+@media screen and (min-width: 1024px) and (min-height: 700px) {
+  .regular-dashboard-buttons {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 1024px) {
   .dashboard-btn-row {
     margin-bottom: 50px;
   }
+
+  .absolute-dashboard-buttons {
+    display: none;
+  }
 }
 
 @media screen and (min-width: 1440px) {
   .dashboard-calendar-col {
     padding-right: 16px;
+  }
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+  .appointment-list {
+    height: 40vh;
+  }
+}
+
+@media screen and (max-height: 700px) {
+  .absolute-dashboard-buttons {
+    display: none;
+  }
+
+  .regular-dashboard-buttons {
+    padding-top: 24px;
+    padding-bottom: 24px;
+  }
+}
+
+@media screen and (min-height: 1100px) {
+  .appointment-list {
+    height: 55vh;
   }
 }
 </style>

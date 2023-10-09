@@ -3,7 +3,9 @@
     <vue-cal
       id="vuecal"
       active-view="week"
-      :style="dashboardMode ? 'height: 50vh' : 'height: 75vh'"
+      :class="
+        dashboardMode ? 'dashboard-mode-height' : 'fullscreen-mode-height'
+      "
       :disable-views="['years', 'year']"
       locale="de"
       :events="events"
@@ -489,5 +491,25 @@ export default defineComponent({
 
 .vuecal__event {
   border-radius: 4px;
+}
+
+.fullscreen-mode-height {
+  height: 75vh;
+}
+
+.dashboard-mode-height {
+  height: 50vh;
+}
+
+@media screen and (max-height: 900px) and (min-width: 1024px) {
+  .dashboard-mode-height {
+    height: 40vh;
+  }
+}
+
+@media screen and (min-height: 1100px) and (min-width: 1024px) {
+  .dashboard-mode-height {
+    height: 55vh;
+  }
 }
 </style>

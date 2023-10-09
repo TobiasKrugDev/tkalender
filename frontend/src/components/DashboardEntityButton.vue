@@ -1,5 +1,5 @@
 <template>
-  <div class="col-sm col-12 q-my-lg">
+  <div class="col-sm col-12">
     <div class="dashboard-btn-container shadow-7">
       <q-btn
         :to="entityData.to"
@@ -64,7 +64,7 @@ export default defineComponent({
 
 @media screen and (min-width: 1440px) {
   .dashboard-btn-container {
-    height: 200px;
+    height: 20vh;
     width: 300px;
   }
 }
