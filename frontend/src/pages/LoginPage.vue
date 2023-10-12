@@ -1,25 +1,33 @@
 <template>
   <q-page class="flex">
-    <WrapperCard title="Login">
-      <q-input
-        ref="username"
-        outlined
-        v-model="username"
-        label="Benutzername"
-        :rules="[(val) => !!val || 'Bitte geben Sie Ihren Benutzernamen ein']"
-      />
-      <q-input
-        ref="password"
-        outlined
-        v-model="password"
-        label="Passwort"
-        :rules="[(val) => !!val || 'Bitte geben Sie Ihr Passwort ein']"
-        type="password"
-      />
-      <div class="text-right">
-        <q-btn color="primary" label="Login" @click="onLoginClick" />
-      </div>
-    </WrapperCard>
+    <div id="blurred-background"></div>
+    <div id="login-card">
+      <WrapperCard title="Login" id="login-wrapper-card">
+        <div class="text-center q-mb-lg">
+          <img src="login-logo.png" alt="TKalender Logo" />
+        </div>
+        <div class="q-mb-md">
+          <q-input
+            ref="username"
+            outlined
+            v-model="username"
+            label="Benutzername"
+          />
+        </div>
+        <div class="q-mb-xl">
+          <q-input
+            ref="password"
+            outlined
+            v-model="password"
+            label="Passwort"
+            type="password"
+          />
+        </div>
+        <div class="text-right">
+          <q-btn color="primary" label="Anmelden" @click="onLoginClick" />
+        </div>
+      </WrapperCard>
+    </div>
   </q-page>
 </template>
 
@@ -46,10 +54,7 @@ export default defineComponent({
     ...mapActions("authentication", ["login"]),
     async onLoginClick() {
       // Frontend Validation
-      this.$refs.username.validate()
-      this.$refs.password.validate()
-
-      if (this.$refs.username.hasError || this.$refs.password.hasError) return
+      if (!this.username || !this.password) return
 
       const response = await this.login({
         username: this.username,
@@ -70,3 +75,32 @@ export default defineComponent({
   },
 })
 </script>
+
+<style lang="scss" scope>
+#blurred-background {
+  width: 100%;
+  background-image: url("pexels-picjumbocom-210660.jpg");
+  filter: blur(3px);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+#login-card {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 500px;
+}
+
+#login-wrapper-card {
+  margin: 0;
+}
+
+@media screen and (max-width: 600px) {
+  #login-card {
+    width: 90vw;
+  }
+}
+</style>
