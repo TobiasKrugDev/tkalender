@@ -12,6 +12,7 @@
             outlined
             v-model="username"
             label="Benutzername"
+            @keyup.enter="onLoginSubmit"
           />
         </div>
         <div class="q-mb-xl">
@@ -21,6 +22,7 @@
             v-model="password"
             label="Passwort"
             type="password"
+            @keyup.enter="onLoginSubmit"
           />
         </div>
         <div class="text-right">
