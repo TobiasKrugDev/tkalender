@@ -24,7 +24,14 @@
           />
         </div>
         <div class="text-right">
-          <q-btn color="primary" label="Anmelden" @click="onLoginClick" />
+          <q-btn
+            color="primary"
+            label="Anmelden"
+            :loading="loading"
+            @click="onLoginSubmit"
+          >
+            <template v-slot:loading> <q-spinner-hourglass /> </template>
+          </q-btn>
         </div>
       </WrapperCard>
     </div>
@@ -47,14 +54,17 @@ export default defineComponent({
     return {
       username: "",
       password: "",
+      loading: false,
     }
   },
 
   methods: {
     ...mapActions("authentication", ["login"]),
-    async onLoginClick() {
+    async onLoginSubmit() {
       // Frontend Validation
       if (!this.username || !this.password) return
+
+      this.loading = true
 
       const response = await this.login({
         username: this.username,
@@ -71,6 +81,8 @@ export default defineComponent({
           progress: true,
         })
       }
+
+      this.loading = false
     },
   },
 })
