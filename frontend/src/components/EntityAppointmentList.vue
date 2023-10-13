@@ -46,7 +46,7 @@ export default defineComponent({
     },
 
     entityId: {
-      type: Number,
+      type: String,
       required: true,
     },
   },
