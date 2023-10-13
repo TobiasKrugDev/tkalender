@@ -113,7 +113,7 @@ module.exports = configure(function (/* ctx */) {
       // directives: [],
 
       // Quasar plugins
-      plugins: ["Loading", "Notify", "Cookies"],
+      plugins: ["Loading", "Notify", "Cookies", "BottomSheet"],
       config: {
         loading: {
           spinner: "QSpinnerHourglass",
