@@ -115,7 +115,15 @@
               </span>
             </div>
             <div class="col-1">
-              <q-btn flat round dense color="grey-7" icon="more_vert">
+              <!-- Desktop button -->
+              <q-btn
+                v-if="$q.screen.gt.sm"
+                flat
+                round
+                dense
+                color="grey-7"
+                icon="more_vert"
+              >
                 <q-menu transition-show="flip-up" transition-hide="flip-down">
                   <q-list style="min-width: 100px">
                     <q-item clickable @click="onRowClick(null, props.row)">
@@ -139,6 +147,17 @@
                   </q-list>
                 </q-menu>
               </q-btn>
+
+              <!-- Mobile button -->
+              <q-btn
+                v-else
+                flat
+                round
+                dense
+                color="grey-7"
+                icon="more_vert"
+                @click="showBottomSheet(props.row)"
+              />
             </div>
             <div class="col-12">
               <div>
@@ -251,6 +270,7 @@ export default defineComponent({
       dialogMode: "",
       loading: false,
       timespanToggle: true,
+      bottomSheetItem: null,
       pagination: {
         // sortBy: 'name',
         // descending: false,
@@ -432,6 +452,40 @@ export default defineComponent({
     formatMobileStartAt(startAt) {
       const jsStartAt = new Date(startAt)
       return date.formatDate(jsStartAt, "DD. MMMM YYYY - HH:mm") + " Uhr"
+    },
+
+    showBottomSheet(item) {
+      this.bottomSheetItem = item
+      this.$q
+        .bottomSheet({
+          grid: false,
+          actions: [
+            {
+              label: "Ansehen",
+              icon: "mdi-eye-outline",
+              id: "show",
+            },
+            {
+              label: "Bearbeiten",
+              icon: "mdi-pencil",
+              id: "update",
+            },
+            {
+              label: "Löschen",
+              icon: "mdi-delete",
+              id: "delete",
+            },
+          ],
+        })
+        .onOk((action) => {
+          if (action.id === "show") {
+            this.onRowClick(null, this.bottomSheetItem)
+          } else if (action.id === "update") {
+            this.openUpdateDialog(this.bottomSheetItem)
+          } else if (action.id === "delete") {
+            this.onDeleteClick(this.bottomSheetItem)
+          }
+        })
     },
   },
 })
