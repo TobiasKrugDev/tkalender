@@ -131,7 +131,7 @@ const actions = {
 
     if (appointment.location) appointment.location = appointment.location.id
     if (appointment.category) appointment.category = appointment.category.id
-    if (appointment.contatcs)
+    if (appointment.contacts)
       appointment.contacts = appointment.contacts.map((contact) => contact.id)
 
     const response = await axios.post("/api/appointment/create", appointment, {
