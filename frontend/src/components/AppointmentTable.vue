@@ -115,7 +115,7 @@
               </span>
             </div>
             <div class="col-1">
-              <!-- Desktop button -->
+              <!-- Desktop menu button -->
               <q-btn
                 v-if="$q.screen.gt.sm"
                 flat
@@ -148,7 +148,7 @@
                 </q-menu>
               </q-btn>
 
-              <!-- Mobile button -->
+              <!-- Mobile bottom sheet button -->
               <q-btn
                 v-else
                 flat
