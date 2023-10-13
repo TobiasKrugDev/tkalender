@@ -90,7 +90,7 @@ module.exports = configure(function (/* ctx */) {
 
       proxy: {
         "/api": {
-          target: "https://www.dev-schabernack-testsite-himom-16.de", // ToDo: Change this to a less embarassing URL
+          target: "https://www.tkalender-demo.de",
           changeOrigin: true,
         },
       },

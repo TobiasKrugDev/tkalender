@@ -8,8 +8,8 @@ import axios from "axios"
 // "export default () => {}" function below (which runs individually
 // for each client)
 const api = axios.create({
-  baseURL: "https://www.dev-schabernack-testsite-himom-16.de/api",
-}) // ToDo: Adjust URL name
+  baseURL: "https://www.tkalender-demo.de/api",
+})
 
 export default boot(({ app }) => {
   // for use inside Vue files (Options API) through this.$axios and this.$api
