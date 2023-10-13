@@ -57,7 +57,7 @@
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-            return $row['total'];
+            return intval($row['total']);
         }
 
         // Get Single Location
