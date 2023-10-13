@@ -4,7 +4,7 @@
     <div id="login-card">
       <WrapperCard title="Login" id="login-wrapper-card">
         <div class="text-center q-mb-lg">
-          <img src="login-logo.png" alt="TKalender Logo" />
+          <img src="/login-logo.png" alt="TKalender Logo" />
         </div>
         <div class="q-mb-md">
           <q-input
@@ -93,7 +93,7 @@ export default defineComponent({
 <style lang="scss" scope>
 #blurred-background {
   width: 100%;
-  background-image: url("pexels-picjumbocom-210660.jpg");
+  background-image: url("/login-background-image.jpg");
   filter: blur(3px);
   background-position: center;
   background-repeat: no-repeat;

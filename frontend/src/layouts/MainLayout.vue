@@ -298,7 +298,7 @@ export default defineComponent({
 
 .page-container-background {
   background-color: #f5f6fa;
-  background-image: url("tkalender-background-logo.png");
+  background-image: url("/tkalender-background-logo.png");
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-position: 50% 50%;
