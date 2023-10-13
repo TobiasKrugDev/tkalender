@@ -10,7 +10,7 @@
       />
     </div>
     <div class="validation-input row">
-      <div class="col q-mr-sm">
+      <div class="col-sm col-12 q-mr-sm-sm">
         <q-input
           ref="startAtInput"
           outlined
@@ -21,7 +21,7 @@
           :rules="[(val) => !!val || 'Start ist ein Pflichtfeld']"
         />
       </div>
-      <div class="col q-ml-sm">
+      <div class="col-sm col-12 q-ml-sm-sm">
         <q-input
           ref="endAtInput"
           outlined
