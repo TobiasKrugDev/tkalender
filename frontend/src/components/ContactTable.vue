@@ -76,7 +76,7 @@
       </template>
       <template #item="props">
         <div class="col-10 q-pl-md">
-          <div class="text-h6 q-mb-md mobile-item-title-circle">
+          <div class="text-h6 q-mb-md">
             <q-avatar v-if="props.row.image">
               <img :src="props.row.image" />
             </q-avatar>
@@ -87,9 +87,9 @@
               text-color="white"
               class="shadow-3"
             />
-            <div class="q-ml-sm">
+            <span class="q-ml-sm">
               {{ props.row.firstname }} {{ props.row.lastname }}
-            </div>
+            </span>
           </div>
           <div class="q-table__grid-item-title">Beschreibung</div>
           <div class="q-mb-md">
