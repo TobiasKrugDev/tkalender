@@ -147,7 +147,7 @@
     </q-drawer>
 
     <q-footer v-if="$q.screen.lt.md" elevated>
-      <q-tabs align="justify">
+      <q-tabs align="justify" indicator-color="transparent">
         <q-route-tab
           icon="mdi-home"
           :label="$q.screen.xs ? '' : 'Dashboard'"
