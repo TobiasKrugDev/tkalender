@@ -49,33 +49,11 @@
       >
         <q-btn
           flat
-          dense
-          color="grey-7"
-          round
-          icon="menu"
-          aria-label="Menu"
-          size="lg"
-          class="q-ml-md"
-          @click="toggleLeftDrawer"
-        />
-
-        <q-toolbar-title>
-          <router-link to="/">
-            <img
-              src="/tkalender-logo-mobile.png"
-              class="absolute-center mobile-layout-toolbar-logo"
-            />
-          </router-link>
-        </q-toolbar-title>
-
-        <q-btn
-          id="mobile-search-btn"
-          flat
           round
           icon="search"
           color="grey-7"
           size="lg"
-          class="q-mr-md"
+          class="q-ml-md"
         >
           <q-popup-proxy
             :breakpoint="0"
@@ -104,6 +82,25 @@
             </div>
           </q-popup-proxy>
         </q-btn>
+
+        <q-toolbar-title>
+          <router-link to="/">
+            <img
+              src="/tkalender-logo-mobile.png"
+              class="absolute-center mobile-layout-toolbar-logo"
+            />
+          </router-link>
+        </q-toolbar-title>
+
+        <q-btn
+          flat
+          round
+          icon="mdi-logout"
+          color="grey-7"
+          size="lg"
+          class="q-mr-md"
+          @click="onLogoutClick"
+        />
       </q-toolbar>
     </q-header>
 
@@ -148,6 +145,47 @@
         </DialogCard>
       </q-dialog>
     </q-drawer>
+
+    <q-footer v-if="$q.screen.lt.md" elevated>
+      <q-tabs align="justify">
+        <q-route-tab
+          icon="mdi-home"
+          :label="$q.screen.xs ? '' : 'Dashboard'"
+          to="/"
+          exact
+        />
+        <q-route-tab
+          icon="mdi-calendar"
+          :label="$q.screen.xs ? '' : 'Kalender'"
+          to="/calendar"
+          exact
+        />
+        <q-route-tab
+          icon="mdi-format-list-bulleted"
+          :label="$q.screen.xs ? '' : 'Terminliste'"
+          to="/appointments"
+          exact
+        />
+        <q-route-tab
+          icon="mdi-account-group"
+          :label="$q.screen.xs ? '' : 'Kontakte'"
+          to="/contacts"
+          exact
+        />
+        <q-route-tab
+          icon="mdi-map-marker-radius"
+          :label="$q.screen.xs ? '' : 'Orte'"
+          to="/locations"
+          exact
+        />
+        <q-route-tab
+          icon="mdi-palette"
+          :label="$q.screen.xs ? '' : 'Kategorien'"
+          to="/categories"
+          exact
+        />
+      </q-tabs>
+    </q-footer>
 
     <q-page-container class="page-container-background">
       <router-view v-slot="{ Component }">
@@ -336,6 +374,16 @@ export default defineComponent({
 
 .search-toolbar {
   margin-left: 21px;
+}
+
+footer .q-tab {
+  padding: 0 9px;
+}
+
+@media screen and (min-width: 600px) {
+  footer .q-tab {
+    padding: 0 13px;
+  }
 }
 
 @media screen and (min-width: 1024px) {
