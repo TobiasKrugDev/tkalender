@@ -87,7 +87,7 @@ export default defineComponent({
 
     formatAppointmentDate(appointmentDate) {
       const jsDate = new Date(appointmentDate)
-      return date.formatDate(jsDate, "DD. MMMM YYYY - HH:mm")
+      return date.formatDate(jsDate, "DD. MMMM YYYY - HH:mm") + " Uhr"
     },
 
     onPageChange(page) {
