@@ -494,12 +494,23 @@ export default defineComponent({
 }
 
 .fullscreen-mode-height {
-  height: 75vh;
-  height: calc(100vh - 224px);
+  height: calc(100vh - 290px);
 }
 
 .dashboard-mode-height {
   height: 50vh;
+}
+
+@media screen and (min-width: 600px) {
+  .fullscreen-mode-height {
+    height: calc(100vh - 300px);
+  }
+}
+
+@media screen and (min-width: 1024px) {
+  .fullscreen-mode-height {
+    height: calc(100vh - 224px);
+  }
 }
 
 @media screen and (max-height: 900px) and (min-width: 1024px) {
