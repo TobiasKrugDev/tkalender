@@ -225,7 +225,7 @@ export default defineComponent({
       calendarTimespanEnd: null,
       holidays: [],
       deleteEventFunction: () => {},
-      timeCellHeight: 30,
+      timeCellHeight: 39,
     }
   },
 
@@ -495,6 +495,7 @@ export default defineComponent({
 
 .fullscreen-mode-height {
   height: 75vh;
+  height: calc(100vh - 224px);
 }
 
 .dashboard-mode-height {
