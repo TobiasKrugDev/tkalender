@@ -100,21 +100,13 @@
               <div class="text-grey-7 text-weight-medium">
                 {{ formatMobileStartAt(props.row.startAt) }}
               </div>
-              <div class="text-h6">
-                {{ props.row.name }}
-              </div>
-              <div class="text-grey-7 q-mb-xs">
-                <span v-if="props.row.location">{{
-                  props.row.location.name
-                }}</span>
-              </div>
             </div>
-            <div class="col-5 text-right">
+            <div class="col-5 text-right top-right-col">
               <span v-if="props.row.category">
                 <CategoryChip :category="props.row.category" />
               </span>
             </div>
-            <div class="col-1">
+            <div class="col-1 top-right-col">
               <!-- Desktop menu button -->
               <q-btn
                 v-if="$q.screen.gt.sm"
@@ -158,6 +150,16 @@
                 icon="more_vert"
                 @click="showBottomSheet(props.row)"
               />
+            </div>
+            <div class="col-12">
+              <div class="text-h6">
+                {{ props.row.name }}
+              </div>
+              <div class="text-grey-7 q-mb-xs">
+                <span v-if="props.row.location">{{
+                  props.row.location.name
+                }}</span>
+              </div>
             </div>
             <div class="col-12">
               <div>
@@ -494,5 +496,9 @@ export default defineComponent({
 <style lang="scss" scope>
 .q-toggle__label {
   color: #546e7a;
+}
+
+.top-right-col {
+  height: 20px !important;
 }
 </style>
