@@ -146,7 +146,7 @@
       </q-dialog>
     </q-drawer>
 
-    <q-footer v-if="$q.screen.lt.md" elevated>
+    <q-footer v-if="$q.screen.lt.md" class="q-mx-xs shadow-up-3">
       <q-tabs align="justify" indicator-color="transparent">
         <q-route-tab
           icon="mdi-home"
@@ -376,8 +376,13 @@ export default defineComponent({
   margin-left: 21px;
 }
 
+footer {
+  border-radius: 8px;
+}
+
 footer .q-tab {
-  padding: 0 9px;
+  padding: 0 8px;
+  border-radius: 8px;
 }
 
 @media screen and (min-width: 600px) {
