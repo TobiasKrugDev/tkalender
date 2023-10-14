@@ -20,7 +20,7 @@
         drag: true,
         resize: true,
         delete: false,
-        create: true,
+        create: $q.screen.gt.sm, // Don't allow create on mobile devices because scrolling might confuse users
       }"
       :snap-to-time="15"
       :time-cell-height="timeCellHeight"
