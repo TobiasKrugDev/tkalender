@@ -1,7 +1,7 @@
 {
   "name": "frontend",
   "version": "0.0.1",
-  "description": "Eine Fullstack Web-App zum Organsisieren all Ihrer Termine!",
+  "description": "Eine Fullstack Web-App zum Organisieren all Ihrer Termine!",
   "productName": "TKalender",
   "author": "Tobias Krug",
   "private": true,
