@@ -107,8 +107,8 @@
           </div>
           <div class="q-table__grid-item-title">E-Mail-Adresse</div>
           <div>
-            <div v-if="props.row.emailAdress">
-              <div>{{ props.row.emailAdress }}</div>
+            <div v-if="props.row.emailAddress">
+              <div>{{ props.row.emailAddress }}</div>
             </div>
             <span v-else>-</span>
           </div>
