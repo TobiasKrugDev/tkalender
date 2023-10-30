@@ -4,7 +4,7 @@ Eine Fullstack Web-App zum Organisieren all Ihrer Termine!
 # Demo
 [tkalender-demo.de](https://tkalender-demo.de)
 
-Benutzername: Demo User
+Benutzername: Demo User <br>
 Passwort: demo
 
 # Features
@@ -25,7 +25,7 @@ Passwort: demo
 + uvm.
 
 # Techstack
-Frontend: Vue, Quasar, JavaScript, HTML und CSS.
+Frontend: Vue, Quasar, JavaScript, HTML und CSS. <br>
 Backend:  PHP und SQL (kein Framework!)
 
 # Kontakt
