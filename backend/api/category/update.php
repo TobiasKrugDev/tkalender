@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Category.php';
     include_once '../../helpers/auth_check.php';
@@ -38,4 +39,5 @@
         'color' => $category->color
     );
 
+    // Return item as JSON
     print_r(json_encode($category_array));

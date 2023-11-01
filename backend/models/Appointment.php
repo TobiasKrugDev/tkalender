@@ -31,6 +31,7 @@
 
         // Get Appointments
         public function read() {
+            // Calendar Mode
             if (isset($this->calendarMode) && $this->calendarMode == true) {
                 $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
                     FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
@@ -40,6 +41,7 @@
                     $stmt->bindParam(2, $this->calendarTimespanEnd, PDO::PARAM_STR);
                     $stmt->execute();
             } else {
+                // Contact Filter
                 if (isset($this->contactFilter)) {
                     $query = '
                         SELECT id, name, startAt
@@ -52,6 +54,7 @@
                     $stmt->bindParam(2, $this->offset, PDO::PARAM_INT);
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
+                // Location Filter
                 } elseif (isset($this->locationFilter)) {
                     $query = '
                         SELECT id, name, startAt
@@ -64,6 +67,7 @@
                     $stmt->bindParam(2, $this->offset, PDO::PARAM_INT);
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
+                // Category Filter
                 } elseif (isset($this->categoryFilter)) {
                     $query = '
                         SELECT id, name, startAt
@@ -77,6 +81,7 @@
                     $stmt->bindParam(3, $this->limit, PDO::PARAM_INT);
                     $stmt->execute();
                 } else {
+                    // Regular Appointment List
                     // ToDo: Look at this beauty
                     $query = 'SELECT appointments.id, appointments.name AS appointmentName, appointments.description AS appointmentDescription, startAt, endAt, icon, categories.id AS categoryID, categories.name AS categoryName, categories.description AS categoryDescription, color, locations.id AS locationID, locations.name AS locationName, locations.description AS locationDescription, street_address AS streetAddress, postal_code AS postalCode, city
                     FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id
@@ -95,16 +100,14 @@
                     $stmt->execute();
                 }
             }
-
-    
             
             return $stmt;
         }
 
         // Get Total Items Number
         public function count() {
+            // Calendar Mode
             if (isset($this->calendarMode) && $this->calendarMode == true) {
-                
                 $query = 'SELECT COUNT(*) AS total 
                 FROM appointments
                 WHERE startAt > ? AND startAt < ?';
@@ -112,8 +115,8 @@
                 $stmt->bindParam(1, $this->calendarTimespanStart, PDO::PARAM_STR);
                 $stmt->bindParam(2, $this->calendarTimespanEnd, PDO::PARAM_STR);
                 $stmt->execute();
-
             } else {
+                // Contact Filter
                 if (isset($this->contactFilter)) {
                     $query = '
                         SELECT COUNT(*) AS total
@@ -122,6 +125,7 @@
                     $stmt = $this->conn->prepare($query);
                     $stmt->bindParam(1, $this->contactFilter);
                     $stmt->execute();
+                // Location Filter
                 } elseif (isset($this->locationFilter)) {
                     $query = '
                         SELECT COUNT(*) AS total
@@ -130,6 +134,7 @@
                     $stmt = $this->conn->prepare($query);
                     $stmt->bindParam(1, $this->locationFilter);
                     $stmt->execute();
+                // Category Filter
                 } elseif (isset($this->categoryFilter)) {
                     $query = '
                         SELECT COUNT(*) AS total
@@ -138,6 +143,7 @@
                     $stmt = $this->conn->prepare($query);
                     $stmt->bindParam(1, $this->categoryFilter);
                     $stmt->execute();
+                // Regular Items Count
                 } else {
                     $query = 'SELECT COUNT(*) AS total 
                     FROM appointments LEFT JOIN categories ON appointments.category = categories.id LEFT JOIN locations ON appointments.location = locations.id

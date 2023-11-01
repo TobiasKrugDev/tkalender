@@ -3,6 +3,7 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Contact.php';
     include_once '../../helpers/auth_check.php';
@@ -50,4 +51,5 @@
         array_push($contact_array['items'], $contact_item);
     }
 
+    // Return items as JSON
     echo json_encode($contact_array);

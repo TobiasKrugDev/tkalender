@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
     include_once '../../models/Contact.php';
@@ -70,4 +71,5 @@
         array_push($appointment_array['contacts'], $contact_item);
     }
 
+    // Return item as JSON
     print_r(json_encode($appointment_array));

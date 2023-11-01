@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
     include_once '../../models/Contact.php';
@@ -31,6 +32,7 @@
     $appointment->contacts = $data->contacts;
     $appointment->icon = $data->icon;
 
+    // Create item and get ID
     $createdAppointmentID = $appointment->create();
 
     // Return data of created item
@@ -71,4 +73,5 @@
         array_push($appointment_array['contacts'], $contact_item);
     }
 
+    // Return items as JSON
     print_r(json_encode($appointment_array));

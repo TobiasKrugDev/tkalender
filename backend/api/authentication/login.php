@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
 
     // Instantiate DB & connect

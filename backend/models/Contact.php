@@ -24,6 +24,7 @@
         // Get Contact List
         public function read() {
             if (isset($this->appointmentFilter)) {
+                // Appointment Filter
                 $query = '
                     SELECT * 
                     FROM participations JOIN contacts ON participations.contact = contacts.id
@@ -34,6 +35,7 @@
                 $stmt->bindParam(1, $this->appointmentFilter);
                 $stmt->execute();
             } else {
+                // Regular Contact List
                 $query = 'SELECT * 
                 FROM contacts 
                 WHERE firstname LIKE ? OR lastname LIKE ? OR description LIKE ? OR email_address LIKE ?

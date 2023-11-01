@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Contact.php';
     include_once '../../helpers/auth_check.php';
@@ -28,6 +29,7 @@
     $contact->emailAddress = $data->emailAddress;
     $contact->image = $data->image;
 
+    // Create item and get ID
     $createdContactID = $contact->create();
 
     // Return data of created item
@@ -45,4 +47,5 @@
         'image' => $createdContact->image,
     );
 
+    // Return item as JSON
     print_r(json_encode($contact_array));

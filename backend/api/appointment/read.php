@@ -3,6 +3,7 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
     include_once '../../models/Contact.php';
@@ -85,6 +86,7 @@
                 $appointment_item['category'] = null;
             }
 
+            // Fill contacts array
             $appointment_item['contacts'] = array();
 
             $contact = new Contact($db);
@@ -111,4 +113,5 @@
 
     }
 
+    // Return items as JSON
     echo json_encode($appointment_array);

@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Location.php';
     include_once '../../helpers/auth_check.php';
@@ -23,12 +24,10 @@
 
     $location->id = isset($_GET['id']) ? $_GET['id'] : die();
 
-    if ($location->delete()) {
-        echo json_encode(
-            array('message' => 'Location Deleted')
-        );
-    } else {
-        echo json_encode(
-            array('message' => 'Location Not Deleted')
-        );
-    }
+    // Delete item
+    $location->delete();
+
+    // Return success message as JSON
+    echo json_encode(
+        array('message' => 'Location Deleted')
+    );

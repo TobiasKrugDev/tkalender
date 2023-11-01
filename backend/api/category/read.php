@@ -3,6 +3,7 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Category.php';
     include_once '../../helpers/auth_check.php';
@@ -45,4 +46,5 @@
         array_push($category_array['items'], $category_item);
     }
 
+    // Return items as JSON
     echo json_encode($category_array);

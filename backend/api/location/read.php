@@ -3,6 +3,7 @@
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Location.php';
     include_once '../../helpers/auth_check.php';
@@ -48,4 +49,5 @@
         array_push($location_array['items'], $location_item);
     }
 
+    // Return items as JSON
     echo json_encode($location_array);

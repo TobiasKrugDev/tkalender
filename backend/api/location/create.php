@@ -6,6 +6,7 @@
     header('Access-Control-Allow-Headers: Access-Control-Allow-Origin, Content-Type, 
     Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
+    // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Location.php';
     include_once '../../helpers/auth_check.php';
@@ -27,6 +28,7 @@
     $location->postalCode = $data->postalCode;
     $location->city = $data->city;
 
+    // Create item and get ID
     $createdLocationID = $location->create();
 
     // Return data of created item
@@ -43,4 +45,5 @@
         'city' => $createdLocation->city,
     );
 
+    // Return item as JSON
     print_r(json_encode($location_array));
