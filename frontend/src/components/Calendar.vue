@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- Vue Cal -->
     <vue-cal
       id="vuecal"
       active-view="week"
@@ -38,6 +39,7 @@
       </template>
     </vue-cal>
 
+    <!-- Item Dialog -->
     <q-dialog
       ref="itemDialog"
       v-model="itemDialog"
@@ -66,6 +68,7 @@
       </DialogCard>
     </q-dialog>
 
+    <!-- Delete Confirm Dialog -->
     <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
       <DeleteConfirm
         :item="selectedAppointment"
@@ -193,7 +196,7 @@ export default defineComponent({
           default:
             event.title = holiday.name
 
-          //ToDo: maybe add holidays like Heiligabend, Silvester, Ostersonntag
+          //ToDo: maybe add holidays like Heiligabend, Silvester and Ostersonntag
         }
 
         result.push(event)

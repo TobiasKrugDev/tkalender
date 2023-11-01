@@ -21,10 +21,6 @@ export default defineComponent({
     },
   },
 
-  data() {
-    return {}
-  },
-
   computed: {
     textColor() {
       if (colors) {
@@ -34,9 +30,5 @@ export default defineComponent({
       }
     },
   },
-
-  methods: {},
 })
 </script>
-
-<style lang="scss"></style>

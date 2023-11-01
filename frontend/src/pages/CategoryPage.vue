@@ -4,6 +4,7 @@
       <CategoryTable ref="categoryTable" />
     </WrapperCard>
 
+    <!-- Floating Create Button -->
     <FABCreateButton @create-button-click="openCreateDialog" />
   </q-page>
 </template>

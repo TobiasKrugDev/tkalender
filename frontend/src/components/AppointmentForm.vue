@@ -224,6 +224,7 @@
       </div>
     </div>
 
+    <!-- Timespan Error Alert -->
     <q-dialog v-model="timespanErrorAlert">
       <q-card>
         <q-card-section>
@@ -318,6 +319,7 @@ export default defineComponent({
       "setShortcutCreateDialog",
       "setShortcutCreateEntity",
     ]),
+
     validateForm() {
       this.$refs.nameInput.validate()
       this.$refs.startAtInput.validate()

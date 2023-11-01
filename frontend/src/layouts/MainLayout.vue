@@ -104,6 +104,7 @@
       </q-toolbar>
     </q-header>
 
+    <!-- Side drawer -->
     <q-drawer show-if-above v-model="leftDrawerOpen" side="left">
       <div class="relative-position q-my-lg layout-desktop-logo">
         <router-link to="/">
@@ -146,6 +147,7 @@
       </q-dialog>
     </q-drawer>
 
+    <!-- Mobile Footer Tabs -->
     <q-footer v-if="$q.screen.lt.md" class="q-mx-xs shadow-up-3">
       <q-tabs align="justify" indicator-color="transparent">
         <q-route-tab
@@ -187,6 +189,7 @@
       </q-tabs>
     </q-footer>
 
+    <!-- Page Container -->
     <q-page-container class="page-container-background">
       <router-view v-slot="{ Component }">
         <transition

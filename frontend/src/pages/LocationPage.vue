@@ -4,6 +4,7 @@
       <LocationTable ref="locationTable" />
     </WrapperCard>
 
+    <!-- Floating Create Button -->
     <FABCreateButton @create-button-click="openCreateDialog" />
   </q-page>
 </template>

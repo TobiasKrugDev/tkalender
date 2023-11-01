@@ -188,6 +188,7 @@
       />
     </div>
 
+    <!-- Item Dialog -->
     <q-dialog ref="itemDialog" v-model="itemDialog" persistent>
       <DialogCard :title="dialogCardTitle">
         <ItemCreate
@@ -211,6 +212,7 @@
       </DialogCard>
     </q-dialog>
 
+    <!-- Delte Confirm Dialog -->
     <q-dialog ref="deleteConfirm" v-model="showDeleteDialog">
       <DeleteConfirm
         :item="selectedAppointment"

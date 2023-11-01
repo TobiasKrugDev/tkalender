@@ -42,7 +42,7 @@ const actions = {
     commit("setTotalItems", response.data.totalItems)
   },
 
-  // DELETE Contacts
+  // DELETE Contact
   async deleteContact({}, id) {
     await axios.delete("/api/contact/delete", {
       params: { id },

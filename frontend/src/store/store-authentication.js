@@ -5,6 +5,7 @@ const state = {}
 const mutations = {}
 
 const actions = {
+  // Login
   async login({}, { username, password }) {
     const data = { username, password }
     let success
@@ -24,6 +25,7 @@ const actions = {
     return { success }
   },
 
+  // Logout
   async logout() {
     const response = await axios.get("/api/authentication/logout")
     let success = response.data.success

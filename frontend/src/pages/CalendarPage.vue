@@ -4,6 +4,7 @@
       <Calendar ref="calendar" />
     </WrapperCard>
 
+    <!-- Floating Create Button -->
     <FABCreateButton @create-button-click="openCreateDialog" />
   </q-page>
 </template>

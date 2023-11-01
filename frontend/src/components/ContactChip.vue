@@ -19,13 +19,5 @@ export default defineComponent({
       default: null,
     },
   },
-
-  data() {
-    return {}
-  },
-
-  methods: {},
 })
 </script>
-
-<style lang="scss"></style>

@@ -34,6 +34,7 @@ export default route(function (/* { store, ssrContext } */) {
     history: createHistory(process.env.VUE_ROUTER_BASE),
   })
 
+  // Navigation guard for user authentication check
   Router.beforeEach((to, from, next) => {
     const loggedIn = Cookies.has("PHPSESSID") // Check for cookie set by PHP session
 

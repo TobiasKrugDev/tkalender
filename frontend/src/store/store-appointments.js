@@ -78,6 +78,7 @@ const actions = {
     commit("setTotalItems", response.data.totalItems)
   },
 
+  // GET Calendar Appointments
   async getCalendarAppointments({ commit }, { start, end }) {
     const calendarTimespanStart = date.formatDate(start, "YYYY-MM-DD HH:mm:00")
     const calendarTimespanEnd = date.formatDate(end, "YYYY-MM-DD HH:mm:00")
@@ -93,6 +94,7 @@ const actions = {
     commit("setCalendarTotalItems", response.data.totalItems)
   },
 
+  // GET Entity Appointments
   async getEntityAppointments(
     { commit },
     { rowsPerPage, page, entity, filterID }

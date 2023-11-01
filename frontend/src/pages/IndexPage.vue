@@ -69,6 +69,7 @@
       </div>
     </div>
 
+    <!-- Floating Create Button -->
     <FABCreateButton expandable-fab />
   </q-page>
 </template>
