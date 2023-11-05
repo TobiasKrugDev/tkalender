@@ -339,7 +339,7 @@ export default defineComponent({
       )
       const end = new Date(
         e.startDate.getFullYear(),
-        e.startDate.getMonth() + 1
+        e.startDate.getMonth() + 2
       )
 
       this.timespanStart = start
