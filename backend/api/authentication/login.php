@@ -41,7 +41,7 @@
             // Valid user credentials --> return status code 200
             http_response_code(200);
             echo json_encode(
-                array('success' => true, 'sessionID' => session_id())
+                array('success' => true, 'sessionID' => session_id(), 'session' => $_SESSION)
             );
         } else {
             // Invalid password -->  return status code 401

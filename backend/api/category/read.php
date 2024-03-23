@@ -9,7 +9,7 @@
     include_once '../../helpers/auth_check.php';
 
     // Check user authentication first
-    checkAuthentication();
+    checkAuthentication($_GET['sessionID']);
 
     // Instantiate DB & connect
     $database = new Database();
@@ -48,3 +48,5 @@
 
     // Return items as JSON
     echo json_encode($category_array);
+
+    // echo (file_exists(session_save_path().'/sess_'.'0682eb63d2766fc2849096c0a049b82e1') ? 1 : 0);

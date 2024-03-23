@@ -35,6 +35,12 @@ const actions = {
   async logout() {
     const response = await axios.get("/api/authentication/logout")
     let success = response.data.success
+
+    // If session cookie isn't deleted automatically we delete it manually
+    if (Cookies.has("PHPSESSID")) {
+      Cookies.remove("PHPSESSID")
+    }
+
     return { success }
   },
 }

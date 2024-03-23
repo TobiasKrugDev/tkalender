@@ -9,7 +9,7 @@
     include_once '../../helpers/auth_check.php';
 
     // Check user authentication first
-    checkAuthentication();
+    checkAuthentication($_GET['sessionID']);
 
     // Instantiate DB & connect
     $database = new Database();

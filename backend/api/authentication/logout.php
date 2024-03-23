@@ -1,4 +1,7 @@
 <?php
+    // Header
+    header('Access-Control-Allow-Origin: *');
+
     session_start();
     // Remove session cookie and destroy session
     $params = session_get_cookie_params();
