@@ -1,4 +1,5 @@
 import { axios } from "src/boot/axios"
+import { Cookies } from "quasar"
 
 const state = {}
 
@@ -17,6 +18,11 @@ const actions = {
       })
 
       success = response.data.success
+
+      // If session cookie isn't set automatically we set it manually
+      if (!Cookies.has("PHPSESSID")) {
+        Cookies.set("PHPSESSID", response.data.sessionID)
+      }
     } catch (e) {
       // Unsuccessful login
       success = false
