@@ -7,6 +7,10 @@
 
     // Includes
     include_once '../../config/Database.php';
+    include_once '../../config/jwt_secret.php';
+    include_once '../../vendor/autoload.php';
+    use Firebase\JWT\JWT;
+    use Firebase\JWT\Key;
 
     // Prevent CORS error by returning status code 200 for OPTIONS preflight requests
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -34,14 +38,16 @@
         $isValid = password_verify($password, $user["password_hash"]);
 
         if ($isValid) {
-            session_start();
-            session_regenerate_id();
-            $_SESSION["user_id"] = $user["id"];
+            // Encode JWT
+            $payload = [
+                'lorem' => 'ipsum' // ToDo: Adjust this
+            ];
+            $jwt = JWT::encode($payload, $jwt_secret, 'HS256');
 
             // Valid user credentials --> return status code 200
             http_response_code(200);
             echo json_encode(
-                array('success' => true, 'sessionID' => session_id(), 'session' => $_SESSION)
+                array('success' => true, 'token' => $jwt)
             );
         } else {
             // Invalid password -->  return status code 401
