@@ -20,7 +20,7 @@
 
     // Instantiate DB & connect
     $database = new Database();
-    $db = $database->connect();
+    $db = $database->connect(null);
 
     $data = json_decode(file_get_contents("php://input"));
 
@@ -40,7 +40,7 @@
         if ($isValid) {
             // Encode JWT
             $payload = [
-                'lorem' => 'ipsum' // ToDo: Adjust this
+                'sub' => $username
             ];
             $jwt = JWT::encode($payload, $jwt_secret, 'HS256');
 

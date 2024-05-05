@@ -6,9 +6,9 @@
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
 
     // Includes
-    include_once '../../config/Database.php';
     include_once '../../models/Category.php';
     include_once '../../helpers/auth_check.php';
+    include_once '../../helpers/database_connect.php';
 
     // Prevent CORS error by returning status code 200 for OPTIONS preflight requests
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -18,10 +18,9 @@
 
     // Check user authentication first
     checkAuthentication();
-
+    
     // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
+    $db = connectToDatabase();
 
     $category = new Category($db);
 

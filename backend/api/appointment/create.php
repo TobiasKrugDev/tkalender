@@ -6,10 +6,10 @@
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
 
     // Includes
-    include_once '../../config/Database.php';
     include_once '../../models/Appointment.php';
     include_once '../../models/Contact.php';
     include_once '../../helpers/auth_check.php';
+    include_once '../../helpers/database_connect.php';
 
     // Prevent CORS error by returning status code 200 for OPTIONS preflight requests
     if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
@@ -21,8 +21,7 @@
     checkAuthentication();
 
     // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
+    $db = connectToDatabase();
 
     $appointment = new Appointment($db);
 

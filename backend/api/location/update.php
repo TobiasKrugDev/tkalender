@@ -6,16 +6,15 @@
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
 
     // Includes
-    include_once '../../config/Database.php';
     include_once '../../models/Location.php';
     include_once '../../helpers/auth_check.php';
+    include_once '../../helpers/database_connect.php';
 
     // Check user authentication first
     checkAuthentication();
 
     // Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
+    $db = connectToDatabase();
 
     $location = new Location($db);
 
