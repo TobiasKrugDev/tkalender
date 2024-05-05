@@ -2,11 +2,7 @@
     // Header
     header('Access-Control-Allow-Origin: *');
 
-    session_start();
-    // Remove session cookie and destroy session
-    $params = session_get_cookie_params();
-    setcookie(session_name(), '', 0, $params['path'], $params['domain'], $params['secure'], isset($params['httponly']));
-    session_destroy();
+    // ToDo: Add logout token logic if needed
 
     // Return logout confirmation
     echo json_encode(
