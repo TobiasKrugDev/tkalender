@@ -74,8 +74,3 @@ INSERT INTO `participations` (`appointment`, `contact`) VALUES
 (9, 5),
 (10, 1),
 (10, 6);
-
--- Users
-DELETE FROM `users`;
-INSERT INTO `users` (`id`, `username`, `password_hash`) VALUES
-(1, 'Demo User', '$2y$10$YE8oeXOFA8fTMrJmKYeCEuGLX66jSkb.g2ZNWhxSPEGphJSSijyoK');

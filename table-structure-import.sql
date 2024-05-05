@@ -47,13 +47,6 @@ CREATE TABLE `participations` (
   `contact` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
--- Users
-CREATE TABLE `users` (
-  `id` int NOT NULL,
-  `username` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
-  `password_hash` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
 
 -- Indices
 
@@ -84,11 +77,6 @@ ALTER TABLE `participations`
   ADD PRIMARY KEY (`appointment`,`contact`),
   ADD KEY `participation.contact` (`contact`);
 
--- Users
-ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`),
-  ADD UNIQUE KEY `username` (`username`);
-
 
 -- Auto Increments
 
@@ -106,10 +94,6 @@ ALTER TABLE `contacts`
 
 -- Locations
 ALTER TABLE `locations`
-  MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
--- Users
-ALTER TABLE `users`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
 
 
