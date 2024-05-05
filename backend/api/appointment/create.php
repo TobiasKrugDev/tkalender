@@ -11,6 +11,12 @@
     include_once '../../models/Contact.php';
     include_once '../../helpers/auth_check.php';
 
+    // Prevent CORS error by returning status code 200 for OPTIONS preflight requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        http_response_code(200);
+        exit;
+    }
+
     // Check user authentication first
     checkAuthentication();
 

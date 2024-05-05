@@ -2,13 +2,19 @@
     // Header
     header('Access-Control-Allow-Origin: *');
     header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: POST');
+    header('Access-Control-Allow-Methods: POST, OPTIONS');
     header('Access-Control-Allow-Headers: Authorization, Content-Type');
 
     // Includes
     include_once '../../config/Database.php';
     include_once '../../models/Category.php';
     include_once '../../helpers/auth_check.php';
+
+    // Prevent CORS error by returning status code 200 for OPTIONS preflight requests
+    if ($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
+        http_response_code(200);
+        exit;
+    }
 
     // Check user authentication first
     checkAuthentication();
