@@ -6,7 +6,7 @@ import {
   createWebHashHistory,
 } from "vue-router"
 import routes from "./routes"
-import { Cookies } from "quasar"
+import { checkToken } from "../helpers/token-storage.js"
 
 /*
  * If not building with SSR mode, you can
@@ -35,8 +35,8 @@ export default route(function (/* { store, ssrContext } */) {
   })
 
   // Navigation guard for user authentication check
-  Router.beforeEach((to, from, next) => {
-    const loggedIn = Cookies.has("PHPSESSID") // Check for cookie set by PHP session
+  Router.beforeEach(async (to, from, next) => {
+    const loggedIn = await checkToken() // Check if token is set in device storage
 
     // User wants to access /login
     if (to.path === "/login") {

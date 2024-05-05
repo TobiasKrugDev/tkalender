@@ -1,4 +1,5 @@
 import { axios } from "src/boot/axios"
+import { getToken } from "../helpers/token-storage.js"
 
 const state = {
   contacts: [],
@@ -28,7 +29,12 @@ const mutations = {
 const actions = {
   // GET Contacts
   async getContacts({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
-    const params = { itemsPerPage: rowsPerPage, page, filter }
+    const params = {
+      itemsPerPage: rowsPerPage,
+      page,
+      filter,
+      token: await getToken(),
+    }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
@@ -45,13 +51,16 @@ const actions = {
   // DELETE Contact
   async deleteContact({}, id) {
     await axios.delete("/api/contact/delete", {
-      params: { id },
+      params: { id, token: await getToken() },
     })
   },
 
   // POST / Create Contact
   async createContact({ commit }, contact) {
     const response = await axios.post("/api/contact/create", contact, {
+      params: {
+        token: await getToken(),
+      },
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,6 +74,7 @@ const actions = {
     const response = await axios.put("/api/contact/update", contact, {
       params: {
         id: contact.id,
+        token: await getToken(),
       },
       headers: {
         "Content-Type": "application/json",

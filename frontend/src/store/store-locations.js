@@ -1,4 +1,5 @@
 import { axios } from "src/boot/axios"
+import { getToken } from "../helpers/token-storage.js"
 
 const state = {
   locations: [],
@@ -28,7 +29,12 @@ const mutations = {
 const actions = {
   // GET Locations
   async getLocations({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
-    const params = { itemsPerPage: rowsPerPage, page, filter }
+    const params = {
+      itemsPerPage: rowsPerPage,
+      page,
+      filter,
+      token: await getToken(),
+    }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
@@ -37,7 +43,9 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
-    const response = await axios.get("/api/location/read", { params })
+    const response = await axios.get("/api/location/read", {
+      params,
+    })
     commit("setLocations", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
@@ -45,13 +53,16 @@ const actions = {
   // DELETE Location
   async deleteLocation({}, id) {
     await axios.delete("/api/location/delete", {
-      params: { id },
+      params: { id, token: await getToken() },
     })
   },
 
   // POST / Create Location
   async createLocation({ commit }, location) {
     const response = await axios.post("/api/location/create", location, {
+      params: {
+        token: await getToken(),
+      },
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,6 +76,7 @@ const actions = {
     const response = await axios.put("/api/location/update", location, {
       params: {
         id: location.id,
+        token: await getToken(),
       },
       headers: {
         "Content-Type": "application/json",

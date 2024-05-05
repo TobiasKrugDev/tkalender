@@ -1,5 +1,5 @@
 import { axios } from "src/boot/axios"
-import { Cookies } from "quasar"
+import { storeToken, removeToken } from "../helpers/token-storage.js"
 
 const state = {}
 
@@ -18,11 +18,7 @@ const actions = {
       })
 
       success = response.data.success
-
-      // If session cookie isn't set automatically we set it manually
-      if (!Cookies.has("PHPSESSID")) {
-        Cookies.set("PHPSESSID", response.data.sessionID)
-      }
+      await storeToken(response.data.token)
     } catch (e) {
       // Unsuccessful login
       success = false
@@ -33,15 +29,12 @@ const actions = {
 
   // Logout
   async logout() {
-    const response = await axios.get("/api/authentication/logout")
-    let success = response.data.success
+    // ToDo: Is a API call here needed anymore?
 
-    // If session cookie isn't deleted automatically we delete it manually
-    if (Cookies.has("PHPSESSID")) {
-      Cookies.remove("PHPSESSID")
-    }
+    // ToDo: Error handling
+    await removeToken()
 
-    return { success }
+    return { success: true }
   },
 }
 

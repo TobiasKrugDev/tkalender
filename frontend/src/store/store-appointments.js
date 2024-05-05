@@ -1,5 +1,6 @@
 import { axios } from "src/boot/axios"
 import { date } from "quasar"
+import { getToken } from "../helpers/token-storage.js"
 
 const state = {
   appointments: [],
@@ -62,7 +63,12 @@ const actions = {
     { commit },
     { rowsPerPage, page, sortBy, desc, filter, futureAppointmentsOnly }
   ) {
-    const params = { itemsPerPage: rowsPerPage, page, filter }
+    const params = {
+      itemsPerPage: rowsPerPage,
+      page,
+      filter,
+      token: await getToken(),
+    }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
@@ -87,6 +93,7 @@ const actions = {
       calendarMode: true,
       calendarTimespanStart,
       calendarTimespanEnd,
+      token: await getToken(),
     }
 
     const response = await axios.get("/api/appointment/read", { params })
@@ -99,7 +106,11 @@ const actions = {
     { commit },
     { rowsPerPage, page, entity, filterID }
   ) {
-    const params = { itemsPerPage: rowsPerPage, page }
+    const params = {
+      itemsPerPage: rowsPerPage,
+      page,
+      token: await getToken(),
+    }
 
     if (entity === "contact") {
       params.filter_contact = filterID
@@ -117,7 +128,7 @@ const actions = {
   // DELETE Appointment
   async deleteAppointment({}, id) {
     await axios.delete("/api/appointment/delete", {
-      params: { id },
+      params: { id, token: getToken() },
     })
   },
 
@@ -137,6 +148,9 @@ const actions = {
       appointment.contacts = appointment.contacts.map((contact) => contact.id)
 
     const response = await axios.post("/api/appointment/create", appointment, {
+      params: {
+        token: await getToken(),
+      },
       headers: {
         "Content-Type": "application/json",
       },
@@ -162,6 +176,7 @@ const actions = {
     const response = await axios.put("/api/appointment/update", appointment, {
       params: {
         id: appointment.id,
+        token: await getToken(),
       },
       headers: {
         "Content-Type": "application/json",

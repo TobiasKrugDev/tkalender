@@ -1,4 +1,5 @@
 import { axios } from "src/boot/axios"
+import { getToken } from "../helpers/token-storage.js"
 
 const state = {
   categories: [],
@@ -28,7 +29,12 @@ const mutations = {
 const actions = {
   // GET Categories
   async getCategories({ commit }, { rowsPerPage, page, sortBy, desc, filter }) {
-    const params = { itemsPerPage: rowsPerPage, page, filter }
+    const params = {
+      itemsPerPage: rowsPerPage,
+      page,
+      filter,
+      token: await getToken(),
+    }
     if (sortBy) {
       params.sortBy = sortBy
       if (desc) {
@@ -37,7 +43,9 @@ const actions = {
         params.orderDirection = "ASC"
       }
     }
-    const response = await axios.get("/api/category/read", { params })
+    const response = await axios.get("/api/category/read", {
+      params,
+    })
     commit("setCategories", response.data.items)
     commit("setTotalItems", response.data.totalItems)
   },
@@ -45,13 +53,16 @@ const actions = {
   // DELETE Category
   async deleteCategory({}, id) {
     await axios.delete("/api/category/delete", {
-      params: { id },
+      params: { id, token: await getToken() },
     })
   },
 
   // POST / Create Category
   async createCategory({ commit }, category) {
     const response = await axios.post("/api/category/create", category, {
+      params: {
+        token: await getToken(),
+      },
       headers: {
         "Content-Type": "application/json",
       },
@@ -65,6 +76,7 @@ const actions = {
     const response = await axios.put("/api/category/update", category, {
       params: {
         id: category.id,
+        token: await getToken(),
       },
       headers: {
         "Content-Type": "application/json",
